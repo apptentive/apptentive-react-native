@@ -1,0 +1,22 @@
+{
+  "name": "react-native-apptentive-module",
+  "version": "1.0.0",
+  "description": "React Native Module for Apptentive SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+  	"apptentive",
+  	"react-native",
+    "ios",
+    "android"
+  ],
+  "author": "Apptentive",
+  "license": "",
+  "peerDependencies": {
+    "react-native": "^0.41.2",
+    "react-native-windows": "0.41.0-rc.1"
+
+  }
+}
