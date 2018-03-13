@@ -1,5 +1,5 @@
-
 #import "RNApptentiveModule.h"
+#import <Apptentive/Apptentive.h>
 
 @implementation RNApptentiveModule
 

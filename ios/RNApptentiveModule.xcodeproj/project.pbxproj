@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B3E7B58A1CC2AC0600A0062D /* RNApptentiveModule.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNApptentiveModule.m */; };
+		EF295C4820587FC0003BD68F /* Apptentive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF295C4720587FC0003BD68F /* Apptentive.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +27,7 @@
 		134814201AA4EA6300B7C361 /* libRNApptentiveModule.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNApptentiveModule.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5881CC2AC0600A0062D /* RNApptentiveModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNApptentiveModule.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNApptentiveModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNApptentiveModule.m; sourceTree = "<group>"; };
+		EF295C4720587FC0003BD68F /* Apptentive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Apptentive.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF295C4820587FC0003BD68F /* Apptentive.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +56,16 @@
 				B3E7B5881CC2AC0600A0062D /* RNApptentiveModule.h */,
 				B3E7B5891CC2AC0600A0062D /* RNApptentiveModule.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				EF295C4620587FBF003BD68F /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		EF295C4620587FBF003BD68F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF295C4720587FC0003BD68F /* Apptentive.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,8 +215,12 @@
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
-				"$(inherited)",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
@@ -219,6 +235,10 @@
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
