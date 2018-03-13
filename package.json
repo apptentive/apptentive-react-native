@@ -1,6 +1,6 @@
 {
-  "name": "react-native-apptentive-module",
-  "version": "1.0.0",
+  "name": "react-native-apptentive-sdk",
+  "version": "5.0.0",
   "description": "React Native Module for Apptentive SDK",
   "main": "index.js",
   "scripts": {
@@ -8,15 +8,23 @@
   },
   "keywords": [
   	"apptentive",
+    "react",
   	"react-native",
+    "react-component",
     "ios",
     "android"
   ],
   "author": "Apptentive",
-  "license": "",
+  "contributors": {
+    "name": "Alex Lementuev",
+    "name": "Frank Schmitt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apptentive/apptentive-react-native.git"
+  },
+  "license": "BSD-3-Clause",
   "peerDependencies": {
-    "react-native": "^0.41.2",
-    "react-native-windows": "0.41.0-rc.1"
-
+    "react-native": ">=0.44.0"
   }
 }
