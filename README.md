@@ -1,6 +1,8 @@
 
 # React Native Apptentive SDK
 
+_The module is still under the development and would be available soon_
+
 ## Getting started
 
 `$ npm install react-native-apptentive-module --save`
