@@ -5,11 +5,11 @@ _The module is still under the development and would be available soon_
 
 ## Getting started
 
-`$ npm install react-native-apptentive-sdk --save`
+`$ npm install apptentive-react-native --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-apptentive-sdk`
+`$ react-native link apptentive-react-native`
 
 ### Manual installation
 
@@ -17,7 +17,7 @@ _The module is still under the development and would be available soon_
 #### iOS
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-apptentive-sdk` and add `RNApptentiveModule.xcodeproj`
+2. Go to `node_modules` ➜ `apptentive-react-native` and add `RNApptentiveModule.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNApptentiveModule.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
 4. Run your project (`Cmd+R`)<
 
@@ -28,17 +28,17 @@ _The module is still under the development and would be available soon_
   - Add `new RNApptentiveModulePackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
-  	include ':react-native-apptentive-sdk'
-  	project(':react-native-apptentive-sdk').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-apptentive-sdk/android')
+  	include ':apptentive-react-native'
+  	project(':apptentive-react-native').projectDir = new File(rootProject.projectDir, 	'../node_modules/apptentive-react-native/android')
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':react-native-apptentive-sdk')
+      compile project(':apptentive-react-native')
   	```
 
 ## Usage
 ```javascript
-import RNApptentiveModule from 'react-native-apptentive-sdk';
+import RNApptentiveModule from 'apptentive-react-native';
 
 // TODO: Do some awesome things here
 ```

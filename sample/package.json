@@ -7,9 +7,9 @@
     "test": "jest"
   },
   "dependencies": {
+    "apptentive-react-native": "file:..",
     "react": "16.3.0-alpha.1",
-    "react-native": "0.54.2",
-    "react-native-apptentive-sdk": "file:.."
+    "react-native": "0.54.2"
   },
   "devDependencies": {
     "babel-jest": "22.4.1",
