@@ -3,16 +3,38 @@
 
 ## Getting started
 
-### Install `npm` package
-
 `$ npm install apptentive-react-native --save`
 
-### Install Apptentive CocoaPod (for iOS)
+`$ react-native link apptentive-react-native`
 
-`$ cd ios`  
-`$ pod install`
+### Manual installation
+
+
+#### iOS
+
+1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
+2. Go to `node_modules` ➜ `apptentive-react-native` and add `RNApptentiveModule.xcodeproj`
+3. In XCode, in the project navigator, select your project. Add `libRNApptentiveModule.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
+4. Run your project (`Cmd+R`)<
+
+#### Android
+
+1. Open up `android/app/src/main/java/[...]/MainActivity.java`
+  - Add `import com.reactlibrary.RNApptentiveModulePackage;` to the imports at the top of the file
+  - Add `new RNApptentiveModulePackage()` to the list returned by the `getPackages()` method
+2. Append the following lines to `android/settings.gradle`:
+  	```
+  	include ':apptentive-react-native'
+  	project(':apptentive-react-native').projectDir = new File(rootProject.projectDir, 	'../node_modules/apptentive-react-native/android')
+  	```
+3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
+  	```
+      compile project(':apptentive-react-native')
+  	```
 
 ## Usage
+```javascript
+import RNApptentiveModule from 'apptentive-react-native';
 
 Create one app for each supported platform in your [Apptentive Dashboard](https://be.apptentive.com) (i.e. one Android app and one iOS app if you support both platforms that Apptentive supports). Then navigate to the [API & Development section under the Settings tab](https://be.apptentive.com/apps/current/settings/api) for each of your apps, and note the Apptentive App Key and Apptentive App Signature.
 
