@@ -31,7 +31,7 @@ export class Apptentive {
    * @return Promise with success boolean or error.
    */
   static presentMessageCenter(customData = null) {
-    return RNApptentiveModule.presentMessageCenter();
+    return RNApptentiveModule.presentMessageCenter(customData);
   }
 
   // TODO: unread message count
@@ -50,7 +50,7 @@ export class Apptentive {
    * @param customData An optional dictionary of key/value pairs to be associated with the event.
    */
   static engage(event, customData = null) {
-    return RNApptentiveModule.engageEvent(event);
+    return RNApptentiveModule.engageEvent(event, customData);
   }
 
   // TODO: extended data
