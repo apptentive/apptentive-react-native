@@ -22,15 +22,17 @@ static ApptentiveLogLevel logLevelFromString(NSString *string) {
 	dispatch_once(&onceToken, ^{
 		_logLevelMapping = @{
 							 @"crit": @(ApptentiveLogLevelCrit),
+							 @"critical": @(ApptentiveLogLevelCrit),
 							 @"error": @(ApptentiveLogLevelError),
 							 @"warn": @(ApptentiveLogLevelWarn),
+							 @"warning": @(ApptentiveLogLevelWarn),
 							 @"info": @(ApptentiveLogLevelInfo),
 							 @"debug": @(ApptentiveLogLevelDebug),
 							 @"verbose": @(ApptentiveLogLevelVerbose)
 							 };
 	});
 
-	return [_logLevelMapping[string] integerValue] ?: ApptentiveLogLevelUndefined;
+	return [_logLevelMapping[string.lowercaseString] integerValue] ?: ApptentiveLogLevelUndefined;
 }
 
 RCT_EXPORT_METHOD(
@@ -47,7 +49,12 @@ RCT_EXPORT_METHOD(
 											  configurationWithApptentiveKey:configurationDictionary[@"appKey"]
 											  apptentiveSignature:configurationDictionary[@"signature"]];
 
-	[configuration setLogLevel:logLevelFromString(configurationDictionary[@"logLevel"])];
+	ApptentiveLogLevel logLevel = logLevelFromString(configurationDictionary[@"logLevel"]);
+	if (logLevel == ApptentiveLogLevelUndefined) {
+		rejecter(kRejectCode, [NSString stringWithFormat:@"%@ is not a valid log level", configurationDictionary[@"logLevel"]], nil);
+	}
+
+	[configuration setLogLevel:logLevel];
 
 	if (configuration) {
 		configuration.appID = configurationDictionary[@"appleID"];
