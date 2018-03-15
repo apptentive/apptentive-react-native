@@ -45,6 +45,14 @@ RCT_EXPORT_METHOD(
 		return;
 	}
 
+	if ([configurationDictionary[@"apptentiveKey"] length] == 0) {
+		rejecter(kRejectCode, @"Apptentive Key is missing or empty", nil);
+	}
+
+	if ([configurationDictionary[@"apptentiveSignature"] length] == 0) {
+		rejecter(kRejectCode, @"Apptentive Signature is missing or empty", nil);
+	}
+
 	ApptentiveConfiguration *configuration = [ApptentiveConfiguration
 											  configurationWithApptentiveKey:configurationDictionary[@"apptentiveKey"]
 											  apptentiveSignature:configurationDictionary[@"apptentiveSignature"]];
@@ -59,8 +67,12 @@ RCT_EXPORT_METHOD(
 	if (configuration) {
 		configuration.appID = configurationDictionary[@"appleID"];
 		[Apptentive registerWithConfiguration:configuration];
-		self.registered = YES;
-		resolve(configuration.distributionName);
+
+		if (Apptentive.shared != nil) {
+			resolve(configuration.distributionName);
+		} else {
+			rejecter(kRejectCode, @"Unable to register", nil);
+		}
 	} else {
 		rejecter(kRejectCode, @"Configuration returned nil", nil);
 	}
