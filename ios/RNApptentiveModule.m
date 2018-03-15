@@ -62,14 +62,15 @@ RCT_EXPORT_METHOD(
 }
 
 RCT_EXPORT_METHOD(
-	presentMessageCenter:(RCTPromiseResolveBlock)resolver
+	presentMessageCenter:(NSDictionary *)customData
+	resolver:(RCTPromiseResolveBlock)resolver
 	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
 	}
 
-	[Apptentive.shared presentMessageCenterFromViewController:nil completion:^(BOOL presented) {
+	[Apptentive.shared presentMessageCenterFromViewController:nil withCustomData:customData completion:^(BOOL presented) {
 		resolver(@(presented));
 	}];
 }
@@ -103,6 +104,7 @@ RCT_EXPORT_METHOD(
 
 RCT_EXPORT_METHOD(
 	engage:(NSString *)eventName
+	customData:(NSDictionary *)customData
 	resolver:(RCTPromiseResolveBlock)resolver
 	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
@@ -110,7 +112,7 @@ RCT_EXPORT_METHOD(
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
 	}
 
-	[Apptentive.shared engage:eventName fromViewController:nil completion:^(BOOL engaged) {
+	[Apptentive.shared engage:eventName withCustomData:customData fromViewController:nil completion:^(BOOL engaged) {
 		resolver(@(engaged));
 	}];
 }
