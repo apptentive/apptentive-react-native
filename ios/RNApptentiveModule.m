@@ -2,6 +2,8 @@
 #import <Apptentive/Apptentive.h>
 
 static NSString *const kRejectCode = @"ApptentiveModule";
+extern ApptentiveLogLevel ApptentiveLogLevelFromString(NSString *level);
+
 
 @interface RNApptentiveModule ()
 
@@ -14,25 +16,6 @@ static NSString *const kRejectCode = @"ApptentiveModule";
 - (dispatch_queue_t)methodQueue
 {
     return dispatch_get_main_queue();
-}
-
-static ApptentiveLogLevel logLevelFromString(NSString *string) {
-	static NSDictionary *_logLevelMapping;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		_logLevelMapping = @{
-							 @"crit": @(ApptentiveLogLevelCrit),
-							 @"critical": @(ApptentiveLogLevelCrit),
-							 @"error": @(ApptentiveLogLevelError),
-							 @"warn": @(ApptentiveLogLevelWarn),
-							 @"warning": @(ApptentiveLogLevelWarn),
-							 @"info": @(ApptentiveLogLevelInfo),
-							 @"debug": @(ApptentiveLogLevelDebug),
-							 @"verbose": @(ApptentiveLogLevelVerbose)
-							 };
-	});
-
-	return [_logLevelMapping[string.lowercaseString] integerValue] ?: ApptentiveLogLevelUndefined;
 }
 
 RCT_EXPORT_METHOD(
@@ -57,7 +40,7 @@ RCT_EXPORT_METHOD(
 											  configurationWithApptentiveKey:configurationDictionary[@"apptentiveKey"]
 											  apptentiveSignature:configurationDictionary[@"apptentiveSignature"]];
 
-	ApptentiveLogLevel logLevel = logLevelFromString(configurationDictionary[@"logLevel"]);
+	ApptentiveLogLevel logLevel = ApptentiveLogLevelFromString([configurationDictionary[@"logLevel"] lowercaseString]);
 	if (logLevel == ApptentiveLogLevelUndefined) {
 		rejecter(kRejectCode, [NSString stringWithFormat:@"%@ is not a valid log level", configurationDictionary[@"logLevel"]], nil);
 	}
