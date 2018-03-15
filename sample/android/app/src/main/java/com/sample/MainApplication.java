@@ -3,7 +3,7 @@ package com.sample;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactlibrary.RNApptentiveModulePackage;
+import com.apptentive.android.sdk.reactlibrary.RNApptentiveModulePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
