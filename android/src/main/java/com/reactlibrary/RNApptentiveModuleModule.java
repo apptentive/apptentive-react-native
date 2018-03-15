@@ -1,6 +1,7 @@
 
 package com.reactlibrary;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -18,5 +19,10 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
   @Override
   public String getName() {
     return "RNApptentiveModule";
+  }
+
+  @ReactMethod
+  public void register(String apptentiveKey, String apptentiveSignature, String logLevel, boolean shouldSanitizeLogMessages, Promise promise) {
+    System.out.println("Register");
   }
 }
