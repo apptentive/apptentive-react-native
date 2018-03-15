@@ -14,7 +14,6 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.ReadableNativeMap;
 
 import java.util.Map;
 
@@ -36,13 +35,26 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 	//region JavaScript bindings
 
 	@ReactMethod
-	public void register(String apptentiveKey, String apptentiveSignature, String logLevel, boolean shouldSanitizeLogMessages, Promise promise) {
+	public void register(ReadableMap configuration, Promise promise) {
 		try {
 			Application application = reactContextWrapper.getApplication();
 
 			// TODO: override log level
 			if (ApptentiveInternal.isApptentiveRegistered()) {
 				promise.reject(CODE_APPTENTIVE, "Apptentive instance already initialized");
+				return;
+			}
+
+			Map<String, Object> config = toHashMap(configuration);
+			String apptentiveKey = ObjectUtils.as(config.get("apptentiveKey"), String.class);
+			if (StringUtils.isNullOrEmpty(apptentiveKey)) {
+				promise.reject(CODE_APPTENTIVE, "Apptentive key is null or empty");
+				return;
+			}
+
+			String apptentiveSignature = ObjectUtils.as(config.get("apptentiveSignature"), String.class);
+			if (StringUtils.isNullOrEmpty(apptentiveSignature)) {
+				promise.reject(CODE_APPTENTIVE, "Apptentive signature is null or empty");
 				return;
 			}
 
@@ -59,7 +71,7 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 			return;
 		}
 
-		Apptentive.showMessageCenter(getContext(), new PromiseCallback(promise), createCustomData(customData));
+		Apptentive.showMessageCenter(getContext(), new PromiseCallback(promise), toHashMap(customData));
 	}
 
 	@ReactMethod
@@ -86,7 +98,7 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 			return;
 		}
 
-		Apptentive.engage(getContext(), event, new PromiseCallback(promise), createCustomData(customData));
+		Apptentive.engage(getContext(), event, new PromiseCallback(promise), toHashMap(customData));
 	}
 
 	@ReactMethod
@@ -201,13 +213,11 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 
 	//region Helpers
 
-	private @Nullable
-	Map<String, Object> createCustomData(ReadableMap map) {
-		ReadableNativeMap customData = ObjectUtils.as(map, ReadableNativeMap.class);
-		return customData != null ? customData.toHashMap() : null;
+	private static @Nullable Map<String, Object> toHashMap(ReadableMap map) {
+		return map != null ? map.toHashMap() : null;
 	}
 
-	private boolean checkRegistered(Promise promise, String message, Object... args) {
+	private static boolean checkRegistered(Promise promise, String message, Object... args) {
 		if (!ApptentiveInternal.isApptentiveRegistered()) {
 			promise.reject(CODE_APPTENTIVE, StringUtils.format("Unable to %s: Apptentive instance is not properly initialized", StringUtils.format(message, args)));
 			return false;
