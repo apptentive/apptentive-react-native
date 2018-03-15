@@ -9,7 +9,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
@@ -39,18 +40,20 @@ export default class App extends Component<Props> {
   }
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>TODO: implement me</Text>
-      </View>
-    );
-  }
+      return (
+        <View style={styles.container}>
+          <Text style={styles.welcome}>
+            Welcome to React Native!
+          </Text>
+        <Button
+          onPress={() => {
+            Apptentive.presentMessageCenter();
+          }}
+          title="Message Center"
+        />
+        </View>
+      );
+    }
 }
 
 const styles = StyleSheet.create({
