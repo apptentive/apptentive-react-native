@@ -10,6 +10,7 @@ import com.apptentive.android.sdk.ApptentiveInternal;
 import com.apptentive.android.sdk.conversation.Conversation;
 import com.apptentive.android.sdk.conversation.ConversationDispatchTask;
 import com.apptentive.android.sdk.util.NotImplementedException;
+import com.apptentive.android.sdk.util.ObjectUtils;
 import com.apptentive.android.sdk.util.StringUtils;
 import com.facebook.react.bridge.ApptentiveReactApplicationContextWrapper;
 import com.facebook.react.bridge.Promise;
@@ -17,6 +18,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableNativeMap;
 
 import java.util.Map;
 
@@ -203,8 +205,9 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 
   //region Helpers
 
-  private @Nullable Map<String, Object> createCustomData(ReadableMap customData) {
-    throw new RuntimeException("Implement me");
+  private @Nullable Map<String, Object> createCustomData(ReadableMap map) {
+    ReadableNativeMap customData = ObjectUtils.as(map, ReadableNativeMap.class);
+    return customData != null ? customData.toHashMap() : null;
   }
 
   private boolean checkRegistered(Promise promise, String message, Object... args) {
