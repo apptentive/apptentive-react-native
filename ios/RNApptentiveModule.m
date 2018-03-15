@@ -34,10 +34,7 @@ static ApptentiveLogLevel logLevelFromString(NSString *string) {
 }
 
 RCT_EXPORT_METHOD(
-	registerWithAppKey:(NSString *)appKey
-	signature:(NSString *)signature
-	logLevel:(NSString *)logLevelString
-	shouldSanitizeLogMessages:(BOOL)shouldSanitizeLogMessages
+	register:(NSDictionary *)configurationDictionary
 	resolver:(RCTPromiseResolveBlock)resolve
 	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
@@ -45,23 +42,15 @@ RCT_EXPORT_METHOD(
 		rejecter(kRejectCode, @"Apptentive is already initialised", nil);
 		return;
 	}
-	if (!appKey || [appKey isEqualToString:@""]) {
-		rejecter(kRejectCode, @"Your appKey is empty", nil);
-		return;
-	}
-	if (!signature || [signature isEqualToString:@""]) {
-		rejecter(kRejectCode, @"Your signature is empty", nil);
-		return;
-	}
 
 	ApptentiveConfiguration *configuration = [ApptentiveConfiguration
-											  configurationWithApptentiveKey:appKey
-											  apptentiveSignature:signature];
+											  configurationWithApptentiveKey:configurationDictionary[@"appKey"]
+											  apptentiveSignature:configurationDictionary[@"signature"]];
 
-	[configuration setLogLevel:logLevelFromString(logLevelString)];
+	[configuration setLogLevel:logLevelFromString(configurationDictionary[@"logLevel"])];
 
 	if (configuration) {
-		//configuration.appID = appleID;
+		configuration.appID = configurationDictionary[@"appleID"];
 		[Apptentive registerWithConfiguration:configuration];
 		self.registered = YES;
 		resolve(configuration.distributionName);

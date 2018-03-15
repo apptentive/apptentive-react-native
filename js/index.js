@@ -22,7 +22,7 @@ export class Apptentive {
    * @return Promise
    */
   static register(apptentiveConfiguration) {
-    return init(RNApptentiveModule, apptentiveConfiguration);
+    return RNApptentiveModule.register(apptentiveConfiguration);
   }
 
   /**
@@ -60,7 +60,7 @@ export class Apptentive {
   }
 
   static setPersonName(value) {
-    RNApptentiveModule.setPersonName(value);
+    return RNApptentiveModule.setPersonName(value);
   }
 
   static getPersonEmail() {
@@ -68,7 +68,7 @@ export class Apptentive {
   }
 
   static setPersonEmail(value) {
-    RNApptentiveModule.setPersonEmail(value);
+    return RNApptentiveModule.setPersonEmail(value);
   }
 
   static addCustomPersonData(key, value) {
