@@ -5,7 +5,7 @@ static NSString *const kRejectCode = @"ApptentiveModule";
 
 @interface RNApptentiveModule ()
 
-@property (assign, nonatomic, getter=isRegistered) BOOL registered;
+@property (readonly, nonatomic, getter=isRegistered) BOOL registered;
 
 @end
 
@@ -263,6 +263,10 @@ RCT_EXPORT_METHOD(
 }
 
 RCT_EXPORT_MODULE()
+
+- (BOOL)isRegistered {
+	return Apptentive.shared != nil;
+}
 
 @end
   
