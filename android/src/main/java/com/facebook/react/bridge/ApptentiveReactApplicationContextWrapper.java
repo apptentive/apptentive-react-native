@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 /**
- * This class breaks incapacitation but makes its easier for end user to integrate.
+ * This class breaks encapsulation but makes its easier for end user to integrate.
  */
 public class ApptentiveReactApplicationContextWrapper {
 	private final ReactApplicationContext reactContext;
