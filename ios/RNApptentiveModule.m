@@ -46,8 +46,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	ApptentiveConfiguration *configuration = [ApptentiveConfiguration
-											  configurationWithApptentiveKey:configurationDictionary[@"appKey"]
-											  apptentiveSignature:configurationDictionary[@"signature"]];
+											  configurationWithApptentiveKey:configurationDictionary[@"apptentiveKey"]
+											  apptentiveSignature:configurationDictionary[@"apptentiveSignature"]];
 
 	ApptentiveLogLevel logLevel = logLevelFromString(configurationDictionary[@"logLevel"]);
 	if (logLevel == ApptentiveLogLevelUndefined) {
