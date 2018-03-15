@@ -130,7 +130,17 @@ RCT_EXPORT_METHOD(
 
 RCT_EXPORT_METHOD(
 	setPersonName:(NSString *)personName
+	resolver:(RCTPromiseResolveBlock)resolver
+	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
+	if (!self.registered) {
+		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+	}
+
+	if (personName != nil && ![personName isKindOfClass:[NSString class]]) {
+		rejecter(kRejectCode, @"Person name is not a string", nil);
+	}
+
 	Apptentive.shared.personName = personName;
 }
 
@@ -154,6 +164,10 @@ RCT_EXPORT_METHOD(
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
 	}
 
+	if (personEmail != nil && ![personEmail isKindOfClass:[NSString class]]) {
+		rejecter(kRejectCode, @"Person email is not a string", nil);
+	}
+
 	Apptentive.shared.personEmailAddress = personEmail;
 }
 
@@ -165,6 +179,14 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+	}
+
+	if (key == nil) {
+		rejecter(kRejectCode, @"Key is nil", nil);
+	}
+
+	if (value == nil) {
+		rejecter(kRejectCode, @"Value is nil", nil);
 	}
 
 	[Apptentive.shared addCustomPersonDataString:value withKey:key];
@@ -180,6 +202,14 @@ RCT_EXPORT_METHOD(
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
 	}
 
+	if (key == nil) {
+		rejecter(kRejectCode, @"Key is nil", nil);
+	}
+
+	if (value == nil) {
+		rejecter(kRejectCode, @"Value is nil", nil);
+	}
+
 	[Apptentive.shared addCustomPersonDataNumber:value withKey:key];
 }
 
@@ -193,6 +223,14 @@ RCT_EXPORT_METHOD(
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
 	}
 
+	if (key == nil) {
+		rejecter(kRejectCode, @"Key is nil", nil);
+	}
+
+	if (value == nil) {
+		rejecter(kRejectCode, @"Value is nil", nil);
+	}
+
 	[Apptentive.shared addCustomPersonDataBool:value.boolValue withKey:key];
 }
 
@@ -203,6 +241,10 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+	}
+
+	if (key == nil) {
+		rejecter(kRejectCode, @"Key is nil", nil);
 	}
 
 	[Apptentive.shared removeCustomPersonDataWithKey:key];
@@ -218,6 +260,14 @@ RCT_EXPORT_METHOD(
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
 	}
 
+	if (key == nil) {
+		rejecter(kRejectCode, @"Key is nil", nil);
+	}
+
+	if (value == nil) {
+		rejecter(kRejectCode, @"Value is nil", nil);
+	}
+
 	[Apptentive.shared addCustomDeviceDataString:value withKey:key];
 }
 
@@ -229,6 +279,14 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+	}
+
+	if (key == nil) {
+		rejecter(kRejectCode, @"Key is nil", nil);
+	}
+
+	if (value == nil) {
+		rejecter(kRejectCode, @"Value is nil", nil);
 	}
 
 	[Apptentive.shared addCustomDeviceDataNumber:value withKey:key];
@@ -244,6 +302,14 @@ RCT_EXPORT_METHOD(
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
 	}
 
+	if (key == nil) {
+		rejecter(kRejectCode, @"Key is nil", nil);
+	}
+
+	if (value == nil) {
+		rejecter(kRejectCode, @"Value is nil", nil);
+	}
+
 	[Apptentive.shared addCustomDeviceDataBool:value.boolValue withKey:key];
 }
 
@@ -254,6 +320,10 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+	}
+
+	if (key == nil) {
+		rejecter(kRejectCode, @"Key is nil", nil);
 	}
 
 	[Apptentive.shared removeCustomDeviceDataWithKey:key];
