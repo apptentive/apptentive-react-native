@@ -10,7 +10,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Button
+  Button,
+  TextInput,
+  Alert
 } from 'react-native';
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
@@ -39,21 +41,51 @@ export default class App extends Component<Props> {
     Apptentive.register(configuration);
   }
 
+  constructor(props) {
+   super(props);
+   this.state = { eventName: '' };
+ }
+
+
   render() {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome to React Native!
-          </Text>
-        <Button
-          onPress={() => {
-            Apptentive.presentMessageCenter();
-          }}
-          title="Message Center"
-        />
-        </View>
-      );
-    }
+    return (
+      <View style={styles.container}>
+      <TextInput
+      style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
+      placeholder={'Event Name'}
+      value={this.state.eventName}
+      onChangeText={(text) => this.setState({eventName: text})}
+      />
+      <Button
+      onPress={() => {
+        Apptentive.engage(this.state.eventName);
+      }}
+      title="Engage"
+      />
+      <Button
+      onPress={() => {
+        Apptentive.presentMessageCenter();
+      }}
+      title="Message Center"
+      />
+      <Button
+      onPress={() => {
+        Apptentive.canShowInteraction(this.state.eventName).then(canShow => {
+          Alert.alert(
+            'Can Show Interaction for Event “' + this.state.eventName + '”',
+            '' + canShow + '',
+            [
+              {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            ],
+            { cancelable: false }
+          )
+        })
+      }}
+      title="Can Show Interaction?"
+      />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
