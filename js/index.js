@@ -49,7 +49,7 @@ export class Apptentive {
    * @param customData An optional dictionary of key/value pairs to be associated with the event.
    */
   static engage(event, customData = null) {
-    return RNApptentiveModule.engageEvent(event, customData);
+    return RNApptentiveModule.engage(event, customData);
   }
 
   // TODO: extended data
