@@ -214,6 +214,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../sample/ios/sample",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -234,6 +235,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../sample/ios/sample",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
