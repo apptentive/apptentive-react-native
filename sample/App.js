@@ -12,7 +12,10 @@ import {
   View,
   Button,
   TextInput,
-  Alert
+  Alert,
+  Modal,
+  TouchableHighlight,
+
 } from 'react-native';
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
@@ -43,46 +46,88 @@ export default class App extends Component<Props> {
 
   constructor(props) {
    super(props);
-   this.state = { eventName: '' };
+   this.state = { eventName: '', dataModalVisible: false, dataModalMode: 'device' };
  }
 
+  setModalVisible(visible) {
+     this.setState({dataModalVisible: visible});
+  }
+
+  setModalMode(mode) {
+    this.setState({dataModalMode: mode});
+  }
 
   render() {
     return (
       <View style={styles.container}>
-      <TextInput
-      style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
-      placeholder={'Event Name'}
-      value={this.state.eventName}
-      onChangeText={(text) => this.setState({eventName: text})}
-      />
-      <Button
-      onPress={() => {
-        Apptentive.engage(this.state.eventName);
-      }}
-      title="Engage"
-      />
-      <Button
-      onPress={() => {
-        Apptentive.presentMessageCenter();
-      }}
-      title="Message Center"
-      />
-      <Button
-      onPress={() => {
-        Apptentive.canShowInteraction(this.state.eventName).then(canShow => {
-          Alert.alert(
-            'Can Show Interaction for Event “' + this.state.eventName + '”',
-            '' + canShow + '',
-            [
-              {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            ],
-            { cancelable: false }
-          )
-        })
-      }}
-      title="Can Show Interaction?"
-      />
+        <TextInput
+          style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
+          placeholder={'Event Name'}
+          value={this.state.eventName}
+          onChangeText={(text) => this.setState({eventName: text})}
+        />
+
+        <Button
+          onPress={() => {
+            Apptentive.engage(this.state.eventName);
+          }}
+          title="Engage"
+        />
+
+        <Button
+          onPress={() => {
+            Apptentive.presentMessageCenter();
+          }}
+          title="Message Center"
+        />
+
+        <Button
+          onPress={() => {
+            Apptentive.canShowInteraction(this.state.eventName).then(canShow => {
+              Alert.alert(
+                'Can Show Interaction for Event “' + this.state.eventName + '”',
+                '' + canShow + '',
+                [
+                  {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                ],
+                { cancelable: false }
+              )
+            })
+          }}
+          title="Can Show Interaction?"
+        />
+
+        <Button
+          onPress={() => {
+            this.setModalVisible(true)
+          }}
+          title="Device Data"
+        />
+
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.dataModalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <View style={styles.container}>
+            <View>
+              <TextInput
+                style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
+                placeholder={'Custom Data Key'}
+                value={this.state.eventName}
+                onChangeText={(text) => this.setState({eventName: text})}
+              />
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisible(!this.state.dataModalVisible);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
       </View>
     );
   }
