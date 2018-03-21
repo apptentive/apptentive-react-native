@@ -1,5 +1,5 @@
 
-import { NativeModules } from 'react-native';
+import { NativeModules, DeviceEventEmitter } from 'react-native';
 
 const { RNApptentiveModule } = NativeModules;
 
@@ -15,12 +15,25 @@ export class ApptentiveConfiguration {
   }
 }
 
+let _eventsRegistered = false;
+let _onUnreadMessageChange = function(count) {};
+
 export class Apptentive {
   /**
    * Initializes Apptentive instance with a given configuration.
    * @return Promise
    */
   static register(apptentiveConfiguration) {
+    if (!_eventsRegistered) {
+      _eventsRegistered = true;
+      // unread message count
+      DeviceEventEmitter.addListener('onUnreadMessageChange', function(e: Event) {
+        if (_onUnreadMessageChange !== undefined) {
+          _onUnreadMessageChange(e.count);
+        }
+      });
+      // TODO: auth callbacks
+    }
     return RNApptentiveModule.register(apptentiveConfiguration);
   }
 
@@ -109,6 +122,14 @@ export class Apptentive {
   // TODO: login/logout
 
   // TODO: push support
+
+  static get onUnreadMessageChange() {
+    return _onUnreadMessageChange;
+  }
+
+  static set onUnreadMessageChange(value) {
+    _onUnreadMessageChange = value;
+  }
 }
 
 module.exports = {
