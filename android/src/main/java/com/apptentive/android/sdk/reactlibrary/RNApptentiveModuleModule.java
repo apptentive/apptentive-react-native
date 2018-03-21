@@ -1,24 +1,29 @@
 package com.apptentive.android.sdk.reactlibrary;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.apptentive.android.sdk.Apptentive;
 import com.apptentive.android.sdk.ApptentiveInternal;
+import com.apptentive.android.sdk.module.messagecenter.UnreadMessagesListener;
 import com.apptentive.android.sdk.util.ObjectUtils;
 import com.apptentive.android.sdk.util.StringUtils;
 import com.facebook.react.bridge.ApptentiveReactApplicationContextWrapper;
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.WritableMap;
 
 import java.util.Map;
 
-public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
+public class RNApptentiveModuleModule extends ReactContextBaseJavaModule implements UnreadMessagesListener {
 	private static final String CODE_APPTENTIVE = "Apptentive";
+	private static final String EVT_UNREAD_MESSAGE_COUNT_CHANGE = "onUnreadMessageChange";
 
 	private final ApptentiveReactApplicationContextWrapper reactContextWrapper;
 
@@ -59,6 +64,25 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 			}
 
 			Apptentive.register(application, apptentiveKey, apptentiveSignature);
+
+			ApptentiveInternal instance = ObjectUtils.as(ApptentiveInternal.getInstance(), ApptentiveInternal.class);
+			if (instance == null) {
+				promise.reject(CODE_APPTENTIVE, "Apptentive instance was not initialized");
+				return;
+			}
+
+			Activity currentActivity = reactContextWrapper.getCurrentActivity();
+			if (currentActivity == null) {
+				promise.reject(CODE_APPTENTIVE, "Apptentive instance was not initialized: current activity is null");
+				return;
+			}
+
+			instance.getRegisteredLifecycleCallbacks().onActivityCreated(currentActivity, null);
+			instance.getRegisteredLifecycleCallbacks().onActivityStarted(currentActivity);
+			instance.getRegisteredLifecycleCallbacks().onActivityResumed(currentActivity);
+
+			Apptentive.addUnreadMessagesListener(this);
+
 			promise.resolve(Boolean.TRUE);
 		} catch (Exception e) {
 			promise.reject(CODE_APPTENTIVE, "Exception while initialized Apptentive", e);
@@ -226,9 +250,36 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 		return true;
 	}
 
+	private void sendEvent(String name, Object... params) {
+		WritableMap args = Arguments.createMap();
+		for (int i = 0; i < params.length; i += 2) {
+			String key = (String) params[i];
+			Object value = params[i + 1];
+			if (value instanceof String) {
+				args.putString(key, (String) value);
+			} else if (value instanceof Integer) {
+				args.putInt(key, (Integer) value);
+			} else if (value instanceof Boolean) {
+				args.putBoolean(key, (Boolean) value);
+			} else {
+				throw new IllegalArgumentException("Unexpected value type: " + value);
+			}
+		}
+		reactContextWrapper.sendEvent(name, args);
+	}
+
 	private Context getContext() {
 		return reactContextWrapper.getContext();
 	}
+
+	//region Unread Message Listener
+
+	@Override
+	public void onUnreadMessageCountChanged(int unreadMessages) {
+		sendEvent(EVT_UNREAD_MESSAGE_COUNT_CHANGE, "count", unreadMessages);
+	}
+
+	//endregion
 
 	private static class PromiseCallback implements Apptentive.BooleanCallback {
 		private final Promise promise;
