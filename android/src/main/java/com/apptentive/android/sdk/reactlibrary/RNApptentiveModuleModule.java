@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 
 import com.apptentive.android.sdk.Apptentive;
 import com.apptentive.android.sdk.ApptentiveInternal;
+import com.apptentive.android.sdk.conversation.Conversation;
+import com.apptentive.android.sdk.conversation.ConversationDispatchTask;
 import com.apptentive.android.sdk.util.ObjectUtils;
 import com.apptentive.android.sdk.util.StringUtils;
 import com.facebook.react.bridge.ApptentiveReactApplicationContextWrapper;
@@ -16,6 +18,8 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 
 import java.util.Map;
+
+import static com.apptentive.android.sdk.ApptentiveHelper.dispatchConversationTask;
 
 public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 	private static final String CODE_APPTENTIVE = "Apptentive";
@@ -71,7 +75,7 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 			return;
 		}
 
-		Apptentive.showMessageCenter(getContext(), new PromiseCallback(promise), toHashMap(customData));
+		Apptentive.showMessageCenter(getContext(), new PromiseBooleanCallback(promise), toHashMap(customData));
 	}
 
 	@ReactMethod
@@ -80,7 +84,7 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 			return;
 		}
 
-		Apptentive.canShowMessageCenter(new PromiseCallback(promise));
+		Apptentive.canShowMessageCenter(new PromiseBooleanCallback(promise));
 	}
 
 	@ReactMethod
@@ -89,7 +93,7 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 			return;
 		}
 
-		Apptentive.queryCanShowInteraction(event, new PromiseCallback(promise));
+		Apptentive.queryCanShowInteraction(event, new PromiseBooleanCallback(promise));
 	}
 
 	@ReactMethod
@@ -98,115 +102,161 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 			return;
 		}
 
-		Apptentive.engage(getContext(), event, new PromiseCallback(promise), toHashMap(customData));
+		Apptentive.engage(getContext(), event, new PromiseBooleanCallback(promise), toHashMap(customData));
 	}
 
 	@ReactMethod
-	public void getPersonName(Promise promise) {
-		if (!checkRegistered(promise, "get person name")) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void getPersonName(final Promise promise) {
+		final String description = "get person name";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				promise.resolve(Apptentive.getPersonName());
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void setPersonName(String name, Promise promise) {
-		if (!checkRegistered(promise, "set person name")) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void setPersonName(final String name, final Promise promise) {
+		final String description = "set person name";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.setPersonName(name);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void getPersonEmail(Promise promise) {
-		if (!checkRegistered(promise, "get person email")) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void getPersonEmail(final Promise promise) {
+		final String description = "get person email";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				promise.resolve(Apptentive.getPersonEmail());
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void setPersonEmail(String email, Promise promise) {
-		if (!checkRegistered(promise, "set person email")) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void setPersonEmail(final String email, final Promise promise) {
+		final String description = "set person email";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.setPersonEmail(email);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void addCustomPersonDataNumber(String key, Number value, Promise promise) {
-		if (!checkRegistered(promise, "add custom person data key '%s'", key)) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void addCustomPersonDataNumber(final String key, final Number value, final Promise promise) {
+		final String description = "add custom person data number";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.addCustomPersonData(key, value);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void addCustomPersonDataString(String key, String value, Promise promise) {
-		if (!checkRegistered(promise, "add custom person data key '%s'", key)) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void addCustomPersonDataString(final String key, final String value, final Promise promise) {
+		final String description = "add custom person data string";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.addCustomPersonData(key, value);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void addCustomPersonDataBool(String key, Boolean value, Promise promise) {
-		if (!checkRegistered(promise, "add custom person data key '%s'", key)) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void addCustomPersonDataBool(final String key, final Boolean value, final Promise promise) {
+		final String description = "add custom person data boolean";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.addCustomPersonData(key, value);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void removeCustomPersonData(String key, Promise promise) {
-		if (!checkRegistered(promise, "remove custom person data key '%s'", key)) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void removeCustomPersonData(final String key, final Promise promise) {
+		final String description = "remove custom person data";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.removeCustomPersonData(key);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void addCustomDeviceDataNumber(String key, Number value, Promise promise) {
-		if (!checkRegistered(promise, "add custom device data key '%s'", key)) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void addCustomDeviceDataNumber(final String key, final Number value, final Promise promise) {
+		final String description = "add custom device data number";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.addCustomDeviceData(key, value);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void addCustomDeviceDataString(String key, String value, Promise promise) {
-		if (!checkRegistered(promise, "add custom device data key '%s'", key)) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void addCustomDeviceDataString(final String key, final String value, final Promise promise) {
+		final String description = "add custom device data string";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.addCustomDeviceData(key, value);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void addCustomDeviceDataBool(String key, Boolean value, Promise promise) {
-		if (!checkRegistered(promise, "add custom device data key '%s'", key)) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void addCustomDeviceDataBool(final String key, final Boolean value, final Promise promise) {
+		final String description = "add custom device data boolean";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.addCustomDeviceData(key, value);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	@ReactMethod
-	public void removeCustomDeviceData(String key, Promise promise) {
-		if (!checkRegistered(promise, "remove custom device data key '%s'", key)) {
-			return;
-		}
-
-		throw new RuntimeException("Implement me");
+	public void removeCustomDeviceData(final String key, final Promise promise) {
+		final String description = "remove custom device data";
+		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
+			@Override
+			protected boolean execute(Conversation conversation) {
+				Apptentive.removeCustomDeviceData(key);
+				promise.resolve(true);
+				return true;
+			}
+		}, description);
 	}
 
 	//endregion
@@ -230,17 +280,41 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 		return reactContextWrapper.getContext();
 	}
 
-	private static class PromiseCallback implements Apptentive.BooleanCallback {
-		private final Promise promise;
+	private static abstract class PromiseCallback implements Apptentive.BooleanCallback {
+		final Promise promise;
 
 		private PromiseCallback(Promise promise) {
 			this.promise = promise;
+		}
+	}
+
+	private static class PromiseBooleanCallback extends PromiseCallback {
+		private PromiseBooleanCallback(Promise promise) {
+			super(promise);
 		}
 
 		@Override
 		public void onFinish(boolean result) {
 			if (promise != null) {
 				promise.resolve(result);
+			}
+		}
+	}
+
+	private static class PromiseFailOnlyCallback extends PromiseBooleanCallback {
+		private final String message;
+
+		private PromiseFailOnlyCallback(Promise promise, String message) {
+			super(promise);
+			this.message = message;
+		}
+
+		@Override
+		public void onFinish(boolean result) {
+			if (!result) {
+				if (promise != null) {
+					promise.reject(CODE_APPTENTIVE, message);
+				}
 			}
 		}
 	}
