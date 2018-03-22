@@ -46,22 +46,18 @@ export default class App extends Component<Props> {
 
   constructor(props) {
    super(props);
-   this.state = { eventName: '', dataModalVisible: false, dataModalMode: 'device' };
+   this.state = { eventName: '', dataModalVisible: false, dataModalMode: null, customDataKey: null };
  }
 
-  setModalVisible(visible) {
-     this.setState({dataModalVisible: visible});
-  }
-
-  setModalMode(mode) {
-    this.setState({dataModalMode: mode});
+  setModalVisible(visible, mode) {
+     this.setState({dataModalVisible: visible, dataModalMode: mode});
   }
 
   render() {
     return (
       <View style={styles.container}>
         <TextInput
-          style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
+          style={styles.fullBorderedTextInput}
           placeholder={'Event Name'}
           value={this.state.eventName}
           onChangeText={(text) => this.setState({eventName: text})}
@@ -99,39 +95,95 @@ export default class App extends Component<Props> {
 
         <Button
           onPress={() => {
-            this.setModalVisible(true)
+            this.setModalVisible(true, 'device')
           }}
           title="Device Data"
         />
 
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.dataModalVisible}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}>
-          <View style={styles.container}>
-            <View>
-              <TextInput
-                style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
-                placeholder={'Custom Data Key'}
-                value={this.state.eventName}
-                onChangeText={(text) => this.setState({eventName: text})}
-              />
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.dataModalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
+        <Button
+          onPress={() => {
+            this.setModalVisible(true, 'person')
+          }}
+          title="Person Data"
+        />
+
+        <CustomDataModal
+        mode: 'device',
+        handler: visibiltyHandler
+        />
+
       </View>
     );
   }
 }
+
+
+export default class CustomDataModel extends Component<Props> {
+
+  constructor(props) {
+   super(props);
+   this.state = { customDataKey: null, customDataString: null };
+  }
+
+  render() {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={this.state.dataModalVisible}
+        />
+        <View
+        style={{marginTop: 22}}
+        >
+        <Button
+          onPress={() => {
+            this.props.closeHandler()
+          }}
+          title="Done"
+        />
+        <View style={styles.container}>
+          <View
+            style={{flex: 1, flexDirection: 'column'}}>
+            <TextInput
+              style={styles.fullBorderedTextInput}
+              placeholder={'Custom Data Key'}
+              value={this.state.customDataKey}
+              onChangeText={(text) => this.setState({customDataKey: text})}
+            />
+            <Button
+              onPress={() => {
+                  if (this.state.dataModalMode == 'person') {
+                    Apptentive.removeCustomPersonData(this.state.customDataKey)
+                  } else if (this.state.dataModalMode == 'device') {
+                    Apptentive.removeCustomDeviceData(this.state.customDataKey)
+                  }
+                }
+              }
+              title="Remove Custom Value"
+            />
+            <View
+            style={styles.textInputButtonRow}>
+            <TextInput
+              style={styles.narrowBorderedTextInput}
+              placeholder={'Custom Data String'}
+              value={this.state.customDataString}
+              onChangeText={(text) => this.setState({customDataString: text})}
+            />
+            <Button onPress={() => {
+              if (this.state.dataModalMode == 'person') {
+                Apptentive.addCustomPersonData(this.state.customDataKey, this.state.customDataString)
+              } else if (this.state.dataModalMode == 'device') {
+                Apptentive.addCustomDeviceData(this.state.customDataKey, this.state.customDataString)
+              }
+            }}
+            title="Add"/>
+            </View>
+        </View>
+        </View>
+        </View>
+      </Modal>
+    );
+  }
 
 const styles = StyleSheet.create({
   container: {
@@ -150,4 +202,19 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  textInputButtonRow: {
+    flexDirection: 'row'
+  },
+  narrowBorderedTextInput: {
+    height: 40,
+    width: 200,
+    borderColor: 'gray',
+    borderWidth: 1
+  },
+  fullBorderedTextInput: {
+    height: 40,
+    width: 300,
+    borderColor: 'gray',
+    borderWidth: 1
+  }
 });
