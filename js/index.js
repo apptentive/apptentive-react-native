@@ -1,5 +1,5 @@
 
-import { NativeModules, DeviceEventEmitter } from 'react-native';
+import { NativeModules, NativeEventEmitter, DeviceEventEmitter } from 'react-native';
 
 const { RNApptentiveModule } = NativeModules;
 
@@ -26,6 +26,14 @@ export class Apptentive {
   static register(apptentiveConfiguration) {
     if (!_eventsRegistered) {
       _eventsRegistered = true;
+
+      const emitter = new NativeEventEmitter(RNApptentiveModule)
+      emitter.addListener('onUnreadMessageChange', function(e: Event) {
+        if (_onUnreadMessageChange !== undefined) {
+          _onUnreadMessageChange(e.count);
+        }
+      });
+
       // unread message count
       DeviceEventEmitter.addListener('onUnreadMessageChange', function(e: Event) {
         if (_onUnreadMessageChange !== undefined) {
