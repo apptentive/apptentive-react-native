@@ -1,8 +1,8 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+* Sample React Native App
+* https://github.com/facebook/react-native
+* @flow
+*/
 
 import React, { Component } from 'react';
 import {
@@ -17,6 +17,8 @@ import {
   TouchableHighlight,
 
 } from 'react-native';
+
+import CustomDataModal from './src/components/CustomDataModal'
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 
@@ -34,7 +36,7 @@ const credentials = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
   componentDidMount() {
     const configuration = new ApptentiveConfiguration(
       credentials.apptentiveKey,
@@ -48,22 +50,9 @@ export default class App extends Component<Props> {
     };
   }
 
-  constructor(props) {
-   super(props);
-   this.state = {
-     eventName: '',
-     dataModalVisible: false,
-     dataModalMode: 'device',
-     unreadMessageCount: 0
-   };
- }
-
-  setModalVisible(visible) {
-     this.setState({dataModalVisible: visible});
-  }
-
-  setModalMode(mode) {
-    this.setState({dataModalMode: mode});
+  constructor() {
+    super()
+    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0 };
   }
 
   render() {
@@ -71,7 +60,7 @@ export default class App extends Component<Props> {
       <View style={styles.container}>
         <Text>Unread messages: {this.state.unreadMessageCount}</Text>
         <TextInput
-          style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
+          style={styles.fullBorderedTextInput}
           placeholder={'Event Name'}
           value={this.state.eventName}
           onChangeText={(text) => this.setState({eventName: text})}
@@ -109,37 +98,40 @@ export default class App extends Component<Props> {
 
         <Button
           onPress={() => {
-            this.setModalVisible(true)
+            this._openCustomDataModal('device')
           }}
           title="Device Data"
         />
 
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.dataModalVisible}
-          onRequestClose={() => {
-            alert('Modal has been closed.');
-          }}>
-          <View style={styles.container}>
-            <View>
-              <TextInput
-                style={{height: 40, width: 300, borderColor: 'gray', borderWidth: 1}}
-                placeholder={'Custom Data Key'}
-                value={this.state.eventName}
-                onChangeText={(text) => this.setState({eventName: text})}
-              />
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.dataModalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
+        <Button
+          onPress={() => {
+            this._openCustomDataModal('person')
+          }}
+          title="Person Data"
+        />
+
+        { this._renderCustomDataModal(this.state.mode) }
       </View>
     );
+  }
+
+  _renderCustomDataModal(mode, closeHandler) {
+    if (this.state.mode !== 'none') {
+      return (
+      <CustomDataModal
+        mode={mode}
+        closeHandler={() => { this._closeCustomDataModal() }}
+      />)
+    }
+    return null
+  }
+
+  _openCustomDataModal(mode) {
+    this.setState({mode: mode})
+  }
+
+  _closeCustomDataModal() {
+    this.setState({mode: 'none'})
   }
 }
 
@@ -160,4 +152,19 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  textInputButtonRow: {
+    flexDirection: 'row'
+  },
+  narrowBorderedTextInput: {
+    height: 40,
+    width: 200,
+    borderColor: 'gray',
+    borderWidth: 1
+  },
+  fullBorderedTextInput: {
+    height: 40,
+    width: 300,
+    borderColor: 'gray',
+    borderWidth: 1
+  }
 });
