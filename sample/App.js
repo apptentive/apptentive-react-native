@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 
 import CustomDataModal from './src/components/CustomDataModal'
+import AuthModal from './src/components/AuthModal'
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 
@@ -52,7 +53,7 @@ export default class App extends Component {
 
   constructor() {
     super()
-    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0 };
+    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0, authModalVisible: false };
   }
 
   render() {
@@ -110,17 +111,37 @@ export default class App extends Component {
           title="Person Data"
         />
 
+        <Button
+          onPress={() => {
+            this._openAuthModal()
+          }}
+          title="Authentication"
+        />
+
         { this._renderCustomDataModal(this.state.mode) }
+        { this._renderAuthModal() }
+
       </View>
     );
   }
 
-  _renderCustomDataModal(mode, closeHandler) {
+  _renderCustomDataModal(mode) {
     if (this.state.mode !== 'none') {
       return (
       <CustomDataModal
         mode={mode}
         closeHandler={() => { this._closeCustomDataModal() }}
+      />)
+    }
+    return null
+  }
+
+  _renderAuthModal() {
+    if (this.state.authModalVisible) {
+      return (
+      <AuthModal
+        jwtSigning={credentials.jwtSigning}
+        closeHandler={() => { this._closeAuthModal() }}
       />)
     }
     return null
@@ -132,6 +153,14 @@ export default class App extends Component {
 
   _closeCustomDataModal() {
     this.setState({mode: 'none'})
+  }
+
+  _openAuthModal() {
+    this.setState({authModalVisible: true})
+  }
+
+  _closeAuthModal() {
+    this.setState({authModalVisible: false})
   }
 }
 
