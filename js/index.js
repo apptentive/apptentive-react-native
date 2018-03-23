@@ -105,8 +105,8 @@ export class Apptentive {
     return Promise.reject("Your value should be either a string, number or bool")
   }
 
-  static removeCustomPersonData(key, value) {
-    return RNApptentiveModule.removeCustomPersonData(key, value);
+  static removeCustomPersonData(key) {
+    return RNApptentiveModule.removeCustomPersonData(key);
   }
 
   static addCustomDeviceData(key, value) {
@@ -123,8 +123,8 @@ export class Apptentive {
     return Promise.reject("Your value should be either a string, number or bool")
   }
 
-  static removeCustomDeviceData(key, value) {
-    return RNApptentiveModule.removeCustomDeviceData(key, value);
+  static removeCustomDeviceData(key) {
+    return RNApptentiveModule.removeCustomDeviceData(key);
   }
 
   // TODO: login/logout
