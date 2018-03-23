@@ -1,5 +1,6 @@
 package com.apptentive.android.sdk.reactlibrary;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -63,6 +64,22 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule {
 			}
 
 			Apptentive.register(application, apptentiveKey, apptentiveSignature);
+
+			ApptentiveInternal instance = ObjectUtils.as(ApptentiveInternal.getInstance(), ApptentiveInternal.class);
+			if (instance == null) {
+				promise.reject(CODE_APPTENTIVE, "Apptentive instance was not initialized");
+				return;
+			}
+
+			Activity currentActivity = reactContextWrapper.getCurrentActivity();
+			if (currentActivity == null) {
+				promise.reject(CODE_APPTENTIVE, "Apptentive instance was not initialized: current activity is null");
+				return;
+			}
+
+			instance.getRegisteredLifecycleCallbacks().onActivityCreated(currentActivity, null);
+			instance.getRegisteredLifecycleCallbacks().onActivityStarted(currentActivity);
+			instance.getRegisteredLifecycleCallbacks().onActivityResumed(currentActivity);
 			promise.resolve(Boolean.TRUE);
 		} catch (Exception e) {
 			promise.reject(CODE_APPTENTIVE, "Exception while initialized Apptentive", e);
