@@ -44,16 +44,21 @@ export default class App extends Component {
     );
     configuration.logLevel = 'verbose';
     Apptentive.register(configuration);
+    Apptentive.onUnreadMessageChange = (count) => {
+      console.log("Unread message count changed: " + count);
+      this.setState({unreadMessageCount: count});
+    };
   }
 
   constructor() {
     super()
-    this.state = { eventName: '', mode: 'none', deviceDataModalVisible: false, personDataModalVisible: false };
+    this.state = { eventName: '', mode: 'none', deviceDataModalVisible: false, personDataModalVisible: false, unreadMessageCount: 0 };
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Text>Unread messages: {this.state.unreadMessageCount}</Text>
         <TextInput
           style={styles.fullBorderedTextInput}
           placeholder={'Event Name'}

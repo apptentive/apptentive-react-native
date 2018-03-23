@@ -32,4 +32,10 @@ public class ApptentiveReactApplicationContextWrapper {
 	public Context getContext() {
 		return reactContext.getApplicationContext();
 	}
+
+	public void sendEvent(String eventName, @Nullable WritableMap event) {
+		reactContext
+			.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+			.emit(eventName, event);
+	}
 }
