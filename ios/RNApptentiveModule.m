@@ -51,6 +51,8 @@ RCT_EXPORT_METHOD(
 		configuration.appID = configurationDictionary[@"appleID"];
 		[Apptentive registerWithConfiguration:configuration];
 
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCenterUnreadCountChangedNotification:) name:ApptentiveMessageCenterUnreadCountChangedNotification object:nil];
+
 		if (Apptentive.shared != nil) {
 			resolve(configuration.distributionName);
 		} else {
@@ -335,5 +337,14 @@ RCT_EXPORT_MODULE()
 	return Apptentive.shared != nil;
 }
 
+- (NSArray<NSString *> *)supportedEvents
+{
+	return @[@"onUnreadMessageChange"];
+}
+
+- (void)messageCenterUnreadCountChangedNotification:(NSNotification *)notification {
+	NSUInteger count = [notification.userInfo[@"count"] intValue];
+	[self sendEventWithName:@"onUnreadMessageChange" body:@{ @"count": @(count)}];
+}
+
 @end
-  
