@@ -52,7 +52,7 @@ export default class App extends Component {
 
   constructor() {
     super()
-    this.state = { eventName: '', mode: 'none', deviceDataModalVisible: false, personDataModalVisible: false, unreadMessageCount: 0 };
+    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0 };
   }
 
   render() {
