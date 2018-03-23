@@ -105,14 +105,13 @@ export default class App extends Component {
           title="Person Data"
         />
 
-        { this._renderCustomDataModal('device') }
-        { this._renderCustomDataModal('person') }
+        { this._renderCustomDataModal(this.state.mode) }
       </View>
     );
   }
 
   _renderCustomDataModal(mode, closeHandler) {
-    if (this.state.mode == mode) {
+    if (this.state.mode !== 'none') {
       return (
       <CustomDataModal
         mode={mode}
