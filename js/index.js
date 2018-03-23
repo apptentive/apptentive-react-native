@@ -122,7 +122,13 @@ export class Apptentive {
     return RNApptentiveModule.removeCustomDeviceData(key);
   }
 
-  // TODO: login/logout
+  static logIn(jwt) {
+    return RNApptentiveModule.logIn(jwt);
+  }
+
+  static logOut() {
+    return RNApptentiveModule.logOut();
+  }
 
   // TODO: push support
 

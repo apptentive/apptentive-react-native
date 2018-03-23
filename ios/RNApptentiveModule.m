@@ -331,6 +331,41 @@ RCT_EXPORT_METHOD(
 	[Apptentive.shared removeCustomDeviceDataWithKey:key];
 }
 
+RCT_EXPORT_METHOD(
+	logIn:(NSString *)jwt
+	resolver:(RCTPromiseResolveBlock)resolver
+	rejecter:(RCTPromiseRejectBlock)rejecter
+) {
+	if (!self.registered) {
+		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+	}
+
+	if (jwt.length == 0) {
+		rejecter(kRejectCode, @"JWT is nil or empty", nil);
+	}
+
+	[Apptentive.shared logInWithToken:jwt completion:^(BOOL success, NSError * _Nonnull error) {
+		if (success) {
+			resolver(nil);
+		} else {
+			rejecter(kRejectCode, @"Error logging in", error);
+		}
+	}];
+}
+
+RCT_EXPORT_METHOD(
+	logOut:(RCTPromiseResolveBlock)resolver
+	rejecter:(RCTPromiseRejectBlock)rejecter
+) {
+	if (!self.registered) {
+		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+	}
+
+	[Apptentive.shared logOut];
+	resolver(nil);
+}
+
+
 RCT_EXPORT_MODULE()
 
 - (BOOL)isRegistered {
