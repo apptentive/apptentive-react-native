@@ -10,7 +10,11 @@ export default class CustomDataModal extends Component {
 
   render() {
     return (
-      <Modal animationType="slide" transparent={false}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        onRequestClose={() => { this.props.closeHandler() }}
+        >
         <View style={styles.container} >
           <Button title="Done" onPress={() => {
               this.props.closeHandler()
