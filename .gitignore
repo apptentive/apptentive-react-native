@@ -46,3 +46,6 @@ buck-out/
       
 # Framework
 Apptentive.framework
+
+# CocoaPods
+Pods

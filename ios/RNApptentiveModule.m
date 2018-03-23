@@ -196,7 +196,7 @@ RCT_EXPORT_METHOD(
 
 RCT_EXPORT_METHOD(
 	addCustomPersonDataNumber:(NSString *)key
-	value:(NSNumber *)value
+	value:(nonnull NSNumber *)value
 	resolver:(RCTPromiseResolveBlock)resolver
 	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
@@ -217,7 +217,7 @@ RCT_EXPORT_METHOD(
 
 RCT_EXPORT_METHOD(
 	addCustomPersonDataBool:(NSString *)key
-	value:(NSNumber *)value
+	value:(nonnull NSNumber *)value
 	resolver:(RCTPromiseResolveBlock)resolver
 	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
@@ -275,7 +275,7 @@ RCT_EXPORT_METHOD(
 
 RCT_EXPORT_METHOD(
 	addCustomDeviceDataNumber:(NSString *)key
-	value:(NSNumber *)value
+	value:(nonnull NSNumber *)value
 	resolver:(RCTPromiseResolveBlock)resolver
 	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
@@ -296,7 +296,7 @@ RCT_EXPORT_METHOD(
 
 RCT_EXPORT_METHOD(
 	addCustomDeviceDataBool:(NSString *)key
-	value:(NSNumber *)value
+	value:(nonnull NSNumber *)value
 	resolver:(RCTPromiseResolveBlock)resolver
 	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
