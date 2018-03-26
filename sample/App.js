@@ -60,13 +60,14 @@ export default class App extends Component {
       <View style={styles.container}>
         <Text>Unread messages: {this.state.unreadMessageCount}</Text>
         <TextInput
-          style={styles.fullBorderedTextInput}
+          style={styles.textInput}
           placeholder={'Event Name'}
           value={this.state.eventName}
           onChangeText={(text) => this.setState({eventName: text})}
         />
 
         <Button
+          style={styles.button}
           onPress={() => {
             Apptentive.engage(this.state.eventName);
           }}
@@ -74,6 +75,7 @@ export default class App extends Component {
         />
 
         <Button
+          style={styles.button}
           onPress={() => {
             Apptentive.presentMessageCenter();
           }}
@@ -81,6 +83,7 @@ export default class App extends Component {
         />
 
         <Button
+          style={styles.button}
           onPress={() => {
             Apptentive.canShowInteraction(this.state.eventName).then(canShow => {
               Alert.alert(
@@ -97,6 +100,7 @@ export default class App extends Component {
         />
 
         <Button
+          style={styles.button}
           onPress={() => {
             this._openCustomDataModal('device')
           }}
@@ -104,6 +108,7 @@ export default class App extends Component {
         />
 
         <Button
+          style={styles.button}
           onPress={() => {
             this._openCustomDataModal('person')
           }}
@@ -142,29 +147,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  textInputButtonRow: {
-    flexDirection: 'row'
-  },
-  narrowBorderedTextInput: {
-    height: 40,
-    width: 200,
-    borderColor: 'gray',
-    borderWidth: 1
-  },
-  fullBorderedTextInput: {
+  textInput: {
     height: 40,
     width: 300,
     borderColor: 'gray',
     borderWidth: 1
+  },
+  button: {
+    width: 200,
+    height: 40
   }
 });
