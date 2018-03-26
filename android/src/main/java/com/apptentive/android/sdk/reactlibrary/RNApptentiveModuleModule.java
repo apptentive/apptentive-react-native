@@ -281,6 +281,35 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule impleme
 		}, description);
 	}
 
+	@ReactMethod
+	public void logIn(String token, final Promise promise) {
+		if (!checkRegistered(promise, "login")) {
+			return;
+		}
+
+		Apptentive.login(token, new Apptentive.LoginCallback() {
+			@Override
+			public void onLoginFinish() {
+				promise.resolve(true);
+			}
+
+			@Override
+			public void onLoginFail(String errorMessage) {
+				promise.reject(CODE_APPTENTIVE, errorMessage);
+			}
+		});
+	}
+
+	@ReactMethod
+	public void logOut(final Promise promise) {
+		if (!checkRegistered(promise, "logout")) {
+			return;
+		}
+
+		Apptentive.logout();
+		promise.resolve(true);
+	}
+
 	//endregion
 
 	//region Helpers
