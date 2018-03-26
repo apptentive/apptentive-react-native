@@ -27,15 +27,16 @@ export default class CustomDataModal extends Component {
             <Picker.Item label="Boolean" value="boolean" />
             <Picker.Item label="Number" value="number" />
           </Picker>
-          <View style={styles.container}>
+          <View style={styles.dataContainer}>
             <View style={styles.textInputButtonRow}>
               <TextInput
                 style={styles.borderedTextInput}
-                placeholder={'Custom Data Key'}
+                placeholder={'Custom data key'}
                 value={this.state.key}
                 onChangeText={(text) => this.setState({key: text})}
               />
               <Button
+                style={styles.button}
                 onPress={() => {
                   if (this.props.mode == 'person') {
                     Apptentive.removeCustomPersonData(this.state.key)
@@ -51,18 +52,20 @@ export default class CustomDataModal extends Component {
               style={styles.textInputButtonRow}>
               <TextInput
                 style={styles.borderedTextInput}
-                placeholder={'Custom Data String'}
+                placeholder={`Custom data ${this.state.type}`}
                 value={this.state.value}
                 onChangeText={(text) => this.setState({value: text})}
               />
-              <Button onPress={() => {
-                if (this.props.mode == 'person') {
-                  const value = this._getTypedValue(this.state.value, this.state.type)
-                  Apptentive.addCustomPersonData(this.state.key, value)
-                } else if (this.props.mode == 'device') {
-                  const value = this._getTypedValue(this.state.value, this.state.type)
-                  Apptentive.addCustomDeviceData(this.state.key, value)
-                }
+              <Button
+                style={styles.button}
+                onPress={() => {
+                  if (this.props.mode == 'person') {
+                    const value = this._getTypedValue(this.state.value, this.state.type)
+                    Apptentive.addCustomPersonData(this.state.key, value)
+                  } else if (this.props.mode == 'device') {
+                    const value = this._getTypedValue(this.state.value, this.state.type)
+                    Apptentive.addCustomDeviceData(this.state.key, value)
+                  }
                 }}
                 title="Add"/>
             </View>
@@ -85,18 +88,25 @@ export default class CustomDataModal extends Component {
 
 styles = {
   container: {
-    marginTop: 22,
     flex: 1,
+    marginTop: 22,
+    flexDirection: 'column'
+  },
+  dataContainer: {
     flexDirection: 'column',
+    height: 80
   },
   textInputButtonRow: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    height: 40
   },
   borderedTextInput: {
-    height: 40,
-    width: 300,
+    flex: 1,
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+    height: 40
+  },
+  button: {
   }
 }
