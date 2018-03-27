@@ -2,6 +2,8 @@ package com.sample;
 
 import android.app.Application;
 
+import com.apptentive.reactnative.sample.BuildConfig;
+
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
