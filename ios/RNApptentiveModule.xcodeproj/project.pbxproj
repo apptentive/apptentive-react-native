@@ -53,15 +53,7 @@
 				B3E7B5881CC2AC0600A0062D /* RNApptentiveModule.h */,
 				B3E7B5891CC2AC0600A0062D /* RNApptentiveModule.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
-				EF295C4620587FBF003BD68F /* Frameworks */,
 			);
-			sourceTree = "<group>";
-		};
-		EF295C4620587FBF003BD68F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
