@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Modal, Button, TextInput, Alert } from 'react-native';
 import { Apptentive } from 'apptentive-react-native';
-import JWT from 'react-native-jwt-io';
 
 export default class CustomDataModal extends Component {
   constructor() {
