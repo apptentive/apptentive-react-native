@@ -19,19 +19,18 @@ import {
 } from 'react-native';
 
 import CustomDataModal from './src/components/CustomDataModal'
+import AuthModal from './src/components/AuthModal'
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 
 const credentials = Platform.select({
   ios: {
     apptentiveKey: 'IOS-REACT-NATIVE-IOS',
-    apptentiveSignature: 'a5bef0098ee104b00b58376a2631164a',
-    jwtSigning: 'f4347328dccc33599bb5fbe8adcdbe88'
+    apptentiveSignature: 'a5bef0098ee104b00b58376a2631164a'
   },
   android: {
     apptentiveKey: 'ANDROID-REACT-NATIVE-ANDROID',
-    apptentiveSignature: 'd64a65f7232fe25d67b65b91b7e974fc',
-    jwtSigning: 'dd4cf3d158e2ad5bc285733ef191d235'
+    apptentiveSignature: 'd64a65f7232fe25d67b65b91b7e974fc'
   }
 });
 
@@ -52,7 +51,7 @@ export default class App extends Component {
 
   constructor() {
     super()
-    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0 };
+    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0, authModalVisible: false };
   }
 
   render() {
@@ -115,17 +114,36 @@ export default class App extends Component {
           title="Person Data"
         />
 
+        <Button
+          onPress={() => {
+            this._openAuthModal()
+          }}
+          title="Authentication"
+        />
+
         { this._renderCustomDataModal(this.state.mode) }
+        { this._renderAuthModal() }
+
       </View>
     );
   }
 
-  _renderCustomDataModal(mode, closeHandler) {
+  _renderCustomDataModal(mode) {
     if (this.state.mode !== 'none') {
       return (
       <CustomDataModal
         mode={mode}
         closeHandler={() => { this._closeCustomDataModal() }}
+      />)
+    }
+    return null
+  }
+
+  _renderAuthModal() {
+    if (this.state.authModalVisible) {
+      return (
+      <AuthModal
+        closeHandler={() => { this._closeAuthModal() }}
       />)
     }
     return null
@@ -137,6 +155,14 @@ export default class App extends Component {
 
   _closeCustomDataModal() {
     this.setState({mode: 'none'})
+  }
+
+  _openAuthModal() {
+    this.setState({authModalVisible: true})
+  }
+
+  _closeAuthModal() {
+    this.setState({authModalVisible: false})
   }
 }
 

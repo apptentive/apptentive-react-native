@@ -93,38 +93,54 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule impleme
 
 	@ReactMethod
 	public void presentMessageCenter(ReadableMap customData, Promise promise) {
-		if (!checkRegistered(promise, "present message center")) {
-			return;
-		}
+		try {
+			if (!checkRegistered(promise, "present message center")) {
+				return;
+			}
 
-		Apptentive.showMessageCenter(getContext(), new PromiseBooleanCallback(promise), toHashMap(customData));
+			Apptentive.showMessageCenter(getContext(), new PromiseBooleanCallback(promise), toHashMap(customData));
+		} catch (Exception e) {
+			promise.reject(CODE_APPTENTIVE, "Exception while presenting message center", e);
+		}
 	}
 
 	@ReactMethod
 	public void canShowMessageCenter(Promise promise) {
-		if (!checkRegistered(promise, "check if message center can be presented")) {
-			return;
-		}
+		try {
+			if (!checkRegistered(promise, "check if message center can be presented")) {
+				return;
+			}
 
-		Apptentive.canShowMessageCenter(new PromiseBooleanCallback(promise));
+			Apptentive.canShowMessageCenter(new PromiseBooleanCallback(promise));
+		} catch (Exception e) {
+			promise.reject(CODE_APPTENTIVE, "Exception while querying message center", e);
+		}
 	}
 
 	@ReactMethod
 	public void canShowInteraction(String event, Promise promise) {
-		if (!checkRegistered(promise, "check if interaction '%s' can be showed", event)) {
-			return;
-		}
+		try {
+			if (!checkRegistered(promise, "check if interaction '%s' can be showed", event)) {
+				return;
+			}
 
-		Apptentive.queryCanShowInteraction(event, new PromiseBooleanCallback(promise));
+			Apptentive.queryCanShowInteraction(event, new PromiseBooleanCallback(promise));
+		} catch (Exception e) {
+			promise.reject(CODE_APPTENTIVE, "Exception while showing interaction", e);
+		}
 	}
 
 	@ReactMethod
 	public void engage(String event, ReadableMap customData, Promise promise) {
-		if (!checkRegistered(promise, "engage event '%s'", event)) {
-			return;
-		}
+		try {
+			if (!checkRegistered(promise, "engage event '%s'", event)) {
+				return;
+			}
 
-		Apptentive.engage(getContext(), event, new PromiseBooleanCallback(promise), toHashMap(customData));
+			Apptentive.engage(getContext(), event, new PromiseBooleanCallback(promise), toHashMap(customData));
+		} catch (Exception e) {
+			promise.reject(CODE_APPTENTIVE, "Exception while engaging event", e);
+		}
 	}
 
 	@ReactMethod
@@ -279,6 +295,43 @@ public class RNApptentiveModuleModule extends ReactContextBaseJavaModule impleme
 				return true;
 			}
 		}, description);
+	}
+
+	@ReactMethod
+	public void logIn(String token, final Promise promise) {
+		try {
+			if (!checkRegistered(promise, "login")) {
+				return;
+			}
+
+			Apptentive.login(token, new Apptentive.LoginCallback() {
+				@Override
+				public void onLoginFinish() {
+					promise.resolve(true);
+				}
+
+				@Override
+				public void onLoginFail(String errorMessage) {
+					promise.reject(CODE_APPTENTIVE, errorMessage);
+				}
+			});
+		} catch (Exception e) {
+			promise.reject(CODE_APPTENTIVE, "Exception while login", e);
+		}
+	}
+
+	@ReactMethod
+	public void logOut(final Promise promise) {
+		try {
+			if (!checkRegistered(promise, "logout")) {
+				return;
+			}
+
+			Apptentive.logout();
+			promise.resolve(true);
+		} catch (Exception e) {
+			promise.reject(CODE_APPTENTIVE, "Exception while logout", e);
+		}
 	}
 
 	//endregion
