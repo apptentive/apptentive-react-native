@@ -16,12 +16,12 @@ import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 
 const credentials = Platform.select({
   ios: {
-    apptentiveKey: '___YOUR_IOS_APPTENTIVE_KEY___',
-    apptentiveSignature: '___YOUR_IOS_APPTENTIVE_SIGNATURE___'
+    apptentiveKey: '<YOUR_IOS_APPTENTIVE_KEY>',
+    apptentiveSignature: '<YOUR_IOS_APPTENTIVE_SIGNATURE>'
   },
   android: {
-    apptentiveKey: '___YOUR_ANDROID_APPTENTIVE_KEY___',
-    apptentiveSignature: '___YOUR_ANDROID_APPTENTIVE_SIGNATURE___c'
+    apptentiveKey: '<YOUR_ANDROID_APPTENTIVE_KEY>',
+    apptentiveSignature: '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>'
   }
 });
 
