@@ -17,13 +17,11 @@ import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 const credentials = Platform.select({
   ios: {
     apptentiveKey: '___YOUR_IOS_APPTENTIVE_KEY___',
-    apptentiveSignature: '___YOUR_IOS_APPTENTIVE_SIGNATURE___',
-    jwtSigning: 'f4347328dccc33599bb5fbe8adcdbe88'
+    apptentiveSignature: '___YOUR_IOS_APPTENTIVE_SIGNATURE___'
   },
   android: {
     apptentiveKey: '___YOUR_ANDROID_APPTENTIVE_KEY___',
-    apptentiveSignature: '___YOUR_ANDROID_APPTENTIVE_SIGNATURE___c',
-    jwtSigning: 'dd4cf3d158e2ad5bc285733ef191d235'
+    apptentiveSignature: '___YOUR_ANDROID_APPTENTIVE_SIGNATURE___c'
   }
 });
 
@@ -50,6 +48,43 @@ export default class App extends Component<Props> {
         <Text style={styles.instructions}>TODO: implement me</Text>
       </View>
     );
+  }
+
+  _renderCustomDataModal(mode) {
+    if (this.state.mode !== 'none') {
+      return (
+      <CustomDataModal
+        mode={mode}
+        closeHandler={() => { this._closeCustomDataModal() }}
+      />)
+    }
+    return null
+  }
+
+  _renderAuthModal() {
+    if (this.state.authModalVisible) {
+      return (
+      <AuthModal
+        closeHandler={() => { this._closeAuthModal() }}
+      />)
+    }
+    return null
+  }
+
+  _openCustomDataModal(mode) {
+    this.setState({mode: mode})
+  }
+
+  _closeCustomDataModal() {
+    this.setState({mode: 'none'})
+  }
+
+  _openAuthModal() {
+    this.setState({authModalVisible: true})
+  }
+
+  _closeAuthModal() {
+    this.setState({authModalVisible: false})
   }
 }
 
