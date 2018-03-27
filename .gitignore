@@ -44,8 +44,5 @@ buck-out/
 \.buckd/
 *.keystore
       
-# Framework
-Apptentive.framework
-
 # CocoaPods
 Pods
