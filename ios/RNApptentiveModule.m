@@ -30,10 +30,12 @@ RCT_EXPORT_METHOD(
 
 	if ([configurationDictionary[@"apptentiveKey"] length] == 0) {
 		rejecter(kRejectCode, @"Apptentive Key is missing or empty", nil);
+		return;
 	}
 
 	if ([configurationDictionary[@"apptentiveSignature"] length] == 0) {
 		rejecter(kRejectCode, @"Apptentive Signature is missing or empty", nil);
+		return;
 	}
 
 	ApptentiveConfiguration *configuration = [ApptentiveConfiguration
@@ -70,6 +72,7 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	[Apptentive.shared presentMessageCenterFromViewController:nil withCustomData:customData completion:^(BOOL presented) {
@@ -83,6 +86,7 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	[Apptentive.shared queryCanShowMessageCenterWithCompletion:^(BOOL canShowMessageCenter) {
@@ -97,6 +101,7 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	[Apptentive.shared queryCanShowInteractionForEvent:eventName completion:^(BOOL canShowInteraction) {
@@ -112,6 +117,7 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	[Apptentive.shared engage:eventName withCustomData:customData fromViewController:nil completion:^(BOOL engaged) {
@@ -125,6 +131,7 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	resolver(Apptentive.shared.personName);
@@ -137,10 +144,12 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (personName != nil && ![personName isKindOfClass:[NSString class]]) {
 		rejecter(kRejectCode, @"Person name is not a string", nil);
+		return;
 	}
 
 	Apptentive.shared.personName = personName;
@@ -152,6 +161,7 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	resolver(Apptentive.shared.personEmailAddress);
@@ -164,10 +174,12 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (personEmail != nil && ![personEmail isKindOfClass:[NSString class]]) {
 		rejecter(kRejectCode, @"Person email is not a string", nil);
+		return;
 	}
 
 	Apptentive.shared.personEmailAddress = personEmail;
@@ -181,14 +193,17 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (key == nil) {
 		rejecter(kRejectCode, @"Key is nil", nil);
+		return;
 	}
 
 	if (value == nil) {
 		rejecter(kRejectCode, @"Value is nil", nil);
+		return;
 	}
 
 	[Apptentive.shared addCustomPersonDataString:value withKey:key];
@@ -202,14 +217,17 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (key == nil) {
 		rejecter(kRejectCode, @"Key is nil", nil);
+		return;
 	}
 
 	if (value == nil) {
 		rejecter(kRejectCode, @"Value is nil", nil);
+		return;
 	}
 
 	[Apptentive.shared addCustomPersonDataNumber:value withKey:key];
@@ -223,14 +241,17 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (key == nil) {
 		rejecter(kRejectCode, @"Key is nil", nil);
+		return;
 	}
 
 	if (value == nil) {
 		rejecter(kRejectCode, @"Value is nil", nil);
+		return;
 	}
 
 	[Apptentive.shared addCustomPersonDataBool:value.boolValue withKey:key];
@@ -243,10 +264,12 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (key == nil) {
 		rejecter(kRejectCode, @"Key is nil", nil);
+		return;
 	}
 
 	[Apptentive.shared removeCustomPersonDataWithKey:key];
@@ -260,14 +283,17 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (key == nil) {
 		rejecter(kRejectCode, @"Key is nil", nil);
+		return;
 	}
 
 	if (value == nil) {
 		rejecter(kRejectCode, @"Value is nil", nil);
+		return;
 	}
 
 	[Apptentive.shared addCustomDeviceDataString:value withKey:key];
@@ -281,14 +307,17 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (key == nil) {
 		rejecter(kRejectCode, @"Key is nil", nil);
+		return;
 	}
 
 	if (value == nil) {
 		rejecter(kRejectCode, @"Value is nil", nil);
+		return;
 	}
 
 	[Apptentive.shared addCustomDeviceDataNumber:value withKey:key];
@@ -302,14 +331,17 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (key == nil) {
 		rejecter(kRejectCode, @"Key is nil", nil);
+		return;
 	}
 
 	if (value == nil) {
 		rejecter(kRejectCode, @"Value is nil", nil);
+		return;
 	}
 
 	[Apptentive.shared addCustomDeviceDataBool:value.boolValue withKey:key];
@@ -322,14 +354,54 @@ RCT_EXPORT_METHOD(
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
 	}
 
 	if (key == nil) {
 		rejecter(kRejectCode, @"Key is nil", nil);
+		return;
 	}
 
 	[Apptentive.shared removeCustomDeviceDataWithKey:key];
 }
+
+RCT_EXPORT_METHOD(
+	logIn:(NSString *)jwt
+	resolver:(RCTPromiseResolveBlock)resolver
+	rejecter:(RCTPromiseRejectBlock)rejecter
+) {
+	if (!self.registered) {
+		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
+	}
+
+	if (jwt.length == 0) {
+		rejecter(kRejectCode, @"JWT is nil or empty", nil);
+		return;
+	}
+
+	[Apptentive.shared logInWithToken:jwt completion:^(BOOL success, NSError * _Nonnull error) {
+		if (success) {
+			resolver(nil);
+		} else {
+			rejecter(kRejectCode, @"Error logging in", error);
+		}
+	}];
+}
+
+RCT_EXPORT_METHOD(
+	logOut:(RCTPromiseResolveBlock)resolver
+	rejecter:(RCTPromiseRejectBlock)rejecter
+) {
+	if (!self.registered) {
+		rejecter(kRejectCode, @"Apptentive is not registered", nil);
+		return;
+	}
+
+	[Apptentive.shared logOut];
+	resolver(nil);
+}
+
 
 RCT_EXPORT_MODULE()
 
