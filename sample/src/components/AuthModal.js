@@ -17,50 +17,59 @@ export default class CustomDataModal extends Component {
         onRequestClose={() => { this.props.closeHandler() }}
         >
         <View style={styles.container} >
-          <Button title={this._getLoginButtonLabel()} onPress={() => {
-              this._toggleLogin()
-            }}
-          />
           <TextInput
             style={styles.borderedTextInput}
             placeholder={'JWT'}
             value={this.state.JWT}
             onChangeText={(text) => this.setState({JWT: text})}
           />
+          <View style={styles.buttonContainer}>
+            <Button title='Login' onPress={() => {
+                this._login()
+              }}
+            />
+            <Button title='Logout' onPress={() => {
+                this._logout()
+              }}
+            />
+          </View>
         </View>
     </Modal>);
   }
 
-  _getLoginButtonLabel() {
-    if (this.state.isLoggedIn) {
-      return "Log Out";
-    } else {
-      return "Log In";
-    }
+  _login() {
+    Apptentive.logIn(this.state.JWT)
+      .then(() => {
+        this.setState({isLoggedIn: true});
+        this._showAlert("Login", "Success!", this.props.closeHandler)
+      })
+      .catch((errorMessage) => {
+        this._showAlert("Login Failed", errorMessage.message, this.props.closeHandler)
+      });
   }
 
-  _toggleLogin() {
-    if (this.state.isLoggedIn) {
-      Apptentive.logOut();
-      this.setState({isLoggedIn: false})
-      this.props.closeHandler();
-    } else {
-      Apptentive.logIn(this.state.JWT)
-        .then(() => {
-          this.setState({isLoggedIn: true});
-          this.props.closeHandler()
-        })
-        .catch((errorMessage) => {
-          Alert.alert(
-            'Login Failed',
-            errorMessage.message,
-            [
-              {text: 'OK', onPress: () => this.props.closeHandler(), style: 'cancel'},
-            ],
-            { cancelable: false }
-          )
-        });
-    }
+  _logout() {
+    Apptentive.logOut()
+      .then(() => {
+        this.setState({isLoggedIn: true});
+        this._showAlert("Logout", "Success!", this.props.closeHandler)
+      })
+      .catch((errorMessage) => {
+        this._showAlert("Logout failed", errorMessage.message, this.props.closeHandler)
+      });
+
+    this.setState({isLoggedIn: false})
+  }
+
+  _showAlert(title, message, closeHandler) {
+    Alert.alert(
+      title,
+      message,
+      [
+        {text: 'OK', style: 'cancel', onPress: () => { closeHandler() } },
+      ],
+      { cancelable: false }
+    )
   }
 }
 
@@ -69,6 +78,11 @@ styles = {
     marginTop: 22,
     flex: 1,
     flexDirection: 'column',
+  },
+  buttonContainer: {
+    width: 300,
+    height: 40,
+    flexDirection: 'row'
   },
   borderedTextInput: {
     height: 40,

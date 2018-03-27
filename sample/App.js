@@ -26,13 +26,11 @@ import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 const credentials = Platform.select({
   ios: {
     apptentiveKey: 'IOS-REACT-NATIVE-IOS',
-    apptentiveSignature: 'a5bef0098ee104b00b58376a2631164a',
-    jwtSigning: 'f4347328dccc33599bb5fbe8adcdbe88'
+    apptentiveSignature: 'a5bef0098ee104b00b58376a2631164a'
   },
   android: {
     apptentiveKey: 'ANDROID-REACT-NATIVE-ANDROID',
-    apptentiveSignature: 'd64a65f7232fe25d67b65b91b7e974fc',
-    jwtSigning: 'dd4cf3d158e2ad5bc285733ef191d235'
+    apptentiveSignature: 'd64a65f7232fe25d67b65b91b7e974fc'
   }
 });
 
@@ -140,7 +138,6 @@ export default class App extends Component {
     if (this.state.authModalVisible) {
       return (
       <AuthModal
-        jwtSigning={credentials.jwtSigning}
         closeHandler={() => { this._closeAuthModal() }}
       />)
     }
