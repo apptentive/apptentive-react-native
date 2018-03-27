@@ -11,7 +11,7 @@
     "jsonwebtoken": "^8.2.0",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.2",
-    "stream": "0.0.2"
+    "react-native-jwt-io": "^1.0.3"
   },
   "devDependencies": {
     "babel-jest": "22.4.1",
