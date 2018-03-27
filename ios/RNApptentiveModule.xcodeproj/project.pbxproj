@@ -26,7 +26,6 @@
 		134814201AA4EA6300B7C361 /* libRNApptentiveModule.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNApptentiveModule.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3E7B5881CC2AC0600A0062D /* RNApptentiveModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNApptentiveModule.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNApptentiveModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNApptentiveModule.m; sourceTree = "<group>"; };
-		EFFDB85E206592D0005C01DB /* Apptentive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Apptentive.framework; path = ../../../../ios/Apptentive.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +60,6 @@
 		EF295C4620587FBF003BD68F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EFFDB85E206592D0005C01DB /* Apptentive.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
