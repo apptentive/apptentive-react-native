@@ -23,8 +23,8 @@ xcuserdata/
 buddybuild_postclone.sh
 jsconfig.json
 
-# Example
-example/
+# Sample
+sample/
 
 # Built application files
 android/*/build/
