@@ -1,8 +1,8 @@
 {
-  "name": "react-native-apptentive-sdk",
+  "name": "apptentive-react-native",
   "version": "5.0.0",
   "description": "React Native Module for Apptentive SDK",
-  "main": "index.js",
+  "main": "js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
