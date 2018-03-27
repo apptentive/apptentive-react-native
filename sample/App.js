@@ -25,12 +25,12 @@ import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 
 const credentials = Platform.select({
   ios: {
-    apptentiveKey: 'IOS-REACT-NATIVE-IOS',
-    apptentiveSignature: 'a5bef0098ee104b00b58376a2631164a'
+    apptentiveKey: '<YOUR_IOS_APPTENTIVE_KEY>',
+    apptentiveSignature: '<YOUR_IOS_APPTENTIVE_SIGNATURE>'
   },
   android: {
-    apptentiveKey: 'ANDROID-REACT-NATIVE-ANDROID',
-    apptentiveSignature: 'd64a65f7232fe25d67b65b91b7e974fc'
+    apptentiveKey: '<YOUR_ANDROID_APPTENTIVE_KEY>',
+    apptentiveSignature: '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>'
   }
 });
 
