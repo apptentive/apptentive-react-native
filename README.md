@@ -1,11 +1,17 @@
 
 # React Native Apptentive SDK
 
-_The module is still under the development and would be available soon_
+_This module is still under development and will be available soon_
 
 ## Getting started
 
+### Install `npm` package
+
 `$ npm install apptentive-react-native --save`
+
+### Install Apptentive SDK (iOS only)
+
+We recommend using Cocoapods to install the Apptentive SDK. On our Customer Learning Center, you can find [instructions on how to install the SDK using CocoaPods](https://learn.apptentive.com/knowledge-base/ios-integration-reference/#cocoapods).
 
 ### Mostly automatic installation
 
@@ -15,6 +21,7 @@ _The module is still under the development and would be available soon_
 
 #### iOS
 
+1. Add the Apptentive SDK to the iOS project or workspace. We recommend using CocoaPods. 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 2. Go to `node_modules` ➜ `apptentive-react-native` and add `RNApptentiveModule.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNApptentiveModule.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
@@ -34,13 +41,13 @@ _The module is still under the development and would be available soon_
   	```
       compile project(':apptentive-react-native')
   	```
-    
-### CocoaPods (iOS only)
-We recommend using Cocoapods to install the Apptentive SDK.  
-Follow the instructions to install Cocoapods and create your Podfile [here](https://learn.apptentive.com/knowledge-base/ios-integration-reference/#cocoapods).
 
 ## Usage
-Register `Apptentive` in your `App.js` file:  
+
+Create one app for each supported platform in your [Apptentive Dashboard](https://be.apptentive.com) (i.e. one Android app and one iOS app if you support both platforms that Apptentive supports). Then navigate to the [API & Development section under the Settings tab](https://be.apptentive.com/apps/current/settings/api) for each of your apps, and note the Apptentive App Key and Apptentive App Signature.
+
+Then in your `App.js` file, add code to register the Apptentive SDK:
+
 ```javascript
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 
@@ -67,7 +74,8 @@ export default class App extends Component {
   ...
 }
 ```
-Make sure you use the Apptentive App Key and Signature for the Android app you created in the Apptentive console. Sharing these keys between two apps, or using keys from the wrong platform is not supported, and will lead to incorrect behavior. You can find them [here](https://be.apptentive.com/apps/current/settings/api).
+
+Again, be sure to use separate credentials for each platform, as supporting both platforms with one set of credentials is not supported.
 
 ## Message Center
 
@@ -114,4 +122,56 @@ You can add an Event almost anywhere in your app, just remember that if you want
 ## Push Notifications
 Apptentive can send push notifications to ensure your customers see your replies to their feedback in Message Center.  
   
-_TBD_
+### iOS
+
+On iOS, you'll need to follow [Apple's instructions on adding Push capability to your app](https://help.apple.com/xcode/mac/current/#/devdfd3d04a1). 
+
+You will need to export your push certificate and key in `.p12` format and upload it to the [Integrations section of the Settings tab](https://be.apptentive.com/apps/current/settings/integrations) in your Apptentive dashboard under "Apptentive Push". You can find more information on this process in the [Push Notifications section of our iOS Integration Reference](https://learn.apptentive.com/knowledge-base/ios-integration-reference/#push-notifications).
+
+You will then edit your AppDelegate.m file. First import the Apptentive SDK at the top level of this file:
+
+```
+@import Apptentive;
+```
+
+Then add the following methods to your App Delegate class:
+
+```
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    // Register for Apptentive's push service:
+    [Apptentive.shared setPushNotificationIntegration:ApptentivePushProviderApptentive withDeviceToken:deviceToken];
+
+    // Uncomment if using PushNotificationsIOS module:
+    //[RCTPushNotificationManager didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    // Forward the notification to the Apptentive SDK:
+    BOOL handledByApptentive = [Apptentive.shared didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+
+    // Be sure your code calls the completion handler if you expect to receive non-Apptentive push notifications.
+    if (!handledByApptentive) {
+        // ...handle the push notification
+        // ...and call the completion handler:
+        completionHandler(UIBackgroundFetchResultNewData);
+
+        // Uncomment if using PushNotificationIOS module (and remove the above call to `completionHandler`):
+        //[RCTPushNotificationManager didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler]; 
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    // Forward the notification to the Apptentive SDK:
+    BOOL handledByApptentive = [Apptentive.shared didReceiveLocalNotification:notification fromViewController:self.window.rootViewController];
+
+    // Uncomment if using PushNotificationIOS module:
+    //if (!handledByApptentive) {
+    //    [RCTPushNotificationManager didReceiveLocalNotification:notification];
+    //}
+}
+```
+
+Apptentive's push services work well alongside other push notification services, such as those handled by the [PushNotificationIOS React Native module](https://facebook.github.io/react-native/docs/pushnotificationios.html) . Note that you will have to implement the handful of additional methods listed in the documentation in your App Delegate to support this module.
