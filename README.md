@@ -126,7 +126,15 @@ Apptentive can send push notifications to ensure your customers see your replies
 
 On iOS, you'll need to follow [Apple's instructions on adding Push capability to your app](https://help.apple.com/xcode/mac/current/#/devdfd3d04a1). 
 
-You will then need to import the Apptentive SDK in your AppDelegate.m file (Add the line `@import Apptentive;` at the top level of the file) and add the following methods:
+You will need to export your push certificate and key in `.p12` format and upload it to the [Integrations section of the Settings tab](https://be.apptentive.com/apps/current/settings/integrations) in your Apptentive dashboard under "Apptentive Push". You can find more information on this process in the [Push Notifications section of our iOS Integration Reference](https://learn.apptentive.com/knowledge-base/ios-integration-reference/#push-notifications).
+
+You will then edit your AppDelegate.m file. First import the Apptentive SDK at the top level of this file:
+
+```
+@import Apptentive;
+```
+
+Then add the following methods to your App Delegate class:
 
 ```
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -166,4 +174,4 @@ You will then need to import the Apptentive SDK in your AppDelegate.m file (Add 
 }
 ```
 
-Apptentive's push services work well alongside other push notification services, such as those handled by the [PushNotificationIOS React Native module](https://facebook.github.io/react-native/docs/pushnotificationios.html) . Note that you will have to implement a handful of additional methods in your App Delegate to support this module.
+Apptentive's push services work well alongside other push notification services, such as those handled by the [PushNotificationIOS React Native module](https://facebook.github.io/react-native/docs/pushnotificationios.html) . Note that you will have to implement the handful of additional methods listed in the documentation in your App Delegate to support this module.
