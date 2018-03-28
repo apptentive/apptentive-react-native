@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Modal, Button, TextInput, Alert } from 'react-native';
+import { View, Text, Modal, Button, TextInput } from 'react-native';
 import { Apptentive } from 'apptentive-react-native';
+import { showAlert } from '../helpers'
 
 export default class CustomDataModal extends Component {
   constructor() {
@@ -40,10 +41,10 @@ export default class CustomDataModal extends Component {
     Apptentive.logIn(this.state.JWT)
       .then(() => {
         this.setState({isLoggedIn: true});
-        this._showAlert("Login", "Success!", this.props.closeHandler)
+        showAlert("Login", "Success!", this.props.closeHandler)
       })
       .catch((errorMessage) => {
-        this._showAlert("Login Failed", errorMessage.message, this.props.closeHandler)
+        showAlert("Login Failed", errorMessage.message, this.props.closeHandler)
       });
   }
 
@@ -51,24 +52,13 @@ export default class CustomDataModal extends Component {
     Apptentive.logOut()
       .then(() => {
         this.setState({isLoggedIn: true});
-        this._showAlert("Logout", "Success!", this.props.closeHandler)
+        showAlert("Logout", "Success!", this.props.closeHandler)
       })
       .catch((errorMessage) => {
-        this._showAlert("Logout failed", errorMessage.message, this.props.closeHandler)
+        showAlert("Logout failed", errorMessage.message, this.props.closeHandler)
       });
 
     this.setState({isLoggedIn: false})
-  }
-
-  _showAlert(title, message, closeHandler) {
-    Alert.alert(
-      title,
-      message,
-      [
-        {text: 'OK', style: 'cancel', onPress: () => { closeHandler() } },
-      ],
-      { cancelable: false }
-    )
   }
 }
 
