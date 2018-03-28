@@ -12,8 +12,7 @@ import {
   View,
   Button,
   TextInput,
-  Modal,
-  TouchableHighlight
+  Modal
 } from 'react-native';
 
 import CustomDataModal from './src/components/CustomDataModal'
