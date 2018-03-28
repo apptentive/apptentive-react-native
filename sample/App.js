@@ -12,16 +12,15 @@ import {
   View,
   Button,
   TextInput,
-  Alert,
   Modal,
-  TouchableHighlight,
-
+  TouchableHighlight
 } from 'react-native';
 
 import CustomDataModal from './src/components/CustomDataModal'
 import AuthModal from './src/components/AuthModal'
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
+import { showAlert } from './src/helpers'
 
 const credentials = Platform.select({
   ios: {
@@ -37,16 +36,37 @@ const credentials = Platform.select({
 type Props = {};
 export default class App extends Component {
   componentDidMount() {
+    if (credentials.apptentiveKey === '<YOUR_IOS_APPTENTIVE_KEY>' ||
+        credentials.apptentiveKey === '<YOUR_ANDROID_APPTENTIVE_KEY>') {
+      showAlert('Error', 'Please, provide Apptentive Key')
+      return
+    }
+
+    if (credentials.apptentiveSignature === '<YOUR_IOS_APPTENTIVE_SIGNATURE>' ||
+        credentials.apptentiveSignature === '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>') {
+      showAlert('Error', 'Please, provide Apptentive Signature')
+      return
+    }
+
+    // Create configuration
     const configuration = new ApptentiveConfiguration(
       credentials.apptentiveKey,
       credentials.apptentiveSignature
     );
+
+    // Override log level (optional)
     configuration.logLevel = 'verbose';
-    Apptentive.register(configuration);
-    Apptentive.onUnreadMessageChange = (count) => {
-      console.log("Unread message count changed: " + count);
-      this.setState({unreadMessageCount: count});
-    };
+
+    // Register Apptentive
+    Apptentive.register(configuration)
+      .then(() => {
+        Apptentive.onUnreadMessageChange = (count) => {
+          this.setState({unreadMessageCount: count})
+        };
+      })
+      .catch((error) => {
+        showAlert('Error', `Can't register Apptentive:\n${error.message}`)
+      });
   }
 
   constructor() {
@@ -68,7 +88,15 @@ export default class App extends Component {
         <Button
           style={styles.button}
           onPress={() => {
-            Apptentive.engage(this.state.eventName);
+            Apptentive.engage(this.state.eventName)
+              .then((engaged) => {
+                if (!engaed) {
+                  showAlert('Interaction', `Interaction "${this.state.eventName}" was not engaged`)
+                }
+              })
+              .catch((error) => {
+                showAlert('Interaction', `Error while engaging interaction:\n\n${error.message}`)
+              })
           }}
           title="Engage"
         />
@@ -76,7 +104,15 @@ export default class App extends Component {
         <Button
           style={styles.button}
           onPress={() => {
-            Apptentive.presentMessageCenter();
+            Apptentive.presentMessageCenter()
+              .then((presented) => {
+                if (!presented) {
+                  showAlert('Message Center', 'Message Center was not presented')
+                }
+              })
+              .catch((error) => {
+                showAlert('Message Center', `Error while presenting Message Center:\n\n${error.message}`)
+              })
           }}
           title="Message Center"
         />
@@ -84,16 +120,13 @@ export default class App extends Component {
         <Button
           style={styles.button}
           onPress={() => {
-            Apptentive.canShowInteraction(this.state.eventName).then(canShow => {
-              Alert.alert(
-                'Can Show Interaction for Event “' + this.state.eventName + '”',
-                '' + canShow + '',
-                [
-                  {text: 'OK', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                ],
-                { cancelable: false }
-              )
-            })
+            Apptentive.canShowInteraction(this.state.eventName)
+              .then((canShow) => {
+                showAlert('Interaction', `Can Show Interaction for Event "${this.state.eventName}": ${canShow}`)
+              })
+              .catch((error) => {
+                showAlert('Interaction', `Error while checking interaction:\n\n${error.message}`)
+              })
           }}
           title="Can Show Interaction?"
         />
