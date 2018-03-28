@@ -44,7 +44,9 @@ We recommend using Cocoapods to install the Apptentive SDK. On our Customer Lear
 
 ## Usage
 
-Register `Apptentive` in your `App.js` file:  
+Create one app for each supported platform in your [Apptentive Dashboard](https://be.apptentive.com) (i.e. one Android app and one iOS app if you support both platforms that Apptentive supports). Then navigate to the [API & Development section under the Settings tab](https://be.apptentive.com/apps/current/settings/api) for each of your apps, and note the Apptentive App Key and Apptentive App Signature.
+
+Then in your `App.js` file, add code to register the Apptentive SDK:
 
 ```javascript
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
@@ -73,7 +75,7 @@ export default class App extends Component {
 }
 ```
 
-Make sure you use the Apptentive App Key and Signature for the Android app you created in the Apptentive console. Sharing these keys between two apps, or using keys from the wrong platform is not supported, and will lead to incorrect behavior. You can find them in the [API & Development section under the Settings tab](https://be.apptentive.com/apps/current/settings/api) on the Apptentive Dashboard for your apps. 
+Again, be sure to use separate credentials for each platform, as supporting both platforms with one set of credentials is not supported.
 
 ## Message Center
 
