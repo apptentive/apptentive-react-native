@@ -2,7 +2,7 @@ package com.apptentive.reactnative.sample;
 
 import android.app.Application;
 
-import com.apptentive.android.sdk.reactlibrary.RNApptentiveModulePackage;
+import com.apptentive.android.sdk.reactlibrary.RNApptentivePackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -24,7 +24,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new RNApptentiveModulePackage()
+          new RNApptentivePackage()
       );
     }
 

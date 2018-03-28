@@ -25,13 +25,13 @@ import java.util.Map;
 
 import static com.apptentive.android.sdk.ApptentiveHelper.dispatchConversationTask;
 
-public class RNApptentiveModuleModule extends ReactContextBaseJavaModule implements UnreadMessagesListener {
+public class RNApptentiveModule extends ReactContextBaseJavaModule implements UnreadMessagesListener {
 	private static final String CODE_APPTENTIVE = "Apptentive";
 	private static final String EVT_UNREAD_MESSAGE_COUNT_CHANGE = "onUnreadMessageChange";
 
 	private final ApptentiveReactApplicationContextWrapper reactContextWrapper;
 
-	public RNApptentiveModuleModule(ReactApplicationContext reactContext) {
+	public RNApptentiveModule(ReactApplicationContext reactContext) {
 		super(reactContext);
 		reactContextWrapper = new ApptentiveReactApplicationContextWrapper(reactContext);
 	}
