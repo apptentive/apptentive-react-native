@@ -24,8 +24,8 @@ _The module is still under the development and would be available soon_
 #### Android
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.RNApptentiveModulePackage;` to the imports at the top of the file
-  - Add `new RNApptentiveModulePackage()` to the list returned by the `getPackages()` method
+  - Add `import com.apptentive.android.sdk.reactlibrary.RNApptentivePackage;` to the imports at the top of the file
+  - Add `new RNApptentivePackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
   	include ':apptentive-react-native'
