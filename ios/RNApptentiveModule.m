@@ -59,7 +59,7 @@ RCT_EXPORT_METHOD(
 
 		Apptentive.shared.authenticationFailureCallback = ^(ApptentiveAuthenticationFailureReason reason, NSString *string){
 			NSString *reasonString = [self stringForAuthenticationFailureReason:reason];
-			[self sendEventWithName:@"onAuthenticationFailure" body:@{ @"reason": reasonString }];
+			[self sendEventWithName:@"onAuthenticationFailed" body:@{ @"reason": reasonString }];
 		};
 
 		if (Apptentive.shared != nil) {
@@ -418,7 +418,7 @@ RCT_EXPORT_MODULE()
 
 - (NSArray<NSString *> *)supportedEvents
 {
-	return @[@"onUnreadMessageChange"];
+	return @[@"onUnreadMessageChange", @"onAuthenticationFailed"];
 }
 
 - (void)messageCenterUnreadCountChangedNotification:(NSNotification *)notification {
