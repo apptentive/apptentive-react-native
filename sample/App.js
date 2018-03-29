@@ -62,6 +62,9 @@ export default class App extends Component {
         Apptentive.onUnreadMessageChange = (count) => {
           this.setState({unreadMessageCount: count})
         };
+        Apptentive.onAuthenticationFailed = (reason) => {
+          showAlert('Error', `Authentication failed:\n${reason}`)
+        }
       })
       .catch((error) => {
         showAlert('Error', `Can't register Apptentive:\n${error.message}`)
