@@ -25,9 +25,10 @@ import java.util.Map;
 
 import static com.apptentive.android.sdk.ApptentiveHelper.dispatchConversationTask;
 
-public class RNApptentiveModule extends ReactContextBaseJavaModule implements UnreadMessagesListener {
+public class RNApptentiveModule extends ReactContextBaseJavaModule implements UnreadMessagesListener, Apptentive.AuthenticationFailedListener {
 	private static final String CODE_APPTENTIVE = "Apptentive";
 	private static final String EVT_UNREAD_MESSAGE_COUNT_CHANGE = "onUnreadMessageChange";
+	private static final String EVT_AUTH_FAILED = "onAuthenticationFailed";
 
 	private final ApptentiveReactApplicationContextWrapper reactContextWrapper;
 
@@ -85,6 +86,7 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 			instance.getRegisteredLifecycleCallbacks().onActivityStarted(currentActivity);
 			instance.getRegisteredLifecycleCallbacks().onActivityResumed(currentActivity);
 			Apptentive.addUnreadMessagesListener(this);
+			Apptentive.setAuthenticationFailedListener(this);
 			promise.resolve(Boolean.TRUE);
 		} catch (Exception e) {
 			promise.reject(CODE_APPTENTIVE, "Exception while initialized Apptentive", e);
@@ -378,6 +380,29 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 	@Override
 	public void onUnreadMessageCountChanged(int unreadMessages) {
 		sendEvent(EVT_UNREAD_MESSAGE_COUNT_CHANGE, "count", unreadMessages);
+	}
+
+	//endregion
+
+	//region Auth failed listener
+
+	@Override
+	public void onAuthenticationFailed(Apptentive.AuthenticationFailedReason reason) {
+		sendEvent(EVT_AUTH_FAILED, "reason", getPrettyReason(reason));
+	}
+
+	private static String getPrettyReason(Apptentive.AuthenticationFailedReason reason) {
+		String raw = reason.toString();
+		String[] tokens = raw.split("_");
+		StringBuilder result = new StringBuilder();
+		for (String token : tokens) {
+			if (result.length() > 0) {
+				result.append(' ');
+			}
+			result.append(Character.toUpperCase(token.charAt(0)));
+			result.append(token.substring(1));
+		}
+		return result.toString();
 	}
 
 	//endregion
