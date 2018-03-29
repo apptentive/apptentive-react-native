@@ -15,10 +15,11 @@
     "android"
   ],
   "author": "Apptentive",
-  "contributors": {
-    "name": "Alex Lementuev",
-    "name": "Frank Schmitt"
-  },
+  "contributors": [
+    "Alex Lementuev",
+    "Frank Schmitt",
+    "Matthew Callis"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/apptentive/apptentive-react-native.git"
