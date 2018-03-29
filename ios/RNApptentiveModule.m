@@ -15,7 +15,7 @@ extern ApptentiveLogLevel ApptentiveLogLevelFromString(NSString *level);
 
 - (dispatch_queue_t)methodQueue
 {
-    return dispatch_get_main_queue();
+	return dispatch_get_main_queue();
 }
 
 RCT_EXPORT_METHOD(
@@ -52,10 +52,15 @@ RCT_EXPORT_METHOD(
 	if (configuration) {
 		configuration.appID = configurationDictionary[@"appleID"];
 		configuration.distributionName = @"React Native";
-		configuration.distributionVersion = @"5.0.0"
+		configuration.distributionVersion = @"5.0.0";
 		[Apptentive registerWithConfiguration:configuration];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCenterUnreadCountChangedNotification:) name:ApptentiveMessageCenterUnreadCountChangedNotification object:nil];
+
+		Apptentive.shared.authenticationFailureCallback = ^(ApptentiveAuthenticationFailureReason reason, NSString *string){
+			NSString *reasonString = [self stringForAuthenticationFailureReason:reason];
+			[self sendEventWithName:@"onAuthenticationFailure" body:@{ @"reason": reasonString }];
+		};
 
 		if (Apptentive.shared != nil) {
 			resolve(configuration.distributionName);
@@ -128,8 +133,8 @@ RCT_EXPORT_METHOD(
 }
 
 RCT_EXPORT_METHOD(
-	  getPersonName:(RCTPromiseResolveBlock)resolver
-	  rejecter:(RCTPromiseRejectBlock)rejecter
+	getPersonName:(RCTPromiseResolveBlock)resolver
+	rejecter:(RCTPromiseRejectBlock)rejecter
 ) {
 	if (!self.registered) {
 		rejecter(kRejectCode, @"Apptentive is not registered", nil);
@@ -421,4 +426,35 @@ RCT_EXPORT_MODULE()
 	[self sendEventWithName:@"onUnreadMessageChange" body:@{ @"count": @(count)}];
 }
 
+- (NSString *)stringForAuthenticationFailureReason:(ApptentiveAuthenticationFailureReason)reason {
+	switch (reason) {
+		case ApptentiveAuthenticationFailureReasonUnknown:
+		default:
+			return @"Unknown";
+		case ApptentiveAuthenticationFailureReasonInvalidAlgorithm:
+			return @"InvalidAlgorithm";
+		case ApptentiveAuthenticationFailureReasonMalformedToken:
+			return @"MalformedToken";
+		case ApptentiveAuthenticationFailureReasonInvalidToken:
+			return @"InvalidToken";
+		case ApptentiveAuthenticationFailureReasonMissingSubClaim:
+			return @"MissingSubClaim";
+		case ApptentiveAuthenticationFailureReasonMismatchedSubClaim:
+			return @"MismatchedSubClaim";
+		case ApptentiveAuthenticationFailureReasonInvalidSubClaim:
+			return @"InvalidSubClaim";
+		case ApptentiveAuthenticationFailureReasonExpiredToken:
+			return @"ExpiredToken";
+		case ApptentiveAuthenticationFailureReasonRevokedToken:
+			return @"RevokedToken";
+		case ApptentiveAuthenticationFailureReasonMissingAppKey:
+			return @"MissingAppKey";
+		case ApptentiveAuthenticationFailureReasonMissingAppSignature:
+			return @"MissingAppSignature";
+		case ApptentiveAuthenticationFailureReasonInvalidKeySignaturePair:
+			return @"InvalidKeySignaturePair";
+	}
+}
+
 @end
+
