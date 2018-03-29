@@ -59,7 +59,7 @@ export default class App extends Component {
     // Register Apptentive
     Apptentive.register(configuration)
       .then(() => {
-        Apptentive.onUnreadMessageChange = (count) => {
+        Apptentive.onUnreadMessageCountChanged = (count) => {
           this.setState({unreadMessageCount: count})
         };
         Apptentive.onAuthenticationFailed = (reason) => {
