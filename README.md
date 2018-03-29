@@ -105,7 +105,7 @@ Find a place in your app where you can add a button that opens Message Center. Y
 
 You can receive a callback when a new unread message comes in. You can use this callback to notify your customer, and display a badge letting them know how many unread messages are waiting for them. Because this listener could be called at any time, you should store the value returned from this method, and then perform any user interaction you desire at the appropriate time.
 ```
-Apptentive.onUnreadMessageChange = (count) => {
+Apptentive.onUnreadMessageCountChanged = (count) => {
   console.log(`Unread message count changed: ${count}`)
 }
 ```

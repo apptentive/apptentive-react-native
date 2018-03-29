@@ -27,7 +27,7 @@ import static com.apptentive.android.sdk.ApptentiveHelper.dispatchConversationTa
 
 public class RNApptentiveModule extends ReactContextBaseJavaModule implements UnreadMessagesListener, Apptentive.AuthenticationFailedListener {
 	private static final String CODE_APPTENTIVE = "Apptentive";
-	private static final String EVT_UNREAD_MESSAGE_COUNT_CHANGE = "onUnreadMessageChange";
+	private static final String EVT_UNREAD_MESSAGE_COUNT_CHANGE = "onUnreadMessageCountChanged";
 	private static final String EVT_AUTH_FAILED = "onAuthenticationFailed";
 
 	private final ApptentiveReactApplicationContextWrapper reactContextWrapper;

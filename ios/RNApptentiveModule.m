@@ -418,12 +418,12 @@ RCT_EXPORT_MODULE()
 
 - (NSArray<NSString *> *)supportedEvents
 {
-	return @[@"onUnreadMessageChange", @"onAuthenticationFailed"];
+	return @[@"onUnreadMessageCountChanged", @"onAuthenticationFailed"];
 }
 
 - (void)messageCenterUnreadCountChangedNotification:(NSNotification *)notification {
 	NSUInteger count = [notification.userInfo[@"count"] intValue];
-	[self sendEventWithName:@"onUnreadMessageChange" body:@{ @"count": @(count)}];
+	[self sendEventWithName:@"onUnreadMessageCountChanged" body:@{ @"count": @(count)}];
 }
 
 - (NSString *)stringForAuthenticationFailureReason:(ApptentiveAuthenticationFailureReason)reason {

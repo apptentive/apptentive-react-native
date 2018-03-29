@@ -17,7 +17,7 @@ export class ApptentiveConfiguration {
 }
 
 let _eventsRegistered = false
-let _onUnreadMessageChange = function(count) {}
+let _onUnreadMessageCountChanged = function(count) {}
 let _onAuthenticationFailed = function(reason) {}
 
 export class Apptentive {
@@ -31,9 +31,9 @@ export class Apptentive {
 
       // unread message count
       const emitter = ApptentivePlatformSpecific.createApptentiveEventEmitter(RNApptentiveModule)
-      emitter.addListener('onUnreadMessageChange', function(e: Event) {
-        if (_onUnreadMessageChange !== undefined) {
-          _onUnreadMessageChange(e.count)
+      emitter.addListener('onUnreadMessageCountChanged', function(e: Event) {
+        if (_onUnreadMessageCountChanged !== undefined) {
+          _onUnreadMessageCountChanged(e.count)
         }
       })
 
@@ -198,16 +198,16 @@ export class Apptentive {
   /**
    * @return Current callback for the unread message count change in the Message Center.
    */
-  static get onUnreadMessageChange() {
-    return _onUnreadMessageChange
+  static get onUnreadMessageCountChanged() {
+    return _onUnreadMessageCountChanged
   }
 
   /**
    * Sets current callback for the unread message count change in the Message Center.
    * @param value Callback function with a single integer parameter.
    */
-  static set onUnreadMessageChange(value) {
-    _onUnreadMessageChange = value
+  static set onUnreadMessageCountChanged(value) {
+    _onUnreadMessageCountChanged = value
   }
 
   /**
