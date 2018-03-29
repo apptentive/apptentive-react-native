@@ -137,14 +137,20 @@ export class Apptentive {
     return RNApptentiveModule.logOut();
   }
 
-  // TODO: push support
-
   static get onUnreadMessageChange() {
     return _onUnreadMessageChange;
   }
 
   static set onUnreadMessageChange(value) {
     _onUnreadMessageChange = value;
+  }
+
+  static get onAuthenticationFailed() {
+    return _onAuthenticationFailed;
+  }
+
+  static set onAuthenticationFailed(value) {
+    _onAuthenticationFailed = value;
   }
 }
 
