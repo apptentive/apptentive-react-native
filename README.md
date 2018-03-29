@@ -1,8 +1,6 @@
 
 # React Native Apptentive SDK
 
-_This module is still under development and will be available soon_
-
 ## Getting started
 
 ### Install `npm` package
