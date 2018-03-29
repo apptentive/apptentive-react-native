@@ -29,6 +29,8 @@ We recommend using Cocoapods to install the Apptentive SDK. On our Customer Lear
 
 #### Android
 
+**Note**: Apptentive SDK requires Android API level 26 and up to work properly.  
+
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
   - Add `import com.apptentive.android.sdk.reactlibrary.RNApptentivePackage;` to the imports at the top of the file
   - Add `new RNApptentivePackage()` to the list returned by the `getPackages()` method
