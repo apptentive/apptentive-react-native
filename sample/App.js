@@ -92,7 +92,7 @@ export default class App extends Component {
           onPress={() => {
             Apptentive.engage(this.state.eventName)
               .then((engaged) => {
-                if (!engaed) {
+                if (!engaged) {
                   showAlert('Interaction', `Interaction "${this.state.eventName}" was not engaged`)
                 }
               })
