@@ -12,7 +12,7 @@ export class ApptentiveConfiguration {
     this.shouldSanitizeLogMessages = true
   }
   toString() {
-    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${shouldSanitizeLogMessages})`
+    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages})`
   }
 }
 
