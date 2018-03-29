@@ -1,4 +1,4 @@
-import { DeviceEventEmitter } from 'react-native';
+import { DeviceEventEmitter } from 'react-native'
 
 export class ApptentivePlatformSpecific {
   static createApptentiveEventEmitter(nativeModule) {
