@@ -18,6 +18,7 @@ export class ApptentiveConfiguration {
 
 let _eventsRegistered = false;
 let _onUnreadMessageChange = function(count) {};
+let _onAuthenticationFailed = function(reason) {};
 
 export class Apptentive {
   /**
@@ -35,7 +36,13 @@ export class Apptentive {
           _onUnreadMessageChange(e.count);
         }
       });
-      // TODO: auth callbacks
+
+      // auth failure callback
+      emitter.addListener('onAuthenticationFailed', function(e: Event) {
+        if (_onAuthenticationFailed !== undefined) {
+          _onAuthenticationFailed(e.reason);
+        }
+      });
     }
     return RNApptentiveModule.register(apptentiveConfiguration);
   }
