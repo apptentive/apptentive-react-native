@@ -175,3 +175,7 @@ Then add the following methods to your App Delegate class:
 ```
 
 Apptentive's push services work well alongside other push notification services, such as those handled by the [PushNotificationIOS React Native module](https://facebook.github.io/react-native/docs/pushnotificationios.html) . Note that you will have to implement the handful of additional methods listed in the documentation in your App Delegate to support this module.
+
+### Android
+  
+On Android, you'll need to follow [Apptentive Android Integration Guide](https://learn.apptentive.com/knowledge-base/android-integration-reference/#push-notifications).
