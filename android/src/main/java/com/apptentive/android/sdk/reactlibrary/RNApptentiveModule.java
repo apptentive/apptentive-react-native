@@ -400,7 +400,7 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 				result.append(' ');
 			}
 			result.append(Character.toUpperCase(token.charAt(0)));
-			result.append(token.substring(1));
+			result.append(token.substring(1).toLowerCase());
 		}
 		return result.toString();
 	}
