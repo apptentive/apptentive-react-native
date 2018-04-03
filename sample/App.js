@@ -33,6 +33,11 @@ const credentials = Platform.select({
 });
 
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0, authModalVisible: false };
+  }
+
   componentDidMount() {
     if (credentials.apptentiveKey === '<YOUR_IOS_APPTENTIVE_KEY>' ||
         credentials.apptentiveKey === '<YOUR_ANDROID_APPTENTIVE_KEY>') {
@@ -68,11 +73,6 @@ export default class App extends Component {
       .catch((error) => {
         showAlert('Error', `Can't register Apptentive:\n${error.message}`);
       });
-  }
-
-  constructor() {
-    super();
-    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0, authModalVisible: false };
   }
 
   render() {
