@@ -31,14 +31,14 @@ export class Apptentive {
 
       // unread message count
       const emitter = ApptentivePlatformSpecific.createApptentiveEventEmitter(RNApptentiveModule);
-      emitter.addListener('onUnreadMessageCountChanged', (e: Event) => {
+      emitter.addListener('onUnreadMessageCountChanged', (e) => {
         if (_onUnreadMessageCountChanged !== undefined) {
           _onUnreadMessageCountChanged(e.count);
         }
       });
 
       // auth failure callback
-      emitter.addListener('onAuthenticationFailed', (e: Event) => {
+      emitter.addListener('onAuthenticationFailed', (e) => {
         if (_onAuthenticationFailed !== undefined) {
           _onAuthenticationFailed(e.reason);
         }
