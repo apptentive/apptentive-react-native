@@ -1,6 +1,6 @@
 {
   "name": "apptentive-react-native",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "React Native Module for Apptentive SDK",
   "main": "js/index.js",
   "scripts": {
@@ -15,10 +15,11 @@
     "android"
   ],
   "author": "Apptentive",
-  "contributors": {
-    "name": "Alex Lementuev",
-    "name": "Frank Schmitt"
-  },
+  "contributors": [
+    "Alex Lementuev",
+    "Frank Schmitt",
+    "Matthew Callis"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/apptentive/apptentive-react-native.git"
@@ -26,5 +27,13 @@
   "license": "BSD-3-Clause",
   "peerDependencies": {
     "react-native": ">=0.44.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-react-native": "^3.2.1"
   }
 }

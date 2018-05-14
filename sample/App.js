@@ -15,36 +15,40 @@ import {
   Modal
 } from 'react-native';
 
-import CustomDataModal from './src/components/CustomDataModal'
-import AuthModal from './src/components/AuthModal'
+import CustomDataModal from './src/components/CustomDataModal';
+import AuthModal from './src/components/AuthModal';
 
 import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
-import { showAlert } from './src/helpers'
+import { showAlert } from './src/helpers';
 
 const credentials = Platform.select({
   ios: {
     apptentiveKey: '<YOUR_IOS_APPTENTIVE_KEY>',
-    apptentiveSignature: '<YOUR_IOS_APPTENTIVE_SIGNATURE>'
+    apptentiveSignature: '<YOUR_IOS_APPTENTIVE_SIGNATURE>',
   },
   android: {
     apptentiveKey: '<YOUR_ANDROID_APPTENTIVE_KEY>',
-    apptentiveSignature: '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>'
-  }
+    apptentiveSignature: '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>',
+  },
 });
 
-type Props = {};
 export default class App extends Component {
+  constructor() {
+    super();
+    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0, authModalVisible: false };
+  }
+
   componentDidMount() {
     if (credentials.apptentiveKey === '<YOUR_IOS_APPTENTIVE_KEY>' ||
         credentials.apptentiveKey === '<YOUR_ANDROID_APPTENTIVE_KEY>') {
-      showAlert('Error', 'Please, provide Apptentive Key')
-      return
+      showAlert('Error', 'Please, provide Apptentive Key');
+      return;
     }
 
     if (credentials.apptentiveSignature === '<YOUR_IOS_APPTENTIVE_SIGNATURE>' ||
         credentials.apptentiveSignature === '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>') {
-      showAlert('Error', 'Please, provide Apptentive Signature')
-      return
+      showAlert('Error', 'Please, provide Apptentive Signature');
+      return;
     }
 
     // Create configuration
@@ -60,98 +64,96 @@ export default class App extends Component {
     Apptentive.register(configuration)
       .then(() => {
         Apptentive.onUnreadMessageCountChanged = (count) => {
-          this.setState({unreadMessageCount: count})
+          this.setState({ unreadMessageCount: count });
         };
         Apptentive.onAuthenticationFailed = (reason) => {
-          showAlert('Error', `Authentication failed:\n${reason}`)
-        }
+          showAlert('Error', `Authentication failed:\n${reason}`);
+        };
       })
       .catch((error) => {
-        showAlert('Error', `Can't register Apptentive:\n${error.message}`)
+        showAlert('Error', `Can't register Apptentive:\n${error.message}`);
       });
-  }
-
-  constructor() {
-    super()
-    this.state = { eventName: '', mode: 'none', unreadMessageCount: 0, authModalVisible: false };
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Unread messages: {this.state.unreadMessageCount}</Text>
+        <Text>
+Unread messages:
+          {this.state.unreadMessageCount}
+        </Text>
         <TextInput
+          onChangeText={text => this.setState({ eventName: text })}
+          placeholder="Event Name"
           style={styles.textInput}
-          placeholder={'Event Name'}
           value={this.state.eventName}
-          onChangeText={(text) => this.setState({eventName: text})}
         />
 
         <Button
-          style={styles.button}
           onPress={() => {
             Apptentive.engage(this.state.eventName)
               .then((engaged) => {
                 if (!engaged) {
-                  showAlert('Interaction', `Interaction "${this.state.eventName}" was not engaged`)
+                  showAlert('Interaction', `Interaction "${this.state.eventName}" was not engaged`);
                 }
               })
               .catch((error) => {
-                showAlert('Interaction', `Error while engaging interaction:\n\n${error.message}`)
-              })
+                showAlert('Interaction', `Error while engaging interaction:\n\n${error.message}`);
+              });
           }}
+          style={styles.button}
           title="Engage"
         />
 
         <Button
-          style={styles.button}
           onPress={() => {
             Apptentive.presentMessageCenter()
               .then((presented) => {
                 if (!presented) {
-                  showAlert('Message Center', 'Message Center was not presented')
+                  showAlert('Message Center', 'Message Center was not presented');
                 }
               })
               .catch((error) => {
-                showAlert('Message Center', `Error while presenting Message Center:\n\n${error.message}`)
-              })
+                showAlert('Message Center', `Error while presenting Message Center:\n\n${error.message}`);
+              });
           }}
+          style={styles.button}
           title="Message Center"
         />
 
         <Button
-          style={styles.button}
           onPress={() => {
             Apptentive.canShowInteraction(this.state.eventName)
               .then((canShow) => {
-                showAlert('Interaction', `Can Show Interaction for Event "${this.state.eventName}": ${canShow}`)
+                showAlert('Interaction', `Can Show Interaction for Event "${this.state.eventName}": ${canShow}`);
               })
               .catch((error) => {
-                showAlert('Interaction', `Error while checking interaction:\n\n${error.message}`)
-              })
+                showAlert('Interaction', `Error while checking interaction:\n\n${error.message}`);
+              });
           }}
+          style={styles.button}
           title="Can Show Interaction?"
         />
 
         <Button
-          style={styles.button}
           onPress={() => {
-            this._openCustomDataModal('device')
+            this._openCustomDataModal('device');
           }}
+          style={styles.button}
           title="Device Data"
         />
 
         <Button
-          style={styles.button}
           onPress={() => {
-            this._openCustomDataModal('person')
+            this._openCustomDataModal('person');
           }}
+          style={styles.button}
           title="Person Data"
         />
 
         <Button
           onPress={() => {
-            this._openAuthModal()
+            this._openAuthModal();
           }}
           title="Authentication"
         />
@@ -166,38 +168,38 @@ export default class App extends Component {
   _renderCustomDataModal(mode) {
     if (this.state.mode !== 'none') {
       return (
-      <CustomDataModal
-        mode={mode}
-        closeHandler={() => { this._closeCustomDataModal() }}
-      />)
+        <CustomDataModal
+          closeHandler={() => { this._closeCustomDataModal(); }}
+          mode={mode}
+        />);
     }
-    return null
+    return null;
   }
 
   _renderAuthModal() {
     if (this.state.authModalVisible) {
       return (
-      <AuthModal
-        closeHandler={() => { this._closeAuthModal() }}
-      />)
+        <AuthModal
+          closeHandler={() => { this._closeAuthModal(); }}
+        />);
     }
-    return null
+    return null;
   }
 
   _openCustomDataModal(mode) {
-    this.setState({mode: mode})
+    this.setState({ mode });
   }
 
   _closeCustomDataModal() {
-    this.setState({mode: 'none'})
+    this.setState({ mode: 'none' });
   }
 
   _openAuthModal() {
-    this.setState({authModalVisible: true})
+    this.setState({ authModalVisible: true });
   }
 
   _closeAuthModal() {
-    this.setState({authModalVisible: false})
+    this.setState({ authModalVisible: false });
   }
 }
 
@@ -212,10 +214,10 @@ const styles = StyleSheet.create({
     height: 40,
     width: 300,
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
   },
   button: {
     width: 200,
-    height: 40
-  }
+    height: 40,
+  },
 });
