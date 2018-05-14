@@ -52,7 +52,7 @@ RCT_EXPORT_METHOD(
 	if (configuration) {
 		configuration.appID = configurationDictionary[@"appleID"];
 		configuration.distributionName = @"React Native";
-		configuration.distributionVersion = @"5.0.0";
+		configuration.distributionVersion = @"5.1.0";
 		[Apptentive registerWithConfiguration:configuration];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCenterUnreadCountChangedNotification:) name:ApptentiveMessageCenterUnreadCountChangedNotification object:nil];
