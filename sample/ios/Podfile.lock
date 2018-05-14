@@ -1,12 +1,12 @@
 PODS:
-  - apptentive-ios (5.0.3)
+  - apptentive-ios (5.1.0)
 
 DEPENDENCIES:
-  - apptentive-ios (= 5.0.3)
+  - apptentive-ios (= 5.1.0)
 
 SPEC CHECKSUMS:
-  apptentive-ios: ad55e169a5ad1d1b999f4f9e996948a2227c1bce
+  apptentive-ios: 8076dff6e16b3f223fea858663806ac2bc63d004
 
-PODFILE CHECKSUM: 560bee8688bf2b5ee064773d554a8a8c46aa1e81
+PODFILE CHECKSUM: 3b881b3c9fae5fa80174617896eaa194c8b580ac
 
 COCOAPODS: 1.4.0

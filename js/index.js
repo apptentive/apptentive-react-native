@@ -1,24 +1,24 @@
 
-import { NativeModules } from 'react-native'
-import { ApptentivePlatformSpecific } from './platform-specific'
+import { NativeModules } from 'react-native';
+import { ApptentivePlatformSpecific } from './platform-specific';
 
-const { RNApptentiveModule } = NativeModules
+const { RNApptentiveModule } = NativeModules;
 
 export class ApptentiveConfiguration {
   constructor(apptentiveKey, apptentiveSignature) {
-    this.apptentiveKey = apptentiveKey
-    this.apptentiveSignature = apptentiveSignature
-    this.logLevel = 'info'
-    this.shouldSanitizeLogMessages = true
+    this.apptentiveKey = apptentiveKey;
+    this.apptentiveSignature = apptentiveSignature;
+    this.logLevel = 'info';
+    this.shouldSanitizeLogMessages = true;
   }
   toString() {
-    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${shouldSanitizeLogMessages})`
+    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages})`;
   }
 }
 
-let _eventsRegistered = false
-let _onUnreadMessageCountChanged = function(count) {}
-let _onAuthenticationFailed = function(reason) {}
+let _eventsRegistered = false;
+let _onUnreadMessageCountChanged = function onUnreadMessageCountChanged(count) {};
+let _onAuthenticationFailed = function onAuthenticationFailed(reason) {};
 
 export class Apptentive {
   /**
@@ -27,24 +27,24 @@ export class Apptentive {
    */
   static register(apptentiveConfiguration) {
     if (!_eventsRegistered) {
-      _eventsRegistered = true
+      _eventsRegistered = true;
 
       // unread message count
-      const emitter = ApptentivePlatformSpecific.createApptentiveEventEmitter(RNApptentiveModule)
-      emitter.addListener('onUnreadMessageCountChanged', function(e: Event) {
+      const emitter = ApptentivePlatformSpecific.createApptentiveEventEmitter(RNApptentiveModule);
+      emitter.addListener('onUnreadMessageCountChanged', (e) => {
         if (_onUnreadMessageCountChanged !== undefined) {
-          _onUnreadMessageCountChanged(e.count)
+          _onUnreadMessageCountChanged(e.count);
         }
-      })
+      });
 
       // auth failure callback
-      emitter.addListener('onAuthenticationFailed', function(e: Event) {
+      emitter.addListener('onAuthenticationFailed', (e) => {
         if (_onAuthenticationFailed !== undefined) {
-          _onAuthenticationFailed(e.reason)
+          _onAuthenticationFailed(e.reason);
         }
-      })
+      });
     }
-    return RNApptentiveModule.register(apptentiveConfiguration)
+    return RNApptentiveModule.register(apptentiveConfiguration);
   }
 
   /**
@@ -53,7 +53,7 @@ export class Apptentive {
    * @return Promise with success boolean or error.
    */
   static presentMessageCenter(customData = null) {
-    return RNApptentiveModule.presentMessageCenter(customData)
+    return RNApptentiveModule.presentMessageCenter(customData);
   }
 
   // TODO: unread message count
@@ -63,7 +63,7 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static canShowMessageCenter() {
-    return RNApptentiveModule.canShowMessageCenter()
+    return RNApptentiveModule.canShowMessageCenter();
   }
 
   /**
@@ -71,7 +71,7 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static canShowInteraction(event) {
-    return RNApptentiveModule.canShowInteraction(event)
+    return RNApptentiveModule.canShowInteraction(event);
   }
 
   /**
@@ -81,7 +81,7 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static engage(event, customData = null) {
-    return RNApptentiveModule.engage(event, customData)
+    return RNApptentiveModule.engage(event, customData);
   }
 
   // TODO: extended data
@@ -90,7 +90,7 @@ export class Apptentive {
    * @return Promise with person name or error.
    */
   static getPersonName() {
-    return RNApptentiveModule.getPersonName()
+    return RNApptentiveModule.getPersonName();
   }
 
   /**
@@ -99,14 +99,14 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static setPersonName(value) {
-    return RNApptentiveModule.setPersonName(value)
+    return RNApptentiveModule.setPersonName(value);
   }
 
   /**
    * @return Promise with person email or error.
    */
   static getPersonEmail() {
-    return RNApptentiveModule.getPersonEmail()
+    return RNApptentiveModule.getPersonEmail();
   }
 
   /**
@@ -115,7 +115,7 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static setPersonEmail(value) {
-    return RNApptentiveModule.setPersonEmail(value)
+    return RNApptentiveModule.setPersonEmail(value);
   }
 
   /**
@@ -126,16 +126,16 @@ export class Apptentive {
    */
   static addCustomPersonData(key, value) {
     if (value !== null && value !== undefined) {
-      const type = typeof value
+      const type = typeof value;
       if (type === 'string') {
-        return RNApptentiveModule.addCustomPersonDataString(key, value)
+        return RNApptentiveModule.addCustomPersonDataString(key, value);
       } else if (type === 'number') {
-        return RNApptentiveModule.addCustomPersonDataNumber(key, value)
+        return RNApptentiveModule.addCustomPersonDataNumber(key, value);
       } else if (type === 'boolean') {
-        return RNApptentiveModule.addCustomPersonDataBool(key, value)
+        return RNApptentiveModule.addCustomPersonDataBool(key, value);
       }
     }
-    return Promise.reject("Your value should be either a string, number or bool")
+    return Promise.reject(new Error('Your value should be either a string, number or bool'));
   }
 
   /**
@@ -144,7 +144,7 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static removeCustomPersonData(key) {
-    return RNApptentiveModule.removeCustomPersonData(key)
+    return RNApptentiveModule.removeCustomPersonData(key);
   }
 
   /**
@@ -155,16 +155,16 @@ export class Apptentive {
    */
   static addCustomDeviceData(key, value) {
     if (value !== null && value !== undefined) {
-      const type = typeof value
+      const type = typeof value;
       if (type === 'string') {
-        return RNApptentiveModule.addCustomDeviceDataString(key, value)
+        return RNApptentiveModule.addCustomDeviceDataString(key, value);
       } else if (type === 'number') {
-        return RNApptentiveModule.addCustomDeviceDataNumber(key, value)
+        return RNApptentiveModule.addCustomDeviceDataNumber(key, value);
       } else if (type === 'boolean') {
-        return RNApptentiveModule.addCustomDeviceDataBool(key, value)
+        return RNApptentiveModule.addCustomDeviceDataBool(key, value);
       }
     }
-    return Promise.reject("Your value should be either a string, number or bool")
+    return Promise.reject(new Error('Your value should be either a string, number or bool'));
   }
 
   /**
@@ -173,7 +173,7 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static removeCustomDeviceData(key) {
-    return RNApptentiveModule.removeCustomDeviceData(key)
+    return RNApptentiveModule.removeCustomDeviceData(key);
   }
 
   /**
@@ -183,7 +183,7 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static logIn(token) {
-    return RNApptentiveModule.logIn(token)
+    return RNApptentiveModule.logIn(token);
   }
 
   /**
@@ -192,14 +192,14 @@ export class Apptentive {
    * @return Promise with boolean flag or error.
    */
   static logOut() {
-    return RNApptentiveModule.logOut()
+    return RNApptentiveModule.logOut();
   }
 
   /**
    * @return Current callback for the unread message count change in the Message Center.
    */
   static get onUnreadMessageCountChanged() {
-    return _onUnreadMessageCountChanged
+    return _onUnreadMessageCountChanged;
   }
 
   /**
@@ -207,14 +207,14 @@ export class Apptentive {
    * @param value Callback function with a single integer parameter.
    */
   static set onUnreadMessageCountChanged(value) {
-    _onUnreadMessageCountChanged = value
+    _onUnreadMessageCountChanged = value;
   }
 
   /**
    * @return Current callback for the authentication failures.
    */
   static get onAuthenticationFailed() {
-    return _onAuthenticationFailed
+    return _onAuthenticationFailed;
   }
 
   /**
@@ -222,11 +222,11 @@ export class Apptentive {
    * @param value Callback function with a single string parameter.
    */
   static set onAuthenticationFailed(value) {
-    _onAuthenticationFailed = value
+    _onAuthenticationFailed = value;
   }
 }
 
 module.exports = {
   Apptentive,
-  ApptentiveConfiguration
-}
+  ApptentiveConfiguration,
+};
