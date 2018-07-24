@@ -8,6 +8,8 @@ This document lets you know what has changed in the React Native module. For cha
 # 2018-07-24 - v5.1.1
 
 - Add podspec for projects integrating React via (deprecated) CocoaPod
+- Apptentive Android SDK: 5.1.5
+- Apptentive iOS SDK: 5.1.2
 
 # 2018-05-14 - v5.1.0
 
