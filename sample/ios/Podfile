@@ -6,7 +6,7 @@ target 'sample' do
   use_frameworks!
 
   # Pods for sample
-  pod 'apptentive-ios', '5.1.0'
+  pod 'apptentive-ios', '5.1.2'
 
   target 'sampleTests' do
     inherit! :search_paths
