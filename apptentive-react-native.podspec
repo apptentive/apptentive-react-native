@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "apptentive-react-native"
-  s.version = "5.1.1"
+  s.version = "5.1.2"
   s.summary      = "Apptentive SDK module for React Native"
 
   s.description  = <<-DESC
@@ -16,4 +16,5 @@ Pod::Spec.new do |s|
   s.source_files  = "ios/*.{h,m}"
   s.public_header_files = "ios/*.h"
   s.dependency "React"
+  s.dependency "apptentive-ios", "~>5.1"
 end
