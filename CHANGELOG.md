@@ -5,6 +5,10 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+# 2018-07-26 - v5.1.3
+
+- Fix check for registered status on iOS
+
 # 2018-07-26 - v5.1.2
 
 - Fix missing dependency in podspec
