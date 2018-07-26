@@ -62,11 +62,8 @@ RCT_EXPORT_METHOD(
 			[self sendEventWithName:@"onAuthenticationFailed" body:@{ @"reason": reasonString }];
 		};
 
-		if (Apptentive.shared != nil) {
-			resolve(configuration.distributionName);
-		} else {
-			rejecter(kRejectCode, @"Unable to register", nil);
-		}
+		_registered = YES;
+		resolve(configuration.distributionName);
 	} else {
 		rejecter(kRejectCode, @"Configuration returned nil", nil);
 	}
@@ -411,10 +408,6 @@ RCT_EXPORT_METHOD(
 
 
 RCT_EXPORT_MODULE()
-
-- (BOOL)isRegistered {
-	return Apptentive.shared != nil;
-}
 
 - (NSArray<NSString *> *)supportedEvents
 {
