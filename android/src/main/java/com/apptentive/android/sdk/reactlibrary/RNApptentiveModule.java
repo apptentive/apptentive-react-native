@@ -9,6 +9,7 @@ import com.apptentive.android.sdk.Apptentive;
 import com.apptentive.android.sdk.ApptentiveInternal;
 import com.apptentive.android.sdk.conversation.Conversation;
 import com.apptentive.android.sdk.conversation.ConversationDispatchTask;
+import com.apptentive.android.sdk.lifecycle.ApptentiveActivityLifecycleCallbacks;
 import com.apptentive.android.sdk.module.messagecenter.UnreadMessagesListener;
 import com.apptentive.android.sdk.util.ObjectUtils;
 import com.apptentive.android.sdk.util.StringUtils;
@@ -82,9 +83,11 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 				return;
 			}
 
-			instance.getRegisteredLifecycleCallbacks().onActivityCreated(currentActivity, null);
-			instance.getRegisteredLifecycleCallbacks().onActivityStarted(currentActivity);
-			instance.getRegisteredLifecycleCallbacks().onActivityResumed(currentActivity);
+			ApptentiveActivityLifecycleCallbacks lifecycleCallbacks = ApptentiveActivityLifecycleCallbacks.getInstance();
+			lifecycleCallbacks.onActivityCreated(currentActivity, null);
+			lifecycleCallbacks.onActivityStarted(currentActivity);
+			lifecycleCallbacks.onActivityResumed(currentActivity);
+
 			Apptentive.addUnreadMessagesListener(this);
 			Apptentive.setAuthenticationFailedListener(this);
 			promise.resolve(Boolean.TRUE);
