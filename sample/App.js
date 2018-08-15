@@ -59,6 +59,7 @@ export default class App extends Component {
 
     // Override log level (optional)
     configuration.logLevel = 'verbose';
+    configuration.shouldSanitizeLogMessages = false;
 
     // Register Apptentive
     Apptentive.register(configuration)

@@ -6,7 +6,9 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 
 import com.apptentive.android.sdk.Apptentive;
+import com.apptentive.android.sdk.ApptentiveConfiguration;
 import com.apptentive.android.sdk.ApptentiveInternal;
+import com.apptentive.android.sdk.ApptentiveLog;
 import com.apptentive.android.sdk.conversation.Conversation;
 import com.apptentive.android.sdk.conversation.ConversationDispatchTask;
 import com.apptentive.android.sdk.lifecycle.ApptentiveActivityLifecycleCallbacks;
@@ -46,7 +48,7 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 	//region JavaScript bindings
 
 	@ReactMethod
-	public void register(ReadableMap configuration, Promise promise) {
+	public void register(ReadableMap configurationMap, Promise promise) {
 		try {
 			Application application = reactContextWrapper.getApplication();
 
@@ -56,7 +58,7 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 				return;
 			}
 
-			Map<String, Object> config = toHashMap(configuration);
+			Map<String, Object> config = toHashMap(configurationMap);
 			String apptentiveKey = ObjectUtils.as(config.get("apptentiveKey"), String.class);
 			if (StringUtils.isNullOrEmpty(apptentiveKey)) {
 				promise.reject(CODE_APPTENTIVE, "Apptentive key is null or empty");
@@ -69,7 +71,13 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 				return;
 			}
 
-			Apptentive.register(application, apptentiveKey, apptentiveSignature);
+			ApptentiveConfiguration configuration = new ApptentiveConfiguration(apptentiveKey, apptentiveSignature);
+			ApptentiveLog.Level logLevel = parseLogLevel(ObjectUtils.as(config.get("logLevel"), String.class));
+			if (logLevel != null) {
+				configuration.setLogLevel(logLevel);
+			}
+			configuration.setShouldSanitizeLogMessages(getBoolean(config, "logLevel", false));
+			Apptentive.register(application, configuration);
 
 			ApptentiveInternal instance = ObjectUtils.as(ApptentiveInternal.getInstance(), ApptentiveInternal.class);
 			if (instance == null) {
@@ -94,6 +102,31 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 		} catch (Exception e) {
 			promise.reject(CODE_APPTENTIVE, "Exception while initialized Apptentive", e);
 		}
+	}
+
+	private ApptentiveLog.Level parseLogLevel(String logLevel) {
+		if (!StringUtils.isNullOrEmpty(logLevel)) {
+			switch (logLevel.toLowerCase()) {
+				case "verbose":
+					return ApptentiveLog.Level.VERBOSE;
+				case "debug":
+					return ApptentiveLog.Level.DEBUG;
+				case "info":
+					return ApptentiveLog.Level.INFO;
+				case "warn":
+				case "warning":
+					return ApptentiveLog.Level.WARN;
+				case "error":
+					return ApptentiveLog.Level.ERROR;
+			}
+		}
+
+		return null;
+	}
+
+	private boolean getBoolean(Map<String, Object> config, String key, boolean defaultValue) {
+		Boolean value = ObjectUtils.as(config.get(key), Boolean.class);
+		return value != null ? value : defaultValue;
 	}
 
 	@ReactMethod
