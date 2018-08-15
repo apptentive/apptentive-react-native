@@ -76,7 +76,12 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 			if (logLevel != null) {
 				configuration.setLogLevel(logLevel);
 			}
-			configuration.setShouldSanitizeLogMessages(getBoolean(config, "logLevel", false));
+
+			Boolean shouldSanitizeLogMessages = ObjectUtils.as(config.get("shouldSanitizeLogMessages"), Boolean.class);
+			if (shouldSanitizeLogMessages != null) {
+				configuration.setShouldSanitizeLogMessages(shouldSanitizeLogMessages);
+			}
+
 			Apptentive.register(application, configuration);
 
 			ApptentiveInternal instance = ObjectUtils.as(ApptentiveInternal.getInstance(), ApptentiveInternal.class);
@@ -122,11 +127,6 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 		}
 
 		return null;
-	}
-
-	private boolean getBoolean(Map<String, Object> config, String key, boolean defaultValue) {
-		Boolean value = ObjectUtils.as(config.get(key), Boolean.class);
-		return value != null ? value : defaultValue;
 	}
 
 	@ReactMethod
