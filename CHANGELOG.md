@@ -5,6 +5,12 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+# 2018-09-14 - v5.2.0
+
+- Allow registration of iOS SDK from native code
+- Apptentive Android SDK: 5.3.0
+- Apptentive iOS SDK: 5.2.0
+
 # 2018-08-15 - v5.1.4
 
 - Fixed Android build issues
