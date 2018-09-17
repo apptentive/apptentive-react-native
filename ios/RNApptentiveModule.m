@@ -52,7 +52,7 @@ RCT_EXPORT_METHOD(
 	if (configuration) {
 		configuration.appID = configurationDictionary[@"appleID"];
 		configuration.distributionName = @"React Native";
-		configuration.distributionVersion = @"5.1.4";
+		configuration.distributionVersion = @"5.2.0";
 		[Apptentive registerWithConfiguration:configuration];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCenterUnreadCountChangedNotification:) name:ApptentiveMessageCenterUnreadCountChangedNotification object:nil];
@@ -62,7 +62,6 @@ RCT_EXPORT_METHOD(
 			[self sendEventWithName:@"onAuthenticationFailed" body:@{ @"reason": reasonString }];
 		};
 
-		_registered = YES;
 		resolve(configuration.distributionName);
 	} else {
 		rejecter(kRejectCode, @"Configuration returned nil", nil);
@@ -409,6 +408,10 @@ RCT_EXPORT_METHOD(
 
 RCT_EXPORT_MODULE()
 
+- (BOOL)isRegistered {
+	return Apptentive.shared.apptentiveKey != nil && Apptentive.shared.apptentiveSignature != nil;
+}
+
 - (NSArray<NSString *> *)supportedEvents
 {
 	return @[@"onUnreadMessageCountChanged", @"onAuthenticationFailed"];
@@ -450,4 +453,3 @@ RCT_EXPORT_MODULE()
 }
 
 @end
-
