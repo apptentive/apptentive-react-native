@@ -232,7 +232,7 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 	}
 
 	@ReactMethod
-	public void addCustomPersonDataNumber(final String key, final Number value, final Promise promise) {
+	public void addCustomPersonDataNumber(final String key, final Integer value, final Promise promise) {
 		final String description = "add custom person data number";
 		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
 			@Override
