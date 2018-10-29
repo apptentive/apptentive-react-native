@@ -130,7 +130,7 @@ export class Apptentive {
       if (type === 'string') {
         return RNApptentiveModule.addCustomPersonDataString(key, value);
       } else if (type === 'number') {
-        return RNApptentiveModule.addCustomPersonDataNumber(key, value);
+        return RNApptentiveModule.addCustomPersonDataNumber(key, ApptentivePlatformSpecific.exportNumber(value));
       } else if (type === 'boolean') {
         return RNApptentiveModule.addCustomPersonDataBool(key, value);
       }
