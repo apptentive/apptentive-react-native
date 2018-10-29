@@ -232,12 +232,18 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 	}
 
 	@ReactMethod
-	public void addCustomPersonDataNumber(final String key, final Number value, final Promise promise) {
+	public void addCustomPersonDataNumber(final String key, final String value, final Promise promise) {
 		final String description = "add custom person data number";
 		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
 			@Override
 			protected boolean execute(Conversation conversation) {
-				Apptentive.addCustomPersonData(key, value);
+				Number number = parseNumber(value);
+				if (number == null) {
+					promise.reject(CODE_APPTENTIVE, "Invalid number value: '" + value + "'");
+					return false;
+				}
+
+				Apptentive.addCustomPersonData(key, number);
 				promise.resolve(true);
 				return true;
 			}
@@ -284,12 +290,18 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 	}
 
 	@ReactMethod
-	public void addCustomDeviceDataNumber(final String key, final Number value, final Promise promise) {
+	public void addCustomDeviceDataNumber(final String key, final String value, final Promise promise) {
 		final String description = "add custom device data number";
 		dispatchConversationTask(new ConversationDispatchTask(new PromiseFailOnlyCallback(promise, description)) {
 			@Override
 			protected boolean execute(Conversation conversation) {
-				Apptentive.addCustomDeviceData(key, value);
+				Number number = parseNumber(value);
+				if (number == null) {
+					promise.reject(CODE_APPTENTIVE, "Invalid number value: '" + value + "'");
+					return false;
+				}
+
+				Apptentive.addCustomDeviceData(key, number);
 				promise.resolve(true);
 				return true;
 			}
@@ -482,6 +494,22 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 				}
 			}
 		}
+	}
+
+	//endregion
+
+	//region Helpers
+
+	private static @Nullable Number parseNumber(String value) {
+		try {
+			return Long.parseLong(value);
+		} catch (Exception ignored) {
+		}
+		try {
+			return Double.parseDouble(value);
+		} catch (Exception ignored) {
+		}
+		return null;
 	}
 
 	//endregion
