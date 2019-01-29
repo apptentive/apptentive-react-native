@@ -1,23 +1,23 @@
-
 buildscript {
     repositories {
         jcenter()
+        google()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.3.0'
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -31,7 +31,6 @@ repositories {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+'
-    compile 'com.apptentive:apptentive-android:5.3.3'
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'com.apptentive:apptentive-android:5.4.0'
 }
-  
