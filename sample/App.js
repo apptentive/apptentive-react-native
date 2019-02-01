@@ -29,6 +29,7 @@ const credentials = Platform.select({
   android: {
     apptentiveKey: '<YOUR_ANDROID_APPTENTIVE_KEY>',
     apptentiveSignature: '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>',
+    // shouldEncryptStorage: true,
   },
 });
 
