@@ -29,7 +29,6 @@ const credentials = Platform.select({
   android: {
     apptentiveKey: '<YOUR_ANDROID_APPTENTIVE_KEY>',
     apptentiveSignature: '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>',
-    // shouldEncryptStorage: true,
   },
 });
 
@@ -61,6 +60,7 @@ export default class App extends Component {
     // Override log level (optional)
     configuration.logLevel = 'verbose';
     configuration.shouldSanitizeLogMessages = false;
+    // configuration.shouldEncryptStorage = true; // TODO: uncomment this line to enable encrypted storage
 
     // Register Apptentive
     Apptentive.register(configuration)
