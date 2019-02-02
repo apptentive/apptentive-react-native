@@ -10,9 +10,10 @@ export class ApptentiveConfiguration {
     this.apptentiveSignature = apptentiveSignature;
     this.logLevel = 'info';
     this.shouldSanitizeLogMessages = true;
+    this.shouldEncryptStorage = false;
   }
   toString() {
-    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages})`;
+    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages}, shouldEncryptStorage=${this.shouldEncryptStorage})`;
   }
 }
 
