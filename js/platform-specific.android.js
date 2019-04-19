@@ -9,7 +9,7 @@ export class ApptentivePlatformSpecific {
    * Android library would automatically cast values to Integer.
    */
   static exportNumber(value) {
-    return value.toString()
+    return value.toString();
   }
 }
 
