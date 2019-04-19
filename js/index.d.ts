@@ -2,7 +2,7 @@
 // Project: apptentive-react-native
 // Definitions by: Matthew Callis
 
-export = ApptentiveConfiguration;
+export { ApptentiveConfiguration, Apptentive }
 
 declare class ApptentiveConfiguration {
     constructor(apptentiveKey: string, apptentiveSignature: string);
@@ -23,8 +23,6 @@ interface ApptentiveConfiguration {
   shouldSanitizeLogMessages: boolean;
   shouldEncryptStorage: boolean;
 }
-
-export = Apptentive;
 
 declare class Apptentive {
     static register(apptentiveConfiguration: ApptentiveConfiguration): Promise;
