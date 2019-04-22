@@ -25,28 +25,21 @@ interface ApptentiveConfiguration {
 }
 
 declare class Apptentive {
-    static register(apptentiveConfiguration: ApptentiveConfiguration): Promise;
-    static presentMessageCenter(customData: object): Promise;
-    static canShowMessageCenter(): Promise;
-    static canShowInteraction(event: string): Promise;
-    static engage(event: string, customData: object): Promise;
-    static getPersonName(): Promise;
-    static setPersonName(value: string): Promise;
-    static getPersonEmail(): Promise;
-    static setPersonEmail(value: string): Promise;
-    static addCustomPersonData(key: string, value: any): Promise;
-    static removeCustomPersonData(key: string): Promise;
-    static addCustomDeviceData(key: string, value: any): Promise;
-    static removeCustomDeviceData(key: string): Promise;
-    static logIn(token: string): Promise;
-    static logOut(): Promise;
-    static get onUnreadMessageCountChanged(): number;
-    static set onUnreadMessageCountChanged(value: number): void;
-    static get onAuthenticationFailed(): string;
-    static set onAuthenticationFailed(value: string): void;
-}
-
-declare class ApptentivePlatformSpecific {
-    createApptentiveEventEmitter(nativeModule: any);
-    exportNumber(value: number): any;
+    static register(apptentiveConfiguration: ApptentiveConfiguration): Promise<any>;
+    static presentMessageCenter(customData?: object): Promise<any>;
+    static canShowMessageCenter(): Promise<any>;
+    static canShowInteraction(event: string): Promise<any>;
+    static engage(event: string, customData?: object): Promise<any>;
+    static getPersonName(): Promise<any>;
+    static setPersonName(value: string): Promise<any>;
+    static getPersonEmail(): Promise<any>;
+    static setPersonEmail(value: string): Promise<any>;
+    static addCustomPersonData(key: string, value: any): Promise<any>;
+    static removeCustomPersonData(key: string): Promise<any>;
+    static addCustomDeviceData(key: string, value: any): Promise<any>;
+    static removeCustomDeviceData(key: string): Promise<any>;
+    static logIn(token: string): Promise<any>;
+    static logOut(): Promise<any>;
+    static onUnreadMessageCountChanged(value?: number): void;
+    static onAuthenticationFailed(value?: string): void;
 }
