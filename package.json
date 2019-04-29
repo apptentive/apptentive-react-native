@@ -2,10 +2,15 @@
   "name": "apptentive-react-native",
   "version": "5.4.1",
   "description": "React Native Module for Apptentive SDK",
-  "main": "js/index.js",
+  "main": "apptentive-react-native",
+  "types": "js/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "js",
+    "LICENSE"
+  ],
   "keywords": [
     "apptentive",
     "react",
