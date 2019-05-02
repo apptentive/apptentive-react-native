@@ -102,7 +102,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.sample"
+        applicationId "com.apptentive.reactnative.sample"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
