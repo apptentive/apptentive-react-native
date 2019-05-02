@@ -1,4 +1,4 @@
-package com.sample;
+package com.apptentive.reactnative.sample;
 
 import android.app.Application;
 
