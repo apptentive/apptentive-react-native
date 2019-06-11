@@ -1,4 +1,3 @@
-
 import { NativeModules } from 'react-native';
 import { ApptentivePlatformSpecific } from './platform-specific';
 
@@ -10,9 +9,10 @@ export class ApptentiveConfiguration {
     this.apptentiveSignature = apptentiveSignature;
     this.logLevel = 'info';
     this.shouldSanitizeLogMessages = true;
+    this.shouldEncryptStorage = false;
   }
   toString() {
-    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages})`;
+    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages}, shouldEncryptStorage=${this.shouldEncryptStorage})`;
   }
 }
 
@@ -68,6 +68,7 @@ export class Apptentive {
 
   /**
    * Checks whether the given event will cause an Interaction to be shown.
+   * @param event A string representing the name of the event.
    * @return Promise with boolean flag or error.
    */
   static canShowInteraction(event) {

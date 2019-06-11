@@ -82,6 +82,11 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 				configuration.setShouldSanitizeLogMessages(shouldSanitizeLogMessages);
 			}
 
+			Boolean shouldEncryptStorage = ObjectUtils.as(config.get("shouldEncryptStorage"), Boolean.class);
+			if (shouldEncryptStorage != null) {
+				configuration.setShouldEncryptStorage(shouldEncryptStorage);
+			}
+
 			Apptentive.register(application, configuration);
 
 			ApptentiveInternal instance = ObjectUtils.as(ApptentiveInternal.getInstance(), ApptentiveInternal.class);

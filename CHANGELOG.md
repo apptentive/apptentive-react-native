@@ -5,6 +5,28 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+# 2019-05-17 - v5.4.2
+
+- Added TypeScript definitions
+- Apptentive Android SDK: 5.4.2
+- Apptentive iOS SDK: 5.2.4
+
+# 2019-02-01 - v5.4.1
+
+- Added ability to control Android SDK encrypted storage
+- Apptentive Android SDK: 5.4.0
+- Apptentive iOS SDK: 5.2.3
+
+# 2019-01-29 - v5.4.0
+
+- Apptentive Android SDK: 5.4.0
+- Apptentive iOS SDK: 5.2.3
+
+# 2018-10-29 - v5.3.2
+
+- Apptentive Android SDK: 5.3.3
+- Apptentive iOS SDK: 5.2.3
+
 # 2018-10-29 - v5.3.1
 
 - Apptentive Android SDK: 5.3.2
