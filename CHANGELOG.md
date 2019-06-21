@@ -5,6 +5,10 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+# 2019-06-21 - v5.4.3
+
+- Fix missing `ios` and `android` directories
+
 # 2019-05-17 - v5.4.2
 
 - Added TypeScript definitions
