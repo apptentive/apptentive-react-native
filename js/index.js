@@ -160,7 +160,7 @@ export class Apptentive {
       if (type === 'string') {
         return RNApptentiveModule.addCustomDeviceDataString(key, value);
       } else if (type === 'number') {
-        return RNApptentiveModule.addCustomDeviceDataNumber(key, value);
+        return RNApptentiveModule.addCustomDeviceDataNumber(key, ApptentivePlatformSpecific.exportNumber(value));
       } else if (type === 'boolean') {
         return RNApptentiveModule.addCustomDeviceDataBool(key, value);
       }
