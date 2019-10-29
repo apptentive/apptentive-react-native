@@ -207,6 +207,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../ios/Pods/apptentive-ios/**",
 					"$(inherited)",
+					"\"$(SRCROOT)/../../../ios/Pods/Headers/Public/React-Core\"",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
@@ -221,6 +222,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../../ios/Pods/apptentive-ios/**",
 					"$(inherited)",
+					"\"$(SRCROOT)/../../../ios/Pods/Headers/Public/React-Core\"",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
