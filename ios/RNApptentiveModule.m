@@ -1,5 +1,5 @@
 #import "RNApptentiveModule.h"
-#import <Apptentive/Apptentive.h>
+#import "Apptentive.h"
 
 static NSString *const kRejectCode = @"ApptentiveModule";
 extern ApptentiveLogLevel ApptentiveLogLevelFromString(NSString *level);
