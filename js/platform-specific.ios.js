@@ -4,8 +4,9 @@ export class ApptentivePlatformSpecific {
   static createApptentiveEventEmitter(nativeModule) {
     return new NativeEventEmitter(nativeModule);
   }
+
   static exportNumber(value) {
-    return value
+    return value;
   }
 }
 
