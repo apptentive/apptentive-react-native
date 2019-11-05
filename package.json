@@ -11,6 +11,7 @@
     "android",
     "ios",
     "js",
+    "apptentive-react-native.podspec",
     "LICENSE"
   ],
   "keywords": [
