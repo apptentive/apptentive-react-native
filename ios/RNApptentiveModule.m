@@ -1,5 +1,5 @@
 #import "RNApptentiveModule.h"
-#import <Apptentive/Apptentive.h>
+#import "Apptentive.h"
 
 static NSString *const kRejectCode = @"ApptentiveModule";
 extern ApptentiveLogLevel ApptentiveLogLevelFromString(NSString *level);
@@ -52,7 +52,7 @@ RCT_EXPORT_METHOD(
 	if (configuration) {
 		configuration.appID = configurationDictionary[@"appleID"];
 		configuration.distributionName = @"React Native";
-		configuration.distributionVersion = @"5.4.4";
+		configuration.distributionVersion = @"5.4.5";
 		[Apptentive registerWithConfiguration:configuration];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCenterUnreadCountChangedNotification:) name:ApptentiveMessageCenterUnreadCountChangedNotification object:nil];
