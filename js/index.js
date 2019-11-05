@@ -11,6 +11,7 @@ export class ApptentiveConfiguration {
     this.shouldSanitizeLogMessages = true;
     this.shouldEncryptStorage = false;
   }
+
   toString() {
     return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages}, shouldEncryptStorage=${this.shouldEncryptStorage})`;
   }
@@ -130,9 +131,11 @@ export class Apptentive {
       const type = typeof value;
       if (type === 'string') {
         return RNApptentiveModule.addCustomPersonDataString(key, value);
-      } else if (type === 'number') {
+      }
+      if (type === 'number') {
         return RNApptentiveModule.addCustomPersonDataNumber(key, ApptentivePlatformSpecific.exportNumber(value));
-      } else if (type === 'boolean') {
+      }
+      if (type === 'boolean') {
         return RNApptentiveModule.addCustomPersonDataBool(key, value);
       }
     }
@@ -159,9 +162,11 @@ export class Apptentive {
       const type = typeof value;
       if (type === 'string') {
         return RNApptentiveModule.addCustomDeviceDataString(key, value);
-      } else if (type === 'number') {
-        return RNApptentiveModule.addCustomDeviceDataNumber(key, value);
-      } else if (type === 'boolean') {
+      }
+      if (type === 'number') {
+        return RNApptentiveModule.addCustomDeviceDataNumber(key, ApptentivePlatformSpecific.exportNumber(value));
+      }
+      if (type === 'boolean') {
         return RNApptentiveModule.addCustomDeviceDataBool(key, value);
       }
     }
