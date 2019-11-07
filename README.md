@@ -9,7 +9,7 @@
 
 ### Install Apptentive CocoaPod (for iOS)
 
-`$ cd ios`
+`$ cd ios`  
 `$ pod install`
 
 ## Usage
