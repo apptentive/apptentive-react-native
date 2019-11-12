@@ -1,68 +1,13 @@
-import React, { Component } from 'react';
-import { View, Text, Modal, Button, TextInput } from 'react-native';
+/* eslint-disable react/jsx-max-depth */
+/* eslint-disable react/no-unused-state */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/no-set-state */
+import React from 'react';
+import { View, Modal, Button, TextInput } from 'react-native';
 import { Apptentive } from 'apptentive-react-native';
-import { showAlert } from '../helpers'
+import showAlert from '../helpers';
 
-export default class CustomDataModal extends Component {
-  constructor() {
-    super()
-    this.state = { isLoggedIn: false, JWT: '' }
-  }
-
-  render() {
-    return (
-      <Modal
-        animationType="slide"
-        transparent={false}
-        onRequestClose={() => { this.props.closeHandler() }}
-        >
-        <View style={styles.container} >
-          <TextInput
-            style={styles.borderedTextInput}
-            placeholder={'JWT'}
-            value={this.state.JWT}
-            onChangeText={(text) => this.setState({JWT: text})}
-          />
-          <View style={styles.buttonContainer}>
-            <Button title='Login' onPress={() => {
-                this._login()
-              }}
-            />
-            <Button title='Logout' onPress={() => {
-                this._logout()
-              }}
-            />
-          </View>
-        </View>
-    </Modal>);
-  }
-
-  _login() {
-    Apptentive.logIn(this.state.JWT)
-      .then(() => {
-        this.setState({isLoggedIn: true});
-        showAlert("Login", "Success!", this.props.closeHandler)
-      })
-      .catch((errorMessage) => {
-        showAlert("Login Failed", errorMessage.message, this.props.closeHandler)
-      });
-  }
-
-  _logout() {
-    Apptentive.logOut()
-      .then(() => {
-        this.setState({isLoggedIn: true});
-        showAlert("Logout", "Success!", this.props.closeHandler)
-      })
-      .catch((errorMessage) => {
-        showAlert("Logout failed", errorMessage.message, this.props.closeHandler)
-      });
-
-    this.setState({isLoggedIn: false})
-  }
-}
-
-styles = {
+const styles = {
   container: {
     marginTop: 22,
     flex: 1,
@@ -71,12 +16,95 @@ styles = {
   buttonContainer: {
     width: 300,
     height: 40,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   borderedTextInput: {
     height: 40,
     width: 300,
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+  },
+};
+
+export default class CustomDataModal extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      isLoggedIn: false,
+      JWT: '',
+    };
+
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogin() {
+    const { closeHandler } = this.props;
+    const { JWT } = this.state;
+    Apptentive.logIn(JWT).then(() => {
+      this.setState({ isLoggedIn: true });
+      showAlert('Login', 'Success!', closeHandler);
+    }).catch((errorMessage) => {
+      showAlert('Login Failed', errorMessage.message, closeHandler);
+    });
+  }
+
+  handleLogout() {
+    const { closeHandler } = this.props;
+    Apptentive.logOut().then(() => {
+      this.setState({ isLoggedIn: true });
+      showAlert('Logout', 'Success!', closeHandler);
+    }).catch((errorMessage) => {
+      showAlert('Logout failed', errorMessage.message, closeHandler);
+    });
+
+    this.setState({ isLoggedIn: false });
+  }
+
+  render() {
+    const { closeHandler } = this.props;
+    const { JWT } = this.state;
+    return (
+      // eslint-disable-next-line react/jsx-filename-extension
+      <Modal
+        accessibilityLabel="auth-modal"
+        animationType="slide"
+        onRequestClose={closeHandler}
+        testID="auth-modal"
+        transparent={false}
+      >
+        <View
+          accessibilityLabel="auth-modal-view"
+          style={styles.container}
+          testID="auth-modal-view"
+        >
+          <TextInput
+            accessibilityLabel="text-input-jwt"
+            onChangeText={text => this.setState({ JWT: text })}
+            placeholder="JWT"
+            style={styles.borderedTextInput}
+            testID="text-input-jwt"
+            value={JWT}
+          />
+          <View
+            accessibilityLabel="view-button-container"
+            style={styles.buttonContainer}
+            testID="button-container"
+          >
+            <Button
+              accessibilityLabel="button-login"
+              onPress={this.handleLogin}
+              testID="button-login"
+              title="Login"
+            />
+            <Button
+              accessibilityLabel="button-logout"
+              onPress={this.handleLogout}
+              testID="button-logout"
+              title="Logout"
+            />
+          </View>
+        </View>
+      </Modal>);
   }
 }
