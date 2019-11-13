@@ -25,12 +25,12 @@ import showAlert from './src/helpers';
 // From https://be.apptentive.com/apps/:id/settings/api
 const credentials = Platform.select({
   ios: {
-    apptentiveKey: '<YOUR_IOS_APPTENTIVE_KEY>',
-    apptentiveSignature: '<YOUR_IOS_APPTENTIVE_SIGNATURE>',
+    apptentiveKey: '___YOUR_IOS_APPTENTIVE_KEY___',
+    apptentiveSignature: '___YOUR_IOS_APPTENTIVE_SIGNATURE___',
   },
   android: {
-    apptentiveKey: '<YOUR_ANDROID_APPTENTIVE_KEY>',
-    apptentiveSignature: '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>',
+    apptentiveKey: '___YOUR_ANDROID_APPTENTIVE_KEY___',
+    apptentiveSignature: '___YOUR_ANDROID_APPTENTIVE_SIGNATURE___',
   },
 });
 
@@ -77,12 +77,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    if (credentials.apptentiveKey === '<YOUR_IOS_APPTENTIVE_KEY>' || credentials.apptentiveKey === '<YOUR_ANDROID_APPTENTIVE_KEY>') {
+    if (!credentials.apptentiveKey || credentials.apptentiveKey === '___YOUR_IOS_APPTENTIVE_KEY___' || credentials.apptentiveKey === '___YOUR_ANDROID_APPTENTIVE_KEY___') {
       showAlert('Error', 'Please, provide Apptentive Key');
       return;
     }
 
-    if (credentials.apptentiveSignature === '<YOUR_IOS_APPTENTIVE_SIGNATURE>' || credentials.apptentiveSignature === '<YOUR_ANDROID_APPTENTIVE_SIGNATURE>') {
+    if (!credentials.apptentiveSignature || credentials.apptentiveSignature === '___YOUR_IOS_APPTENTIVE_SIGNATURE___' || credentials.apptentiveSignature === '___YOUR_ANDROID_APPTENTIVE_SIGNATURE___') {
       showAlert('Error', 'Please, provide Apptentive Signature');
       return;
     }
