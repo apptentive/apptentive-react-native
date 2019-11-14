@@ -3,12 +3,12 @@ package com.apptentive.android.sdk.reactlibrary;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import com.apptentive.android.sdk.Apptentive;
 import com.apptentive.android.sdk.ApptentiveConfiguration;
 import com.apptentive.android.sdk.ApptentiveInternal;
 import com.apptentive.android.sdk.ApptentiveLog;
+import com.apptentive.android.sdk.Availability;
 import com.apptentive.android.sdk.conversation.Conversation;
 import com.apptentive.android.sdk.conversation.ConversationDispatchTask;
 import com.apptentive.android.sdk.lifecycle.ApptentiveActivityLifecycleCallbacks;
@@ -25,6 +25,8 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 
 import java.util.Map;
+
+import androidx.annotation.Nullable;
 
 import static com.apptentive.android.sdk.ApptentiveHelper.dispatchConversationTask;
 
@@ -51,6 +53,11 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 	public void register(ReadableMap configurationMap, Promise promise) {
 		try {
 			Application application = reactContextWrapper.getApplication();
+
+			if (!Availability.isAndroidX()) {
+				promise.reject(CODE_APPTENTIVE, "https://learn.apptentive.com/knowledge-base/react-native-integration-reference/#migrating-from-support-library-to-androidx");
+				return;
+			}
 
 			// TODO: override log level
 			if (ApptentiveInternal.isApptentiveRegistered()) {
