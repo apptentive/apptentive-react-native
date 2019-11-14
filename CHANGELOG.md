@@ -5,6 +5,12 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+# 2019-11-14 - v5.5.0
+
+- Fixed React Native `0.60.+` incompatibility on Android. For more information: https://learn.apptentive.com/knowledge-base/react-native-integration-reference/#migrating-from-support-library-to-androidx
+- Apptentive Android SDK: 5.5.0
+- Apptentive iOS SDK: 5.2.7
+
 # 2019-11-05 - v5.4.6
 
 - Fixed `podspec` file for 0.60-style auto-linking.
