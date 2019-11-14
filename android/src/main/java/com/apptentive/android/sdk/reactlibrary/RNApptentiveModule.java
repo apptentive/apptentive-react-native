@@ -55,7 +55,7 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 			Application application = reactContextWrapper.getApplication();
 
 			if (!Availability.isAndroidX()) {
-				promise.reject(CODE_APPTENTIVE, "https://learn.apptentive.com/knowledge-base/react-native-integration-reference/#migrating-from-support-library-to-androidx");
+				promise.reject(CODE_APPTENTIVE, "Unable to register Apptentive SDK: AndroidX support required. For more information see: https://learn.apptentive.com/knowledge-base/react-native-integration-reference/#migrating-from-support-library-to-androidx");
 				return;
 			}
 
