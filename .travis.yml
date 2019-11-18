@@ -3,8 +3,8 @@ jobs:
     - stage: Android e2e Test
       language: android
       dist: trusty
-      before_install: #1.1
-        - nvm install 6
+      before_install:
+        - nvm install 10
         - node --version
       android:
         components:
