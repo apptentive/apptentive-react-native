@@ -88,29 +88,22 @@ public class ChangeTextBehaviorTest {
                 .perform(click());
     }
 
+    @Test
+    public void canShowInteraction() {
+        onView(withContentDescription("input-event-name"))
+                .perform(clearText())
+                .perform(typeText("test"));
 
-//    @Test
-//    public void messageCenter() {
-//        onView(withText("MESSAGE CENTER"))
-//                .perform(click());
-//
-//    }
-//
-//    @Test
-//    public void interaction() {
-//        onView(withText("CAN SHOW INTERACTION?"))
-//                .perform(click());
-//    }
-//
-//    @Test
-//    public void deviceData() {
-//        onView(withText("DEVICE DATA"))
-//                .perform(click());
-//    }
-//
-//    @Test
-//    public void personData() {
-//        onView(withText("PERSON DATA"))
-//                .perform(click());
-//    }
+        onView(withContentDescription("button-can-show-interaction"))
+                .check(matches(isDisplayed()))
+                .perform(click());
+
+        onView(withId(android.R.id.message))
+                .inRoot(isDialog())
+                .check(matches(withText(endsWith("true"))));
+
+        onView(withId(android.R.id.button1))
+                .inRoot(isDialog())
+                .perform(click());
+    }
 }
