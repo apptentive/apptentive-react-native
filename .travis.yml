@@ -1,9 +1,13 @@
 jobs:
   include:
-
     - stage: Android e2e Test
       language: android
       dist: trusty
+      before_install: #1.1
+        - nvm install 6
+        - node --version
+      install: #1.2
+        - npm install
       android:
         components:
           - tools
@@ -26,9 +30,11 @@ jobs:
           - sys-img-x86-android-28
           # - sys-img-armeabi-v7a-android-17
         licenses:
-          - 'android-sdk-preview-license-52d11cd2'
-          - 'android-sdk-license-.+'
-          - 'google-gdk-license-.+'
+          - "android-sdk-preview-license-52d11cd2"
+          - "android-sdk-license-.+"
+          - "google-gdk-license-.+"
       script:
-        - cd sample61/android/
+        - cd sample61/
+        - npm start &
+        - cd android/
         - ./gradlew connectedAndroidTest
