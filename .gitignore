@@ -47,3 +47,5 @@ buck-out/
       
 # CocoaPods
 Pods
+
+.vscode/
