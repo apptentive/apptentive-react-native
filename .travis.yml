@@ -6,8 +6,6 @@ jobs:
       before_install: #1.1
         - nvm install 6
         - node --version
-      install: #1.2
-        - npm install
       android:
         components:
           - tools
@@ -35,6 +33,7 @@ jobs:
           - "google-gdk-license-.+"
       script:
         - cd sample61/
+        - npm install 
         - npm start &
         - cd android/
         - ./gradlew connectedAndroidTest
