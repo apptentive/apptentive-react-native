@@ -1,0 +1,5 @@
+language: objective-c
+podfile: sample61/ios/Podfile
+osx_image: xcode11.2
+script:
+  - xcodebuild -workspace sample61/ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11,OS=13.0' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
