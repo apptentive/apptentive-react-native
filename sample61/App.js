@@ -25,12 +25,12 @@ import showAlert from './src/helpers';
 // From https://be.apptentive.com/apps/:id/settings/api
 const credentials = Platform.select({
   ios: {
-    apptentiveKey: process.env.IOS_APPTENTIVE_KEY || '',
-    apptentiveSignature: process.env.IOS_APPTENTIVE_SIGNATURE || '',
+    apptentiveKey: '___YOUR_IOS_APPTENTIVE_KEY___',
+    apptentiveSignature: '___YOUR_IOS_APPTENTIVE_SIGNATURE___',
   },
   android: {
-    apptentiveKey: process.env.ANDROID_APPTENTIVE_KEY || '',
-    apptentiveSignature: process.env.ANDROID_APPTENTIVE_SIGNATURE || '',
+    apptentiveKey: '___YOUR_ANDROID_APPTENTIVE_KEY___',
+    apptentiveSignature: '___YOUR_ANDROID_APPTENTIVE_SIGNATURE___',
   },
 });
 
