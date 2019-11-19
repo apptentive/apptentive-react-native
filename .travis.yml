@@ -12,6 +12,7 @@ jobs:
       before_install:
         - nvm install 10
         - node --version
+      install: skip
       android:
         components:
           - tools
