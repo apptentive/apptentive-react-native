@@ -77,12 +77,12 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    if (!credentials.apptentiveKey || credentials.apptentiveKey === '___YOUR_IOS_APPTENTIVE_KEY___' || credentials.apptentiveKey === '___YOUR_ANDROID_APPTENTIVE_KEY___') {
+    if (!credentials.apptentiveKey) {
       showAlert('Error', 'Please, provide Apptentive Key');
       return;
     }
 
-    if (!credentials.apptentiveSignature || credentials.apptentiveSignature === '___YOUR_IOS_APPTENTIVE_SIGNATURE___' || credentials.apptentiveSignature === '___YOUR_ANDROID_APPTENTIVE_SIGNATURE___') {
+    if (!credentials.apptentiveSignature) {
       showAlert('Error', 'Please, provide Apptentive Signature');
       return;
     }
