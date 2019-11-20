@@ -8,8 +8,7 @@ jobs:
     - stage: Android e2e Test
       language: android
       jdk: oraclejdk8
-      # dist: trusty
-      osx_image: xcode11.2
+      dist: trusty
       android:
         components:
           - tools
