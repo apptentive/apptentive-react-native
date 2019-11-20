@@ -30,8 +30,8 @@ jobs:
       before_script:
         - nvm install 10
         - node --version
-        - mkdir -p "$ANDROID_HOME/licenses"
-        - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
+        # - mkdir -p "$ANDROID_HOME/licenses"
+        # - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
       script:
         - emulator -accel-check
         # - cd sample61/
