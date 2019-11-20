@@ -1,0 +1,47 @@
+---
+deployment:
+  enabled: true
+
+  podTemplate:
+    annotations:
+      commit: {{env "RELEASE_COMMIT"}}
+
+  image:
+    name: {{env "RELEASE_NAME"}}
+    tag: {{env "RELEASE_COMMIT"}}
+
+  ports:
+    - port: 8080
+      protocol: TCP
+
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 8080
+      scheme: HTTP
+
+  readinessProbe:
+    httpGet:
+      path: /
+      port: 8080
+      scheme: HTTP
+
+service:
+  enabled: true
+  type: LoadBalancer
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 8080
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+
+  annotations:
+
+{{ if not ( (or (eq .Environment.Name "production") (eq .Environment.Name "staging"))) }}
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+{{ end }}
+
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: {{.Environment.Values.externalCertArn}}
+    external-dns.alpha.kubernetes.io/hostname: {{ env "RELEASE_NAME" }}-{{.Environment.Values.namespace}}.{{.Environment.Values.externalDnsSuffix}}

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: docker
+      image: docker:stable
+      imagePullPolicy: IfNotPresent
+      command: ['cat']
+      tty: true
+      volumeMounts:
+      - name: dockersock
+        mountPath: /var/run/docker.sock
+    - name: aws-cli
+      image: "mesosphere/aws-cli"
+      imagePullPolicy: IfNotPresent
+      command: ['cat']
+      tty: true
+  volumes:
+    - name: dockersock
+      hostPath:
+        path: /var/run/docker.sock
