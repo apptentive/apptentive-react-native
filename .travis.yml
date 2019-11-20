@@ -33,7 +33,11 @@ jobs:
         # - mkdir -p "$ANDROID_HOME/licenses"
         # - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
       script:
-        - emulator -accel-check
+        - sdkmanager 'system-images;android-24;default;arm64-v8a'
+        - echo no | avdmanager create avd -n apptentiveEmulator -k 'system-images;android-24;default;arm64-v8a' --force
+        - emulator -avd apptentiveEmulator -noaudio -no-boot-anim -no-window -gpu off &
+        - adb wait-for-device
+        - adb devices
         # - cd sample61/
         # - npm install
         # - npm run android &
