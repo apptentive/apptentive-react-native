@@ -8,9 +8,8 @@ jobs:
     - stage: Android e2e Test
       language: android
       jdk: oraclejdk8
-      dist: trusty
-      before_install: skip
-      install: skip
+      # dist: trusty
+      osx_image: xcode11.2
       android:
         components:
           - tools
@@ -26,18 +25,21 @@ jobs:
           - "android-sdk-preview-license-.+"
           - "android-sdk-license-.+"
           - "google-gdk-license-.+"
-        before_script:
-          - nvm install 10
-          - node --version
-          - mkdir -p "$ANDROID_HOME/licenses"
-          - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
-        script:
-          - cd sample61/
-          - npm install
-          - npm start &
-          - echo no | android create avd --force -n test -t android-28 --abi google_apis/armeabi-v7a
-          - emulator -avd test -no-audio -no-window &
-          - android-wait-for-emulator
-          - adb shell input keyevent 82 &
-          - cd android/
-          - ./gradlew connectedAndroidTest
+        before_install: skip
+        install: skip
+      before_script:
+        - nvm install 10
+        - node --version
+        - mkdir -p "$ANDROID_HOME/licenses"
+        - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
+      script:
+        - emulator -accel-check
+        # - cd sample61/
+        # - npm install
+        # - npm run android &
+        # - echo no | android create avd --force -n test -t android-28 --abi google_apis/armeabi-v7a
+        # - emulator -avd test -no-audio -no-window &
+        # - adb wait-for-device
+        # # - adb shell input keyevent 82 &
+        # - cd android/
+        # - ./gradlew connectedAndroidTest
