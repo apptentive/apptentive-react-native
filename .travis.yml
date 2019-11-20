@@ -30,15 +30,17 @@ jobs:
       before_script:
         - nvm install 10
         - node --version
+        - touch /home/travis/.android/repositories.cfg
         # - mkdir -p "$ANDROID_HOME/licenses"
         # - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
       script:
-        - yes | sdkmanager --licenses 
-        - sdkmanager 'system-images;android-24;default;arm64-v8a'
-        - echo no | avdmanager create avd -n apptentiveEmulator -k 'system-images;android-24;default;arm64-v8a' --force
-        - emulator -avd apptentiveEmulator -noaudio -no-boot-anim -no-window -gpu off &
-        - adb wait-for-device
-        - adb devices
+        - avdmanager list
+        # - yes | sdkmanager --licenses 
+        # - sdkmanager 'system-images;android-24;default;arm64-v8a'
+        # - echo no | avdmanager create avd -n apptentiveEmulator -k 'system-images;android-24;default;arm64-v8a' --force
+        # - emulator -avd apptentiveEmulator -noaudio -no-boot-anim -no-window -gpu off &
+        # - adb wait-for-device
+        # - adb devices
         # - cd sample61/
         # - npm install
         # - npm run android &
