@@ -47,11 +47,12 @@ jobs:
         - adb wait-for-device get-serialno
       script:
         - adb devices
-        - npm install
+        # - npm install
         - cd sample61/
         - npm install
-        - mkdir -p android/app/src/main/assets/
-        - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+        - npm start &
+        # - mkdir -p android/app/src/main/assets/
+        # - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
         - cd android/
         - ./gradlew connectedAndroidTest
         - pwd
