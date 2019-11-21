@@ -1,50 +1,60 @@
-# env:
-#   global:
-#     - ANDROID_API_LEVEL=28
-#     - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+env:
+  global:
+    - ANDROID_API=27
+    - EMULATOR_API=24
+    - ANDROID_BUILD_TOOLS=27.0.3
 
-# jobs:
-#   include:
-#     - stage: Android e2e Test
-#       language: android
-#       jdk: oraclejdk8
-#       dist: trusty
-#       android:
-#         components:
-#           - tools
-#           - platform-tools
-#           - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-#           - android-$ANDROID_API_LEVEL
-#           - android-25
-#           - extra-google-google_play_services
-#           - extra-google-m2repository
-#           - extra-android-m2repository
-#           - addon-google_apis-google-$ANDROID_API_LEVEL
-#           - sys-img-armeabi-v7a-android-25
-#         licenses:
-#           - "android-sdk-preview-license-.+"
-#           - "android-sdk-license-.+"
-#           - "google-gdk-license-.+"
-#         before_install: skip
-#         install: skip
-#       before_script:
-#         - nvm install 10
-#         - node --version
-#         - touch /home/travis/.android/repositories.cfg
-#         - android list targets
-#         - emulator -list-avds 
-#         - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
-#         - emulator -avd test -no-skin -no-audio -no-window &
-#         - android-wait-for-emulator
-#         - adb shell input keyevent 82 &
+jobs:
+  include:
+    - stage: Android e2e Test
+      language: android
+      jdk: oraclejdk8
+      dist: trusty
+      android:
+        components:
+          - tools
+          - android-$EMULATOR_API
+          - platform-tools
+          - tools
+          # The BuildTools version used by your project
+          - build-tools-$ANDROID_BUILD_TOOLS
+          # The SDK version used to compile your project
+          - android-$ANDROID_API
+          # Additional components
+          - extra-android-m2repository
+          - extra-google-m2repository
+          - sys-img-armeabi-v7a-android-$EMULATOR_API
+        licenses:
+          - ".+"
+        before_install:
+          - yes | sdkmanager "platforms;android-${ANDROID_API}"
+        install: skip
+      before_script:
+        - nvm install 10
+        - node --version
+        - touch /home/travis/.android/repositories.cfg
+        - android list targets
+        - emulator -list-avds
+        - echo "y" | android update sdk -a --no-ui --filter android-$EMULATOR_API
+        - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-$EMULATOR_API
+        - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi armeabi-v7a
+        - emulator -avd test -no-skin -no-window &
+        - android-wait-for-emulator
+        - adb shell input keyevent 82 &
+        - adb wait-for-device get-serialno
+        # - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
+        # - emulator -avd test -no-skin -no-audio -no-window &
+        # - android-wait-for-emulator
+        # - adb shell input keyevent 82 &
         # - mkdir -p "$ANDROID_HOME/licenses"
         # - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
       script:
+        - adb devices
         # - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
         # - emulator -avd test -no-audio -no-window &
         # - android-wait-for-emulator
         # - adb shell input keyevent 82 &
-        # - yes | sdkmanager --licenses 
+        # - yes | sdkmanager --licenses
         # - sdkmanager 'system-images;android-24;default;arm64-v8a'
         # - echo no | avdmanager create avd -n apptentiveEmulator -k 'system-images;android-24;default;arm64-v8a' --force
         # - emulator -avd apptentiveEmulator -noaudio -no-boot-anim -no-window -gpu off &
@@ -60,48 +70,14 @@
         # - cd android/
         # - ./gradlew connectedAndroidTest
 
-language: android
-sudo: required
 
-jdk: openjdk8
 
-env:
-  global:
-    - ANDROID_API=27
-    - EMULATOR_API=24
-    - ANDROID_BUILD_TOOLS=27.0.3
-
-android:
-  components:
-    - tools
-    - android-$EMULATOR_API
-    - platform-tools
-    - tools
-    # The BuildTools version used by your project
-    - build-tools-$ANDROID_BUILD_TOOLS
-    # The SDK version used to compile your project
-    - android-$ANDROID_API
-    # Additional components
-    - extra-android-m2repository
-    - extra-google-m2repository
-    - sys-img-armeabi-v7a-android-$EMULATOR_API
-  licenses:
-    - ".+"
-
-before_install:
-  - yes | sdkmanager "platforms;android-${ANDROID_API}"
 
 # Emulator Management: Create, Start and Wait https://docs.travis-ci.com/user/languages/android#How-to-Create-and-Start-an-Emulator
-before_script:
-  - echo "y" | android update sdk -a --no-ui --filter android-$EMULATOR_API
-  - echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-$EMULATOR_API
-  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-  - adb wait-for-device get-serialno
+# before_script:
 
-script:
-  - adb devices
-  # test demo flavour
-  # for me espresso test failed on `onView` check
+
+# script:
+#   - adb devices
+#   # test demo flavour
+#   # for me espresso test failed on `onView` check
