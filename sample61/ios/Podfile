@@ -39,5 +39,11 @@ target 'sample61' do
     # Pods for testing
   end
 
+  target 'sample61UITests' do
+    inherit! :search_paths
+
+    pod 'OHHTTPStubs/Swift' # includes the Default subspec, with support for NSURLSession & JSON, and the Swiftier API wrappers
+  end
+
   use_native_modules!
 end
