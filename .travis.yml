@@ -8,7 +8,7 @@ addons:
   artifacts:
     # ⋮
     paths:
-    - $HOME/sample61/android/captures/*
+    - ./sample61/android/captures/*
 
 jobs:
   include:
@@ -50,9 +50,9 @@ jobs:
         - npm install
         - cd sample61/
         - npm install
-        - npx react-native run-android
         - npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
         - cd android/
         - ./gradlew connectedAndroidTest
-        - ls $HOME/sample61/android/captures
-        - ls captures 
+        - pwd
+        - ls ../android/captures
+        - ls captures
