@@ -30,6 +30,8 @@ jobs:
         - nvm install 10
         - node --version
         - touch /home/travis/.android/repositories.cfg
+        - android list targets
+        - emulator -list-avds 
         - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
         - emulator -avd test -no-skin -no-audio -no-window &
         - android-wait-for-emulator
@@ -37,8 +39,6 @@ jobs:
         # - mkdir -p "$ANDROID_HOME/licenses"
         # - cp ./google-licenses/* "$ANDROID_HOME/licenses/"
       script:
-        - android list targets
-        - emulator -list-avds 
         # - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
         # - emulator -avd test -no-audio -no-window &
         # - android-wait-for-emulator
