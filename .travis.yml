@@ -4,6 +4,12 @@ env:
     - EMULATOR_API=24
     - ANDROID_BUILD_TOOLS=28.0.3
 
+addons:
+  artifacts:
+    # ⋮
+    paths:
+    - $HOME/sample61/android/captures/*
+
 jobs:
   include:
     - stage: Android e2e Test
@@ -16,11 +22,8 @@ jobs:
           - android-$EMULATOR_API
           - platform-tools
           - tools
-          # The BuildTools version used by your project
           - build-tools-$ANDROID_BUILD_TOOLS
-          # The SDK version used to compile your project
           - android-$ANDROID_API
-          # Additional components
           - extra-android-m2repository
           - extra-google-m2repository
           - sys-img-armeabi-v7a-android-$EMULATOR_API
