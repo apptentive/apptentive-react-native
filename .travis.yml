@@ -16,6 +16,19 @@ jobs:
       language: objective-c
       osx_image: xcode11.2
       jdk: oraclejdk8
+      before_install:
+        - wget -O android_sdk.zip https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip
+        - unzip android_sdk.zip -d ./android_sdk
+        - export PATH="/android_sdk/tools/bin:$PATH"
+        - export PATH="/android_sdk/tools:$PATH"
+        - export PATH="/android_sdk/platform-tools:$PATH"
+        - export PATH="/android_sdk/emulator:$PATH"
+      install:
+        - emulator -accel-check
+        - yes | sdkmanager --licenses
+        - sdkmanager "emulator" "tools" "platform-tools"
+        - sdkmanager "build-tools;29.0.2" "platforms;android-29" > /dev/null
+        - sdkmanager 'system-images;android-29;default;x86'
       script:
         - node --version
         - cd Meh
