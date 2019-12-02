@@ -34,6 +34,7 @@ jobs:
       dist: bionic
       jdk: oraclejdk8
       before_install:
+        - java -version
         - wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip
         - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
         - rm android-sdk-tools.zip
