@@ -30,8 +30,8 @@ env:
 jobs:
   include:
     - stage: Android e2e Test
-      language: objective-c
-      osx_image: xcode11.2
+      language: bash
+      dist: bionic
       jdk: oraclejdk8
       before_instal:
         - wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip
