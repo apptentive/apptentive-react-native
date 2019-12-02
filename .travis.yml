@@ -1,14 +1,31 @@
+sudo: true
+language: bash
+dist: bionic
+
 env:
   global:
     - ANDROID_API=28
     - EMULATOR_API=24
-    - ANDROID_BUILD_TOOLS=28.0.3
+    - ANDROID_BUILD_TOOLS=28.0.3 #TODO use these vars
 
-addons:
-  artifacts:
-    # ⋮
-    paths:
-      - ./sample61/android/captures/*
+    - ABI=x86_64
+    - ADB_INSTALL_TIMEOUT=8
+    - ANDROID_HOME=${HOME}/android-sdk
+    - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
+    - EMU_FLAVOR=default
+    - EMU_CHANNEL=""
+    - JDK="1.8"
+    - TOOLS=${ANDROID_HOME}/tools
+    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+    - UNIT_TEST=FALSE
+    - FINALIZE_COVERAGE=FALSE
+    - API=28
+
+# addons:
+#   artifacts:
+#     # ⋮
+#     paths:
+#       - ./sample61/android/captures/*
 
 jobs:
   include:
@@ -16,21 +33,36 @@ jobs:
       language: objective-c
       osx_image: xcode11.2
       jdk: oraclejdk8
-      # before_install:
-
-      #   - export PATH="./android_sdk/tools/bin:$PATH"
-      #   - export PATH="./android_sdk/tools:$PATH"
-      #   - export PATH="./android_sdk/platform-tools:$PATH"
-      #   - export PATH="./android_sdk/emulator:$PATH"
+      before_instal:
+        - wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip
+        - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+        - rm android-sdk-tools.zip
+        - mkdir ~/.android;
+        - echo 'count=0' > ~/.android/repositories.cfg;
+        - yes | sdkmanager --licenses >/dev/null;
+        - echo y | sdkmanager --no_https "platform-tools" >/dev/null
+        - echo y | sdkmanager --no_https "tools" >/dev/null;
+        - echo y | sdkmanager --no_https "build-tools;28.0.3" >/dev/null;
+        - echo y | sdkmanager --no_https "platforms;android-28" >/dev/null;
       install:
-        - wget -O android_sdk.zip https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip
-        - unzip android_sdk.zip -d ./android_sdk
-        - emulator -accel-check
-        - yes | sdkmanager --licenses
-        - sdkmanager "emulator" "tools" "platform-tools"
-        - sdkmanager "build-tools;29.0.2" "platforms;android-29" > /dev/null
-        - sdkmanager 'system-images;android-29;default;x86'
+        - echo y | sdkmanager --no_https "platforms;android-$API" >/dev/null
+        - echo y | sdkmanager --no_https $EMU_CHANNEL "emulator" >/dev/null
+        - echo y | sdkmanager --no_https "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null
+        - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst ubuntu-vm-builder
+        - sudo adduser $USER libvirt
+        - sudo adduser $USER kvm
+        - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
+        - |
+          EMU_PARAMS="-verbose -no-snapshot -no-window -camera-back none -camera-front none -selinux permissive -qemu -m 2048"
+          EMU_COMMAND="emulator-headless"
+          # This double "sudo" monstrosity is used to have Travis execute the
+          # emulator with its new group permissions and help preserve the rule
+          # of least privilege.
+          sudo -E sudo -u $USER -E bash -c "${ANDROID_HOME}/emulator/${EMU_COMMAND} -avd test ${AUDIO} ${EMU_PARAMS} &"
+        # Wait for emulator to be ready
+        - ./tools/android-wait-for-emulator.sh
+        - adb shell input keyevent 82 &
       script:
         - node --version
         - cd Meh
-        - ./gradlew assembleRelease
+        - ./gradlew connectedAndroidTest
