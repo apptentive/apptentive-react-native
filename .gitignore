@@ -38,7 +38,7 @@ build/
 .gradle
 local.properties
 *.iml
-android/captures/
+captures/
 
 # BUCK
 buck-out/
