@@ -34,6 +34,7 @@ jobs:
         - cd sample61
         - npm install
         - cd ios
+        - pod --version
         - pod install
         - cd ..
       script:
