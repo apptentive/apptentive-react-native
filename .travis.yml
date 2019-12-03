@@ -65,10 +65,12 @@ jobs:
           # of least privilege.
           sudo -E sudo -u $USER -E bash -c "${ANDROID_HOME}/emulator/${EMU_COMMAND} -avd test ${AUDIO} ${EMU_PARAMS} &"
         # Wait for emulator to be ready
-        - sudo ./travis/android-wait-for-emulator.sh
+        - chmod a+x travis/android-wait-for-emulator.sh
+        - sh ./travis/android-wait-for-emulator.sh
         - adb shell input keyevent 82 &
       script:
         - node --version
         - cd sample61
-        - npm install 
+        - npm install
+        - cd android
         - ./gradlew connectedAndroidTest
