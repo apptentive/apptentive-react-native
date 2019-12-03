@@ -67,7 +67,7 @@ jobs:
           sudo -E sudo -u $USER -E bash -c "${ANDROID_HOME}/emulator/${EMU_COMMAND} -avd test ${AUDIO} ${EMU_PARAMS} &"
         # Wait for emulator to be ready
         - chmod a+x travis/android-wait-for-emulator.sh
-        - sh ./travis/android-wait-for-emulator.sh
+        - ./travis/android-wait-for-emulator.sh
         - adb shell input keyevent 82 &
       script:
         - node --version
