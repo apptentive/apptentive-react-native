@@ -12,6 +12,7 @@ env:
     - ADB_INSTALL_TIMEOUT=8
     - ANDROID_HOME=${HOME}/android-sdk
     - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
+    - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
     - EMU_FLAVOR=default
     - EMU_CHANNEL=""
     - JDK="1.8"
@@ -34,6 +35,9 @@ jobs:
       dist: bionic
       jdk: oraclejdk8
       before_install:
+        - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
+        - export TARGET_JDK="${JDK}"
+        - source ~/.install-jdk-travis.sh
         - java -version
         - wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip
         - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
