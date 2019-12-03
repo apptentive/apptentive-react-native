@@ -6,7 +6,7 @@ set +e
 
 bootanim=""
 failcounter=0
-timeout_in_sec=600 # 10 minutes
+timeout_in_sec=1200 # 10 minutes
 
 until [[ "$bootanim" =~ "stopped" ]]; do
   bootanim=`adb -e shell getprop init.svc.bootanim 2>&1 &`
