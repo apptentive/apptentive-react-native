@@ -1,12 +1,86 @@
-language: objective-c
-osx_image: xcode11.2
-install:
-  - npm install
-  - cd sample61
-  - npm install
-  - cd ios
-  - pod install
-  - cd ..
-script:
-  - npx react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
-  - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11,OS=13.2' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+sudo: true
+language: bash
+dist: bionic
+
+env:
+  global:
+    - ABI=x86_64
+    - ADB_INSTALL_TIMEOUT=8
+    - ANDROID_HOME=${HOME}/android-sdk
+    - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
+    - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
+    - EMU_FLAVOR=default
+    - EMU_CHANNEL=""
+    - JDK="1.8"
+    - TOOLS=${ANDROID_HOME}/tools
+    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
+    - UNIT_TEST=FALSE
+    - FINALIZE_COVERAGE=FALSE
+    - API=28
+
+# addons:
+#   artifacts:
+#     # ⋮
+#     paths:
+#       - ./sample61/android/captures/*
+
+jobs:
+  include:
+    - stage: e2e
+      language: objective-c
+      osx_image: xcode11.2
+      install:
+        - npm install
+        - cd sample61
+        - npm install
+        - cd ios
+        - pod install
+        - cd ..
+      script:
+        - npx react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
+        - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11,OS=13.2' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+    - stage: e2e
+      sudo: true
+      language: bash
+      dist: bionic
+      jdk: oraclejdk8
+      before_install:
+        - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
+        - export TARGET_JDK="${JDK}"
+        - source ~/.install-jdk-travis.sh
+        - java -version
+        - wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip
+        - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
+        - rm android-sdk-tools.zip
+        - mkdir ~/.android;
+        - echo 'count=0' > ~/.android/repositories.cfg;
+        - yes | sdkmanager --licenses >/dev/null;
+        - echo y | sdkmanager --no_https "platform-tools" >/dev/null
+        - echo y | sdkmanager --no_https "tools" >/dev/null;
+        - echo y | sdkmanager --no_https "build-tools;28.0.3" >/dev/null;
+        - echo y | sdkmanager --no_https "platforms;android-28" >/dev/null;
+      install:
+        - echo y | sdkmanager --no_https "platforms;android-$API" >/dev/null
+        - echo y | sdkmanager --no_https $EMU_CHANNEL "emulator" >/dev/null
+        - echo y | sdkmanager --no_https "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null
+        - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst libxcursor1 ubuntu-vm-builder
+        - sudo adduser $USER libvirt
+        - sudo adduser $USER kvm
+        - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
+        - |
+          EMU_PARAMS="-verbose -no-snapshot -no-window -camera-back none -camera-front none -selinux permissive -qemu -m 2048"
+          EMU_COMMAND="emulator"
+          # This double "sudo" monstrosity is used to have Travis execute the
+          # emulator with its new group permissions and help preserve the rule
+          # of least privilege.
+          sudo -E sudo -u $USER -E bash -c "${ANDROID_HOME}/emulator/${EMU_COMMAND} -avd test ${AUDIO} ${EMU_PARAMS} &"
+        - nvm install 10
+        - chmod a+x travis/android-wait-for-emulator.sh
+        - ./travis/android-wait-for-emulator.sh
+        - adb shell input keyevent 82 &
+      script:
+        - node --version
+        - cd sample61
+        - npm install
+        - cd android
+        - ./gradlew connectedAndroidTest
