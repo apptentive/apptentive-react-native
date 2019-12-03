@@ -60,7 +60,7 @@ jobs:
         - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
         - |
           EMU_PARAMS="-verbose -no-snapshot -no-window -camera-back none -camera-front none -selinux permissive -qemu -m 2048"
-          EMU_COMMAND="emulator"
+          EMU_COMMAND="emulator-headless"
           # This double "sudo" monstrosity is used to have Travis execute the
           # emulator with its new group permissions and help preserve the rule
           # of least privilege.
