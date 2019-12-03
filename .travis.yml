@@ -54,7 +54,7 @@ jobs:
         - echo y | sdkmanager --no_https "platforms;android-$API" >/dev/null
         - echo y | sdkmanager --no_https $EMU_CHANNEL "emulator" >/dev/null
         - echo y | sdkmanager --no_https "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null
-        - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst libxcursor1:i386 ubuntu-vm-builder
+        - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst libxcursor1 ubuntu-vm-builder
         - sudo adduser $USER libvirt
         - sudo adduser $USER kvm
         - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
