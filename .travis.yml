@@ -1,6 +1,6 @@
-sudo: true
-language: bash
-dist: bionic
+# sudo: true
+# language: bash
+# dist: bionic
 
 env:
   global:
@@ -29,6 +29,8 @@ jobs:
     - stage: e2e
       language: objective-c
       osx_image: xcode11.2
+      before_install:
+        - sudo gem install cocoapods
       install:
         - npm install
         - cd sample61
