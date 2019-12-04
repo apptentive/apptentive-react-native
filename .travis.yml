@@ -29,7 +29,7 @@ env:
 
 jobs:
   include:
-    - stage: e2e ios
+    - stage: e2e
       os: osx
       language: objective-c
       cache:
@@ -49,46 +49,30 @@ jobs:
         - cd ..
       script:
         - npx react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
-        - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO    
+        - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
     # adapted from ankidriod ci process https://github.com/ankidroid/Anki-Android/blob/master/.travis.yml
-    - stage: e2e android
-      sudo: true
-      language: bash
-      dist: bionic
-      jdk: oraclejdk8
+    - stage: e2e
+      language: android
+      dist: trusty
+      android:
+        components:
+          - tools
+          - platform-tools
+          - build-tools-28.0.3
+          - android-28
+          - extra-google-google_play_services
+          - extra-google-m2repository
+          - extra-android-m2repository
+          - sys-img-x86-android-28
+          - sys-img-armeabi-v7a-android-17
+        licenses: ".+"
       before_install:
-        - curl "${GRAVIS}.install-jdk-travis.sh" --output ~/.install-jdk-travis.sh
-        - export TARGET_JDK="${JDK}"
-        - source ~/.install-jdk-travis.sh
-        - java -version
-        - wget -q "${ANDROID_TOOLS_URL}" -O android-sdk-tools.zip
-        - unzip -q android-sdk-tools.zip -d ${ANDROID_HOME}
-        - rm android-sdk-tools.zip
-        - mkdir ~/.android;
-        - echo 'count=0' > ~/.android/repositories.cfg;
-        - yes | sdkmanager --licenses >/dev/null;
-        - echo y | sdkmanager --no_https "platform-tools" >/dev/null
-        - echo y | sdkmanager --no_https "tools" >/dev/null;
-        - echo y | sdkmanager --no_https "build-tools;28.0.3" >/dev/null;
-        - echo y | sdkmanager --no_https "platforms;android-28" >/dev/null;
-      install:
-        - echo y | sdkmanager --no_https "platforms;android-$API" >/dev/null
-        - echo y | sdkmanager --no_https $EMU_CHANNEL "emulator" >/dev/null
-        - echo y | sdkmanager --no_https "system-images;android-$API;$EMU_FLAVOR;$ABI" >/dev/null
-        - sudo -E apt-get -yq --no-install-suggests --no-install-recommends install bridge-utils libpulse0 libvirt-bin qemu-kvm virtinst libxcursor1 ubuntu-vm-builder
-        - sudo adduser $USER libvirt
-        - sudo adduser $USER kvm
-        - echo no | avdmanager create avd --force -n test -k "system-images;android-$API;$EMU_FLAVOR;$ABI" -c 10M
-        - |
-          EMU_PARAMS="-verbose -no-snapshot -no-window -camera-back none -camera-front none -selinux permissive -qemu -m 2048"
-          EMU_COMMAND="emulator"
-          # This double "sudo" monstrosity is used to have Travis execute the
-          # emulator with its new group permissions and help preserve the rule
-          # of least privilege.
-          sudo -E sudo -u $USER -E bash -c "${ANDROID_HOME}/emulator/${EMU_COMMAND} -avd test ${AUDIO} ${EMU_PARAMS} &"
         - nvm install 10
-        - chmod a+x travis/android-wait-for-emulator.sh
-        - ./travis/android-wait-for-emulator.sh
+      install: skip
+      before_script:
+        - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
+        - emulator -avd test -no-audio -no-window &
+        - android-wait-for-emulator
         - adb shell input keyevent 82 &
       script:
         - node --version
