@@ -1,6 +1,9 @@
 # sudo: true
 # language: bash
 # dist: bionic
+# os:
+#   - linux
+#   - osx
 
 env:
   global:
@@ -27,6 +30,7 @@ env:
 jobs:
   include:
     - stage: e2e ios
+      os: osx
       language: objective-c
       cache:
         bundler: true
