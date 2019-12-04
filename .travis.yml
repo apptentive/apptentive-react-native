@@ -52,6 +52,7 @@ jobs:
     #     - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
     # adapted from ankidriod ci process https://github.com/ankidroid/Anki-Android/blob/master/.travis.yml
     - stage: e2e
+      os: linux
       language: android
       dist: trusty
       android:
@@ -63,16 +64,16 @@ jobs:
           - extra-google-google_play_services
           - extra-google-m2repository
           - extra-android-m2repository
-          - sys-img-x86-android-28
-          - sys-img-armeabi-v7a-android-25
+          # - sys-img-x86-android-28
+          # - sys-img-armeabi-v7a-android-25
+          - sys-img-armeabi-v7a-android-24
         licenses: ".+"
       before_install:
         - nvm install 10
       install: skip
       before_script:
         - android list targets
-        - sdkmanager --list
-        - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a -c 100M
+        - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
         - emulator -avd test -no-audio -no-window &
         - android-wait-for-emulator
         - adb shell input keyevent 82 &
