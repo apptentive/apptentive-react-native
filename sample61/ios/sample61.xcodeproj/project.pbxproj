@@ -16,6 +16,20 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		34A0B32C2384AA05005DC742 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 008F07F21AC5B25A0029DE68 /* main.jsbundle */; };
 		34B6CBE9237E074C008779EB /* sample61UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B6CBE8237E074C008779EB /* sample61UITests.swift */; };
+		34B9147323874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-interactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9146C23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-interactions.json */; };
+		34B9147423874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-interactions.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9146C23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-interactions.json */; };
+		34B9147523874B6F003D61D7 /* conversations.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9146D23874B6F003D61D7 /* conversations.json */; };
+		34B9147623874B6F003D61D7 /* conversations.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9146D23874B6F003D61D7 /* conversations.json */; };
+		34B9147723874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-POST.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9146E23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-POST.json */; };
+		34B9147823874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-POST.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9146E23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-POST.json */; };
+		34B9147923874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-GET.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9146F23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-GET.json */; };
+		34B9147A23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-GET.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9146F23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-GET.json */; };
+		34B9147B23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-events-POST.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9147023874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-events-POST.json */; };
+		34B9147C23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-events-POST.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9147023874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-events-POST.json */; };
+		34B9147D23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-person-PUT.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9147123874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-person-PUT.json */; };
+		34B9147E23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-person-PUT.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9147123874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-person-PUT.json */; };
+		34B9147F23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9147223874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-configuration.json */; };
+		34B9148023874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = 34B9147223874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-configuration.json */; };
 		FFDED37CF7E9A6AAE0B64809 /* libPods-sample61Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A99076CEF6FFD888417741F5 /* libPods-sample61Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +67,13 @@
 		34B6CBE6237E074C008779EB /* sample61UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sample61UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		34B6CBE8237E074C008779EB /* sample61UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sample61UITests.swift; sourceTree = "<group>"; };
 		34B6CBEA237E074C008779EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		34B9146C23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-interactions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "conversations-5dd709938bc3a004a50f410e-interactions.json"; sourceTree = "<group>"; };
+		34B9146D23874B6F003D61D7 /* conversations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversations.json; sourceTree = "<group>"; };
+		34B9146E23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-POST.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "conversations-5dd709938bc3a004a50f410e-messages-POST.json"; sourceTree = "<group>"; };
+		34B9146F23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-GET.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "conversations-5dd709938bc3a004a50f410e-messages-GET.json"; sourceTree = "<group>"; };
+		34B9147023874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-events-POST.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "conversations-5dd709938bc3a004a50f410e-events-POST.json"; sourceTree = "<group>"; };
+		34B9147123874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-person-PUT.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "conversations-5dd709938bc3a004a50f410e-person-PUT.json"; sourceTree = "<group>"; };
+		34B9147223874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-configuration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "conversations-5dd709938bc3a004a50f410e-configuration.json"; sourceTree = "<group>"; };
 		34C27BC52387117500A9FBB6 /* sample61-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "sample61-Bridging-Header.h"; sourceTree = "<group>"; };
 		72CD9F8AD4B42AB2EBC978E2 /* Pods-sample61UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sample61UITests.debug.xcconfig"; path = "Target Support Files/Pods-sample61UITests/Pods-sample61UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7B02AC6EA2F3518FA14201FC /* Pods-sample61.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sample61.release.xcconfig"; path = "Target Support Files/Pods-sample61/Pods-sample61.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +170,13 @@
 		34B6CBE7237E074C008779EB /* sample61UITests */ = {
 			isa = PBXGroup;
 			children = (
+				34B9147223874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-configuration.json */,
+				34B9147023874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-events-POST.json */,
+				34B9146C23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-interactions.json */,
+				34B9146F23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-GET.json */,
+				34B9146E23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-POST.json */,
+				34B9147123874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-person-PUT.json */,
+				34B9146D23874B6F003D61D7 /* conversations.json */,
 				34B6CBE8237E074C008779EB /* sample61UITests.swift */,
 				34B6CBEA237E074C008779EB /* Info.plist */,
 				34C27BC52387117500A9FBB6 /* sample61-Bridging-Header.h */,
@@ -327,8 +355,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				34A0B32C2384AA05005DC742 /* main.jsbundle in Resources */,
+				34B9147F23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-configuration.json in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				34B9147D23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-person-PUT.json in Resources */,
+				34B9147723874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-POST.json in Resources */,
+				34B9147B23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-events-POST.json in Resources */,
+				34B9147523874B6F003D61D7 /* conversations.json in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				34B9147923874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-GET.json in Resources */,
+				34B9147323874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-interactions.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +371,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34B9148023874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-configuration.json in Resources */,
+				34B9147623874B6F003D61D7 /* conversations.json in Resources */,
+				34B9147A23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-GET.json in Resources */,
+				34B9147C23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-events-POST.json in Resources */,
+				34B9147423874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-interactions.json in Resources */,
+				34B9147823874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-messages-POST.json in Resources */,
+				34B9147E23874B6F003D61D7 /* conversations-5dd709938bc3a004a50f410e-person-PUT.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

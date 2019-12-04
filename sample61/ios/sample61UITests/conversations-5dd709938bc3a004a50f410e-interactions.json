@@ -1,0 +1,190 @@
+{
+	"interactions": [
+    {
+		"id": "55bae8ef35878bc3c600057c",
+		"display_type": null,
+		"type": "EnjoymentDialog",
+		"version": 1,
+		"configuration": {
+			"title": "Do you love Apptentive?",
+			"yes_text": "Yes",
+			"no_text": "No",
+			"show_dismiss_button": false
+		}
+	}, {
+		"id": "58d580bff5dc8ec2f6000002",
+		"display_type": null,
+		"type": "TextModal",
+		"version": 1,
+		"configuration": {
+			"actions": [{
+				"id": "58d580bff5dc8ec2f6000001",
+				"action": "dismiss",
+				"label": "Dismiss   -------"
+			}],
+			"title": "Thanks! We love you too!",
+			"position": "corner"
+		}
+	}, {
+		"id": "55c10dd573faf92eb3000140",
+		"display_type": null,
+		"type": "MessageCenter",
+		"version": 2,
+		"configuration": {
+			"title": "Contact Us",
+			"branding": "Powered by Apptentive",
+			"composer": {
+				"title": "New Message",
+				"hint_text": "Please leave detailed feedback",
+				"send_button": "Send",
+				"send_start": "Sending...",
+				"send_ok": "Sent",
+				"send_fail": "Failed",
+				"close_text": "Close",
+				"close_confirm_body": "Are you sure you want to discard this message?",
+				"close_discard_button": "Discard",
+				"close_cancel_button": "Cancel"
+			},
+			"greeting": {
+				"title": "Hello!",
+				"body": "Have any questions, comments, or feedback? We're here & happy to help. Reach out to us anytime.",
+				"image_url": "https://app-icons.apptentive.com/4eec2417687bd9000100000a_1574293601.png"
+			},
+			"status": {
+				"body": "Thanks for your message! We will respond during business hours, 8am-6pm PT Monday through Friday."
+			},
+			"automated_message": {},
+			"error_messages": {
+				"http_error_body": "It looks like we're having trouble sending your message. We've saved it and will try sending it again soon.",
+				"network_error_body": "It looks like you aren't connected to the Internet right now. We've saved your message and will try again when we detect a connection."
+			},
+			"profile": {
+				"request": false,
+				"require": false,
+				"initial": {
+					"title": "Who are we speaking with?",
+					"name_hint": "Name",
+					"email_hint": "Email",
+					"skip_button": "Skip",
+					"save_button": "That's Me!"
+				},
+				"edit": {
+					"title": "Profile",
+					"name_hint": "Name",
+					"email_hint": "Email",
+					"skip_button": "Cancel",
+					"save_button": "Save"
+				}
+			}
+		}
+	}, {
+		"id": "57eb4ab386cfb98ced000001",
+		"display_type": null,
+		"type": "Survey",
+		"version": 1,
+		"configuration": {
+			"questions": [{
+				"id": "57eb4ab486cfb98ced000002",
+				"type": "range",
+				"required": false,
+				"value": "How likely is it that you would recommend Apptentive to a friend or colleague?",
+				"error_message": "Error - There was a problem with your NPS answer.",
+				"min": 0,
+				"max": 10,
+				"min_label": "Not at all likely",
+				"max_label": "Extremely likely"
+			}, {
+				"id": "57eb4ab486cfb98ced000003",
+				"type": "singleline",
+				"required": false,
+				"value": "Why did you give that rating?",
+				"error_message": "Error - There was a problem with your text answer.",
+				"multiline": true,
+				"freeform_hint": "Please leave detailed feedback"
+			}, {
+				"id": "57eb4ab486cfb98ced000004",
+				"type": "singleline",
+				"required": false,
+				"value": "What company are you with?",
+				"error_message": "Error - There was a problem with your text answer.",
+				"multiline": false,
+				"freeform_hint": "Please provide a response"
+			}, {
+				"id": "57eb4ab486cfb98ced000005",
+				"type": "multichoice",
+				"required": false,
+				"instructions": "select one",
+				"value": "What's your role at the company?",
+				"error_message": "Error - There was a problem with your single-select answer.",
+				"randomize": false,
+				"answer_choices": [{
+					"id": "57eb4ab486cfb98ced000006",
+					"value": "Product Management",
+					"type": "select_option"
+				}, {
+					"id": "57eb4ab486cfb98ced000007",
+					"value": "Marketing",
+					"type": "select_option"
+				}, {
+					"id": "57eb4ab486cfb98ced000008",
+					"value": "Customer Support / Customer Success",
+					"type": "select_option"
+				}, {
+					"id": "57eb4ab486cfb98ced000009",
+					"value": "Customer Insights / Market Research",
+					"type": "select_option"
+				}, {
+					"id": "57eb4ab486cfb98ced00000a",
+					"value": "Executive",
+					"type": "select_option"
+				}, {
+					"id": "57eb4ab486cfb98ced00000b",
+					"value": "Engineering & Design",
+					"type": "select_option"
+				}, {
+					"id": "57eb4ab486cfb98ced00000c",
+					"value": "Other (please specify)",
+					"type": "select_other",
+					"hint": "Please specify"
+				}]
+			}],
+			"submit_text": "Submit",
+			"required_text": "Required",
+			"validation_error": "There are issues with your response.",
+			"title": "Web NPS Survey - POC2",
+			"name": "Feedback Survey",
+			"description": "Please help us improve by completing this short survey!",
+			"multiple_responses": false,
+			"show_success_message": true,
+			"view_period": 86400.0,
+			"required": false,
+			"success_message": "Thank you! We appreciate your feedback."
+		}
+	}],
+	"targets": {
+		"local#app#love": [{
+			"interaction_id": "55bae8ef35878bc3c600057c",
+			"criteria": {}
+		}],
+		"local#app#note": [{
+			"interaction_id": "58d580bff5dc8ec2f6000002",
+			"criteria": {}
+    }],
+		"local#app#survey": [{
+			"interaction_id": "57eb4ab386cfb98ced000001",
+			"criteria": {}
+    }],
+		"com.apptentive#app#show_message_center": [{
+			"interaction_id": "55c10dd573faf92eb3000140",
+			"criteria": {}
+		}],
+		"com.apptentive#EnjoymentDialog#yes": [{
+			"interaction_id": "58d580bff5dc8ec2f6000002",
+			"criteria": {}
+		}],
+		"com.apptentive#EnjoymentDialog#no": [{
+			"interaction_id": "57eb4ab386cfb98ced000001",
+			"criteria": {}
+		}]
+	}
+}

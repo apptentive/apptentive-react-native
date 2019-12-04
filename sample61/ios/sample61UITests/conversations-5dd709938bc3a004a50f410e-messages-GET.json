@@ -1,0 +1,20 @@
+{
+	"messages": [{
+		"client_created_at": 1574374287.37872,
+		"client_created_at_utc_offset": -28800,
+		"custom_data": null,
+		"id": "5dd70b8f8bc3a0017909240c",
+		"nonce": "5ED6FDBC-7E7C-463B-A57A-EFC5ABA13895",
+		"inbound": true,
+		"attachments": [],
+		"created_at": 1574374287.478,
+		"sender": {
+			"id": "5dd709938bc3a004a50f410c",
+			"name": null,
+			"profile_photo": "https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e.png?d=mm&r=PG"
+		},
+		"body": "test Message"
+	}],
+	"ends_with": "5dd70b8f8bc3a0017909240c",
+	"has_more": false
+}

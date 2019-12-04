@@ -1,0 +1,23 @@
+{
+	"state": "new",
+	"id": "5dd709938bc3a004a50f410e",
+	"device_id": "5dd709938bc3a004a50f410d",
+	"person_id": "5dd709938bc3a004a50f410c",
+	"token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ0eXBlIjoiYW5vbiIsImlzcyI6ImFwcHRlbnRpdmUiLCJzdWIiOiI1ZGQ3MDk5MzhiYzNhMDA0YTUwZjQxMGUiLCJhcHBfaWQiOiI1N2QzMzY3NzgyZTNiMmIzZTkwMDAwMDYiLCJpYXQiOjE1NzQzNzM3Nzl9.4bqKKxW7AlnL3e-OPIBPRVytl67VP3wzdxlupcNQOl2k33nWmxYjoJ0Chw9k2Og1mDlMpS_-ze8ExjF5xjK9PA",
+	"encryption_key": "e43819d27a4bf9223e47f06bfac4f2bc0a888e448e9093e358d2239d55048ab4",
+	"app_release": {
+		"type": "App::IosAppRelease",
+		"version": "5.2.7",
+		"sdk_version": "5.2.8",
+		"sdk_platform": "iOS",
+		"sdk_programming_language": "Objective-C",
+		"sdk_distribution": "source",
+		"sdk_distribution_version": "5.2.8",
+		"sdk_author_name": "Apptentive, Inc.",
+		"sdk_author_email": null,
+		"cf_bundle_version": "544",
+		"cf_bundle_short_version_string": "5.2.7",
+		"overriding_styles": false,
+		"has_app_store_receipt": false
+	}
+}

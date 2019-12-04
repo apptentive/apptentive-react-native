@@ -1,0 +1,19 @@
+{
+	"support_display_name": "Casey Test",
+	"support_display_email": "casey@apptentive.com",
+	"hide_branding": false,
+	"message_center": {
+		"title": "Message Center",
+		"fg_poll": 10,
+		"bg_poll": 300,
+		"email_required": true,
+		"notification_popup": {
+			"enabled": false
+		}
+	},
+	"support_image_url": "https://secure.gravatar.com/avatar/b894bf8f0a54da9e36f2b1c490da28a3?d=mm\u0026r=pg\u0026s=80",
+	"message_center_enabled": true,
+	"metrics_enabled": true,
+	"apptimize_integration": true,
+	"collect_ad_id": false
+}
