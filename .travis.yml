@@ -1,4 +1,9 @@
 language: objective-c
+cache:
+  bundler: true
+  cocoapods: true
+  npm: true
+  pip: true
 osx_image: xcode11.2
 before_install:
   - gem install cocoapods -v '0.32.1'
