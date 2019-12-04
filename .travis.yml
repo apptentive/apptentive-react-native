@@ -29,27 +29,27 @@ env:
 
 jobs:
   include:
-    - stage: e2e
-      os: osx
-      language: objective-c
-      cache:
-        bundler: true
-        cocoapods: true
-        npm: true
-        pip: true
-      osx_image: xcode11.2
-      before_install:
-        - gem install cocoapods -v '0.32.1'
-      install:
-        - npm install
-        - cd sample61
-        - npm install
-        - cd ios
-        - pod install
-        - cd ..
-      script:
-        - npx react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
-        - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+    # - stage: e2e
+    #   os: osx
+    #   language: objective-c
+    #   cache:
+    #     bundler: true
+    #     cocoapods: true
+    #     npm: true
+    #     pip: true
+    #   osx_image: xcode11.2
+    #   before_install:
+    #     - gem install cocoapods -v '0.32.1'
+    #   install:
+    #     - npm install
+    #     - cd sample61
+    #     - npm install
+    #     - cd ios
+    #     - pod install
+    #     - cd ..
+    #   script:
+    #     - npx react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
+    #     - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
     # adapted from ankidriod ci process https://github.com/ankidroid/Anki-Android/blob/master/.travis.yml
     - stage: e2e
       language: android
@@ -70,6 +70,7 @@ jobs:
         - nvm install 10
       install: skip
       before_script:
+        - android list targets
         - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
         - emulator -avd test -no-audio -no-window &
         - android-wait-for-emulator
