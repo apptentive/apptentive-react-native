@@ -1,5 +1,12 @@
 language: objective-c
+cache:
+  bundler: true
+  cocoapods: true
+  npm: true
+  pip: true
 osx_image: xcode11.2
+before_install:
+  - gem install cocoapods -v '0.32.1'
 install:
   - npm install
   - cd sample61
@@ -9,4 +16,4 @@ install:
   - cd ..
 script:
   - npx react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios
-  - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11,OS=13.2' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+  - xcodebuild -workspace ios/sample61.xcworkspace/ -scheme sample61 -sdk iphonesimulator -destination  'platform=iOS Simulator,name=iPhone 11' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
