@@ -86,4 +86,4 @@ jobs:
         - cd sample61
         - npm install
         - cd android
-        - ./gradlew connectedAndroidTest
+        - ./gradlew tasks
