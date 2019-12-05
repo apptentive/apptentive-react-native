@@ -88,5 +88,6 @@ jobs:
         # - mkdir -p android/app/src/main/assets
         # - npx react-native bundle --entry-file index.js --platform android --dev false --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
         - cd android
-        - pwd
-        - ./gradlew tasks
+        - java -version
+        - ./gradlew --version
+        - ./gradlew tasks --all
