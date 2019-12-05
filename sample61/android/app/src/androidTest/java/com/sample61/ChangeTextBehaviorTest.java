@@ -41,7 +41,7 @@ public class ChangeTextBehaviorTest {
     public void initValidString() {
 //        TODO: Replace with idler
         try {
-            Thread.sleep(5000);
+            Thread.sleep(15000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
