@@ -5,22 +5,6 @@
 #   - linux
 #   - osx
 
-env:
-  global:
-    - ABI=x86_64
-    - ADB_INSTALL_TIMEOUT=8
-    - ANDROID_HOME=${HOME}/android-sdk
-    - ANDROID_TOOLS_URL="https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip"
-    - GRAVIS="https://raw.githubusercontent.com/DanySK/Gravis-CI/master/"
-    - EMU_FLAVOR=default
-    - EMU_CHANNEL=""
-    - JDK="1.8"
-    - TOOLS=${ANDROID_HOME}/tools
-    - PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH}
-    - UNIT_TEST=FALSE
-    - FINALIZE_COVERAGE=FALSE
-    - API=28
-
 # addons:
 #   artifacts:
 #     # ⋮
@@ -88,6 +72,5 @@ jobs:
         # - mkdir -p android/app/src/main/assets
         # - npx react-native bundle --entry-file index.js --platform android --dev false --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
         - cd android
-        - java -version
         - ./gradlew --version
-        - ./gradlew tasks --all
+        - ./gradlew tasks --no-daemon
