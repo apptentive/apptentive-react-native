@@ -33,6 +33,7 @@ jobs:
       dist: trusty
       android:
         components:
+          # Project
           - tools
           - platform-tools
           - build-tools-28.0.3
@@ -41,6 +42,7 @@ jobs:
           - extra-google-m2repository
           - extra-android-m2repository
 
+          # Emulator 
           - android-24
           - sys-img-armeabi-v7a-android-24
         licenses: ".+"
@@ -48,7 +50,6 @@ jobs:
         - nvm install 12
       install: skip
       before_script:
-        - android list targets
         - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
         - emulator -avd test -no-window &
         - android-wait-for-emulator
