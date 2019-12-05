@@ -1,10 +1,13 @@
 package com.sample61;
 
+import android.Manifest;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.TextView;
 
 import org.hamcrest.Matcher;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +18,11 @@ import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.rule.GrantPermissionRule;
+import androidx.test.runner.screenshot.ScreenCapture;
+import androidx.test.runner.screenshot.Screenshot;
+
+import java.io.IOException;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
@@ -33,6 +41,11 @@ import static org.hamcrest.CoreMatchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class ChangeTextBehaviorTest {
+    @ClassRule
+    public static GrantPermissionRule grantPermissionRule = GrantPermissionRule.grant(
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    );
+
     @Rule
     public ActivityTestRule<MainActivity> activityRule
             = new ActivityTestRule<>(MainActivity.class);
@@ -41,7 +54,7 @@ public class ChangeTextBehaviorTest {
     public void initValidString() {
 //        TODO: Replace with idler
         try {
-            Thread.sleep(30000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -69,11 +82,20 @@ public class ChangeTextBehaviorTest {
         return stringHolder[0];
     }
 
+    private void captureScreenshot(String name) throws IOException {
+        ScreenCapture capture = Screenshot.capture();
+        capture.setFormat(Bitmap.CompressFormat.PNG);
+        capture.setName(name);
+        capture.process();
+    }
+
     @Test
-    public void canShowInteraction() {
+    public void canShowInteraction() throws IOException {
+        captureScreenshot("before");
          onView(withContentDescription("input-event-name"))
                  .perform(clearText())
                  .perform(typeText("test"));
+        captureScreenshot("after");
 
 //        onView(withContentDescription("button-can-show-interaction"))
 //                .check(matches(isDisplayed()))
