@@ -60,4 +60,9 @@ jobs:
         - mkdir -p android/app/src/main/assets
         - npx react-native bundle --entry-file index.js --platform android --dev false --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
         - cd android
+        - adb shell screenrecord /sdcard/video.mp4 &
+        - FOO_PID=$!
         - ./gradlew assembleAndroidTest
+        - kill $FOO_PID
+        - mkdir -p captures
+        - mv video.mp4 captures
