@@ -61,14 +61,16 @@ jobs:
           - platform-tools
           - build-tools-28.0.3
           - android-28
-          - android-28
           - extra-google-google_play_services
           - extra-google-m2repository
           - extra-android-m2repository
+
+          - android-24
           - sys-img-armeabi-v7a-android-24
-          # - sys-img-x86-android-28
-          # - sys-img-armeabi-v7a-android-25
-          # - system-images-android-24-default-armeabi-v7a
+          - sys-img-x86_64-android-24
+          - sys-img-x86_64-google_apis-24
+          - sys-img-x86-android-24
+          - sys-img-x86-google_apis-24
         licenses: ".+"
       before_install:
         - nvm install 10
