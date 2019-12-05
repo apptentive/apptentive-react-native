@@ -74,7 +74,6 @@ jobs:
         - nvm install 10
       install: skip
       before_script:
-        - echo 'y' | android update sdk --no-ui --all --filter "system-images;android-24;default;armeabi-v7a"
         - android list targets
         - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a -c 100M
         - emulator -avd test -no-audio -no-window &
