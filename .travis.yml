@@ -60,8 +60,6 @@ jobs:
         - mkdir -p android/app/src/main/assets
         - npx react-native bundle --entry-file index.js --platform android --dev false --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
         - cd android
-        # - adb shell mkdir -p something
         - ./gradlew assembleAndroidTest
-        # - kill $FOO_PID
-        # - mkdir -p captures
-        # - mv video.mp4 captures
+        - adb pull /sdcard/Pictures/screenshots/*
+        - mv *.png captures/
