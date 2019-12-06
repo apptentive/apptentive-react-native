@@ -61,5 +61,6 @@ jobs:
         - npx react-native bundle --entry-file index.js --platform android --dev false --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
         - cd android
         - ./gradlew assembleAndroidTest
-        - adb pull /sdcard/Pictures/screenshots/*
-        - mv *.png captures/
+        - adb pull /sdcard/Pictures/screenshots
+        - mkdir -p captures
+        - mv ./screenshots/* captures/
