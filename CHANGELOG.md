@@ -5,10 +5,10 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
-# 2020-07-06 - v5.5.1
+# 2020-07-08 - v5.5.1
 
 - Apptentive Android SDK: 5.5.3
-- Apptentive iOS SDK: 5.2.13
+- Apptentive iOS SDK: 5.2.14
 
 # 2019-11-14 - v5.5.0
 
