@@ -38,6 +38,7 @@ build/
 .gradle
 local.properties
 *.iml
+captures/
 
 # BUCK
 buck-out/
@@ -46,3 +47,5 @@ buck-out/
       
 # CocoaPods
 Pods
+
+.vscode
