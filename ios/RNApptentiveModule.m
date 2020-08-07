@@ -52,7 +52,7 @@ RCT_EXPORT_METHOD(
 	if (configuration) {
 		configuration.appID = configurationDictionary[@"appleID"];
 		configuration.distributionName = @"React Native";
-		configuration.distributionVersion = @"5.5.1";
+		configuration.distributionVersion = @"5.5.2";
 		[Apptentive registerWithConfiguration:configuration];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCenterUnreadCountChangedNotification:) name:ApptentiveMessageCenterUnreadCountChangedNotification object:nil];
@@ -156,6 +156,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	Apptentive.shared.personName = personName;
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -186,6 +188,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	Apptentive.shared.personEmailAddress = personEmail;
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -210,6 +214,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	[Apptentive.shared addCustomPersonDataString:value withKey:key];
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -234,6 +240,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	[Apptentive.shared addCustomPersonDataNumber:value withKey:key];
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -258,6 +266,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	[Apptentive.shared addCustomPersonDataBool:value.boolValue withKey:key];
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -276,6 +286,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	[Apptentive.shared removeCustomPersonDataWithKey:key];
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -300,6 +312,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	[Apptentive.shared addCustomDeviceDataString:value withKey:key];
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -324,6 +338,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	[Apptentive.shared addCustomDeviceDataNumber:value withKey:key];
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -348,6 +364,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	[Apptentive.shared addCustomDeviceDataBool:value.boolValue withKey:key];
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
@@ -366,6 +384,8 @@ RCT_EXPORT_METHOD(
 	}
 
 	[Apptentive.shared removeCustomDeviceDataWithKey:key];
+
+	resolver(nil);
 }
 
 RCT_EXPORT_METHOD(
