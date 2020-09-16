@@ -5,6 +5,14 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+
+# 2020-09-15 - v5.5.5
+
+- Fixed a crashing bug in Surveys for projects built with Xcode 12 and run on iOS 14.
+- Increased iOS deployment target to version 10.3
+- Apptentive Android SDK: 5.5.4
+- Apptentive iOS SDK: 5.3.0
+
 # 2020-09-08 - v5.5.4
 
 - Fixed Android 11 support.
