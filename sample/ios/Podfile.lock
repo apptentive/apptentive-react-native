@@ -1,16 +1,16 @@
 PODS:
-  - apptentive-ios (5.3.0)
+  - apptentive-ios (5.3.1)
 
 DEPENDENCIES:
-  - apptentive-ios (= 5.3.0)
+  - apptentive-ios (= 5.3.1)
 
 SPEC REPOS:
   trunk:
     - apptentive-ios
 
 SPEC CHECKSUMS:
-  apptentive-ios: 9f78b6a860afc3a64ff992bfa7a7a19897eb099b
+  apptentive-ios: 94a2e90b4759051a3b73e6e2ae85f16361e20b9c
 
-PODFILE CHECKSUM: b3bcae995bfc4551ded4614aae57fb8d8a064231
+PODFILE CHECKSUM: b8ee30509500fda33f3f4c562ea55c481721df65
 
-COCOAPODS: 1.10.0.beta.2
+COCOAPODS: 1.9.3
