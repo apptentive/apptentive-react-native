@@ -6,6 +6,6 @@ target 'sample' do
   use_frameworks!
 
   # Pods for sample
-  pod 'apptentive-ios', '5.3.0'
+  pod 'apptentive-ios', '5.3.1'
 
 end
