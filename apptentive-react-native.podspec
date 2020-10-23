@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.source_files  = "ios/*.{h,m}"
   s.public_header_files = "ios/*.h"
   s.dependency "React"
-  s.dependency "apptentive-ios", "~>5"
+  s.dependency "apptentive-ios", ">= 5.3.1", "< 6.0"
 end
