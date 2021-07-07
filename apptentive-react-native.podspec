@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "apptentive-react-native"
-  s.version      = "5.6.3"
+  s.version      = "5.6.4"
   s.summary      = "Apptentive SDK module for React Native"
 
   s.description  = <<-DESC
