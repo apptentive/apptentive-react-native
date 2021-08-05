@@ -432,7 +432,7 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 	}
 
 	private Context getContext() {
-		return reactContextWrapper.getContext();
+		return reactContextWrapper.getCurrentActivity();
 	}
 
 	//region Unread Message Listener
