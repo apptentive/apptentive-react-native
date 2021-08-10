@@ -5,6 +5,12 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+# 2021-08-10 - v5.7.1
+
+- Fixed behavior of Google Play Review Dialog for uncoupled rating interactions.
+- Apptentive Android SDK: 5.7.0
+- Apptentive iOS SDK: 5.3.4
+
 # 2021-08-04 - v5.7.0
 
 - Apptentive Android SDK: 5.7.0
