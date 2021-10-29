@@ -95,8 +95,13 @@ class App extends React.Component {
 
     // Override log level (optional)
     configuration.logLevel = 'verbose';
-    configuration.shouldSanitizeLogMessages = false;
+    // configuration.shouldSanitizeLogMessages = true; // TODO: ucomment this line to sanitize log messages
     // configuration.shouldEncryptStorage = true; // TODO: uncomment this line to enable encrypted storage
+    // configuration.enableDebugLogFile = false; // TODO: uncomment this line to disable debug log files on iOS
+    // configuration.troubleshootingModeEnabled = false; // TODO: uncomment this line to disable troubleshooting mode on Android
+    // configuration.shouldCollectAndroidIdOnPreOreoTargets = false; // TODO: uncomment this line to disable collecting Android ID on pre Oreo target
+    // configuration.showInfoButton = false; // TODO: uncomment this line to disable the Info Button on iOS
+    // configuration.gatherCarrierInfo = false; // TODO: uncomment this line to disable gathering carrier info on iOS
 
     // Register Apptentive
     Apptentive.register(configuration).then(() => {
