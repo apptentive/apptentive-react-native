@@ -2284,7 +2284,6 @@
     "estraverse" "^4.2.0"
     "esutils" "^2.0.2"
     "optionator" "^0.8.1"
-    "source-map" "~0.6.1"
   optionalDependencies:
     "source-map" "~0.6.1"
 
@@ -2966,7 +2965,6 @@
     "neo-async" "^2.6.0"
     "optimist" "^0.6.1"
     "source-map" "^0.6.1"
-    "uglify-js" "^3.1.4"
   optionalDependencies:
     "uglify-js" "^3.1.4"
 
@@ -3598,7 +3596,6 @@
     "@jest/types" "^24.9.0"
     "anymatch" "^2.0.0"
     "fb-watchman" "^2.0.0"
-    "fsevents" "^1.2.7"
     "graceful-fs" "^4.1.15"
     "invariant" "^2.2.4"
     "jest-serializer" "^24.9.0"
