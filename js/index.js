@@ -10,10 +10,15 @@ export class ApptentiveConfiguration {
     this.logLevel = 'info';
     this.shouldSanitizeLogMessages = true;
     this.shouldEncryptStorage = false;
+    this.enableDebugLogFile = true;
+    this.showInfoButton = true;
+    this.gatherCarrierInfo = true;
+    this.troubleshootingModeEnabled = true;
+    this.shouldCollectAndroidIdOnPreOreoTargets = true;
   }
 
   toString() {
-    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages}, shouldEncryptStorage=${this.shouldEncryptStorage})`;
+    return `(apptentiveKey=${this.apptentiveKey}, apptentiveSignature=${this.apptentiveSignature}, logLevel=${this.logLevel}, shouldSanitizeLogMessages=${this.shouldSanitizeLogMessages}, shouldEncryptStorage=${this.shouldEncryptStorage}, enableDebugLogFile=${this.enableDebugLogFile}, showInfoButton=${this.showInfoButton}, gatherCarrierInfo=${this.gatherCarrierInfo}, troubleshootingModeEnabled=${this.troubleshootingModeEnabled}, shouldCollectAndroidIdOnPreOreoTargets=${this.shouldCollectAndroidIdOnPreOreoTargets})`;
   }
 }
 
