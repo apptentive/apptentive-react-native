@@ -12,6 +12,11 @@ declare class ApptentiveConfiguration {
     logLevel: string;
     shouldSanitizeLogMessages: boolean;
     shouldEncryptStorage: boolean;
+    enableDebugLogFile: boolean;
+    showInfoButton: boolean;
+    gatherCarrierInfo: boolean;
+    troubleshootingModeEnabled: boolean;
+    shouldCollectAndroidIdOnPreOreoTargets: boolean;
 
     toString(): string;
 }
@@ -22,6 +27,11 @@ interface ApptentiveConfiguration {
   logLevel: string;
   shouldSanitizeLogMessages: boolean;
   shouldEncryptStorage: boolean;
+  enableDebugLogFile: boolean;
+  showInfoButton: boolean;
+  gatherCarrierInfo: boolean;
+  troubleshootingModeEnabled: boolean;
+  shouldCollectAndroidIdOnPreOreoTargets: boolean;
 }
 
 declare class Apptentive {
