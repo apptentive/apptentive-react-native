@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "apptentive-react-native"
-  s.version      = "5.7.2"
+  s.version      = "5.7.3"
   s.summary      = "Apptentive SDK module for React Native"
 
   s.description  = <<-DESC
@@ -10,8 +10,7 @@ Pod::Spec.new do |s|
   s.homepage     = "https://github.com/apptentive/apptentive-react-native"
   s.license      = "BSD"
   s.author             = { "Apptentive, Inc." => "info@apptentive.com" }
-  s.platform     = :ios
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios, "10.3"
   s.source       = { :git => "https://github.com/apptentive/apptentive-react-native.git", :tag => "v#{s.version}" }
   s.source_files  = "ios/*.{h,m}"
   s.public_header_files = "ios/*.h"

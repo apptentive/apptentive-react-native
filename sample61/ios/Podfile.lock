@@ -1,7 +1,7 @@
 PODS:
-  - apptentive-ios (5.2.7)
-  - apptentive-react-native (5.4.6):
-    - apptentive-ios (~> 5)
+  - apptentive-ios (5.3.4)
+  - apptentive-react-native (5.7.2):
+    - apptentive-ios (< 6.0, >= 5.3.1)
     - React
   - boost-for-react-native (1.63.0)
   - DoubleConversion (1.1.6)
@@ -314,8 +314,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  apptentive-ios: fc0c29a9599737240b5fe93d10d2a90150fb6b7a
-  apptentive-react-native: a92f29eb138e46b2d8205e0889fec89c4a9959d9
+  apptentive-ios: e5be8ad11cfad2259a0063150ce898b04b7c1090
+  apptentive-react-native: 0e0a46e13ad6f21e47862c3644c392f23d962ea2
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   FBLazyVector: feb35a6b7f7b50f367be07f34012f34a79282fa3
@@ -343,6 +343,6 @@ SPEC CHECKSUMS:
   ReactCommon: a6a294e7028ed67b926d29551aa9394fd989c24c
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
-PODFILE CHECKSUM: 22988c2207567a6eddc8fc72f7d82661d162b93a
+PODFILE CHECKSUM: 145da3768ae612a6d94b98b31781321acaa902b2
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.2

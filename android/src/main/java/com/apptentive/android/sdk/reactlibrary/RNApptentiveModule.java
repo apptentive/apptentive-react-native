@@ -94,6 +94,16 @@ public class RNApptentiveModule extends ReactContextBaseJavaModule implements Un
 				configuration.setShouldEncryptStorage(shouldEncryptStorage);
 			}
 
+			Boolean troubleshootingModeEnabled = ObjectUtils.as(config.get("troubleshootingModeEnabled"), Boolean.class);
+			if (troubleshootingModeEnabled != null) {
+				configuration.setTroubleshootingModeEnabled(troubleshootingModeEnabled);
+			}
+
+			Boolean shouldCollectAndroidIdOnPreOreoTargets = ObjectUtils.as(config.get("shouldCollectAndroidIdOnPreOreoTargets"), Boolean.class);
+			if (shouldCollectAndroidIdOnPreOreoTargets != null) {
+				configuration.setShouldCollectAndroidIdOnPreOreoTargets(shouldCollectAndroidIdOnPreOreoTargets);
+			}
+
 			Apptentive.register(application, configuration);
 
 			ApptentiveInternal instance = ObjectUtils.as(ApptentiveInternal.getInstance(), ApptentiveInternal.class);

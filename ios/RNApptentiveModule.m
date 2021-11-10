@@ -49,10 +49,22 @@ RCT_EXPORT_METHOD(
 
 	[configuration setLogLevel:logLevel];
 
+	BOOL shouldSanitizeLogMessages = [configurationDictionary[@"shouldSanitizeLogMessages"] boolValue];
+	[configuration setShouldSanitizeLogMessages:shouldSanitizeLogMessages];
+
+	BOOL enableDebugLogFile = [configurationDictionary[@"enableDebugLogFile"] boolValue];
+	[configuration setEnableDebugLogFile:enableDebugLogFile];
+
+	BOOL showInfoButton = [configurationDictionary[@"showInfoButton"] boolValue];
+	[configuration setShowInfoButton:showInfoButton];
+
+	BOOL gatherCarrierInfo = [configurationDictionary[@"gatherCarrierInfo"] boolValue];
+	[configuration setGatherCarrierInfo:gatherCarrierInfo];
+
 	if (configuration) {
 		configuration.appID = configurationDictionary[@"appleID"];
 		configuration.distributionName = @"React Native";
-		configuration.distributionVersion = @"5.7.2";
+		configuration.distributionVersion = @"5.7.3";
 		[Apptentive registerWithConfiguration:configuration];
 
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(messageCenterUnreadCountChangedNotification:) name:ApptentiveMessageCenterUnreadCountChangedNotification object:nil];
