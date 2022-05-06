@@ -1,31 +1,21 @@
 {
-  "name": "sample",
-  "version": "1.0.0",
+  "name": "react-native-apptentive-example",
+  "description": "Example app for apptentive-react-native",
+  "version": "6.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "start": "react-native start"
   },
   "dependencies": {
-    "apptentive-react-native": "^5.7.2",
-    "react": "16.9.0",
-    "react-native": "0.61.4"
+    "react": "16.13.1",
+    "react-native": "0.63.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/runtime": "^7.7.2",
-    "@react-native-community/eslint-config": "^0.0.5",
-    "babel-jest": "^24.9.0",
-    "babel-plugin-module-resolver": "^3.2.0",
-    "babel-plugin-transform-remove-console": "^6.9.4",
-    "eslint": "^6.6.0",
-    "jest": "^24.9.0",
-    "metro-react-native-babel-preset": "^0.57.0",
-    "react-native-mock-render": "^0.1.6",
-    "react-test-renderer": "16.9.0"
+    "@babel/core": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "metro-react-native-babel-preset": "^0.64.0"
   }
 }
