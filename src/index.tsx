@@ -20,11 +20,15 @@ export class ApptentiveConfiguration {
   apptentiveKey: string;
   apptentiveSignature: string;
   logLevel: string;
+  distributionName: string;
+  distributionVersion: string;
 
   constructor(key: string, signature: string) {
     this.apptentiveKey = key;
     this.apptentiveSignature = signature;
     this.logLevel = "info";
+    this.distributionName = "React Native";
+    this.distributionVersion = require("../package").version;
   }
 
 }
