@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, Button, View, Text, TextInput, Platform } from 'react-native';
-import { Apptentive, ApptentiveConfiguration } from 'react-native-apptentive';
+import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
 
 interface State {
   eventName: string;
