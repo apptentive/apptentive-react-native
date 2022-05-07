@@ -6,8 +6,31 @@ import ApptentiveKit
 
   // Register the Apptentive iOS SDK
   @objc(register:resolver:rejecter:)
-  func register(_ credentials: Dictionary<String,Any>, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    Apptentive.shared.register(with: unpackCredentials(credentials: credentials), completion: { (result) -> Void in
+  func register(_ configuration: Dictionary<String,Any>, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
+    guard let distributionName = configuration["distributionName"] as? String,
+          let distributionVersion = configuration["distributionVersion"] as? String
+    else {
+      return reject("Apptentive Error", "Internal error: missing distribution information", nil)
+    }
+
+    Apptentive.shared.distributionName = distributionName
+    Apptentive.shared.distributionVersion = distributionVersion
+
+    if let logLevel = configuration["logLevel"] as? String {
+      guard let rnLogLevel = RNLogLevel(rawValue: logLevel) else {
+      return reject("Apptentive Error", "Unrecognized log level value “\(configuration["logLevel"] ?? "<none>")”", nil)
+      }
+
+      ApptentiveLogger.logLevel = rnLogLevel.logLevel
+    }
+
+    guard let apptentiveKey = configuration["apptentiveKey"] as? String,
+          let apptentiveSignature = configuration["apptentiveSignature"] as? String
+    else {
+      return reject("Apptentive Error", "Missing key or signature", nil)
+    }
+
+    Apptentive.shared.register(with: .init(key: apptentiveKey, signature: apptentiveSignature), completion: { (result) -> Void in
       switch result {
       case .success(let success):
         resolve(success)
@@ -161,35 +184,30 @@ import ApptentiveKit
     resolve(Apptentive.shared.unreadMessageCount)
   }
 
-  ////// Utility Functions
-
-  // Set ApptentiveLogger log level
-  private func setLogLevel(logLevel: String) -> Void {
-    switch logLevel {
-    case "verbose":
-      ApptentiveLogger.logLevel = .debug
-    case "debug":
-      ApptentiveLogger.logLevel = .info
-    case "info":
-      ApptentiveLogger.logLevel = .notice
-    case "warn":
-      ApptentiveLogger.logLevel = .warning
-    case "error":
-      ApptentiveLogger.logLevel = .critical
-    default:
-      print("Apptentive Unkown log level: \(logLevel), setting to .notice by default")
-      ApptentiveLogger.logLevel = .notice
-    }
-  }
-
-  // Unpack dictionary to create AppCredentials object and set ApptentiveLogger log level
-  // Returns created AppCredentials instance
-  private func unpackCredentials(credentials: Dictionary<String, Any>) -> Apptentive.AppCredentials {
-    let appCredentials = Apptentive.AppCredentials(key: credentials["apptentiveKey"]! as! String, signature: credentials["apptentiveSignature"]! as! String)
-    setLogLevel(logLevel: credentials["logLevel"]! as! String)
-    return appCredentials
-  }
-
   // Avoid RN Module warning
   @objc static func requiresMainQueueSetup() -> Bool { return false }
+
+  private enum RNLogLevel: String {
+    case verbose
+    case debug
+    case info
+    case warn
+    case error
+    case crit
+
+    var logLevel: LogLevel {
+      switch self {
+      case .verbose, .debug:
+        return .debug
+      case .info:
+        return .info
+      case .warn:
+        return .warning
+      case .error:
+        return .error
+      case .crit:
+        return .critical
+      }
+    }
+  }
 }
