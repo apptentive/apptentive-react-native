@@ -10,7 +10,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import apptentive-react-native.ApptentivePackage;
+import com.apptentive.android.sdk.reactlibrary.ApptentivePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 

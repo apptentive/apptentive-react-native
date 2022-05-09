@@ -103,7 +103,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
       is String -> Apptentive.addCustomPersonData(key, value)
       else -> {
         promise.reject("Apptentive Error", "Unable to add custom person" +
-          " data for key $key: Unexpected type: ${value::class.simpleName}", null)
+          " data for key $key: Unexpected type: ${value::class.java.simpleName}", null)
         return
       }
     }
@@ -129,7 +129,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
       is Boolean -> Apptentive.addCustomDeviceData(key, value)
       is String -> Apptentive.addCustomDeviceData(key, value)
       else -> {
-        promise.reject("Apptentive Error", "Unable to add custom device data for key $key: Unexpected type: ${value::class.simpleName}", null)
+        promise.reject("Apptentive Error", "Unable to add custom device data for key $key: Unexpected type: ${value::class.java.simpleName}", null)
         return
       }
     }
