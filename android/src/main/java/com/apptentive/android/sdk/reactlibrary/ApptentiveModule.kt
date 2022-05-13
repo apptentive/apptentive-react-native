@@ -2,17 +2,17 @@ package com.apptentive.android.sdk.reactlibrary
 
 import android.app.Activity
 import android.app.Application
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.bridge.ReactContextBaseJavaModule
-import com.facebook.react.bridge.ReactMethod
-import com.facebook.react.bridge.Promise
-import com.facebook.react.bridge.ReadableMap
-
 import com.apptentive.android.sdk.Apptentive
 import com.apptentive.android.sdk.ApptentiveConfiguration
 import com.apptentive.android.sdk.ApptentiveLog
+import com.apptentive.android.sdk.module.messagecenter.UnreadMessagesListener
+import com.facebook.react.bridge.*
+import com.facebook.react.modules.core.DeviceEventManagerModule
 
-class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
+
+class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext),
+  UnreadMessagesListener {
+  private val EVT_UNREAD_MESSAGE_COUNT_CHANGE = "onUnreadMessageCountChanged"
 
   // React context allows us to get the Application context and the current Activity context
   private var mReactContext: ReactApplicationContext = reactContext
@@ -22,6 +22,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   fun register(credentials: ReadableMap, promise: Promise): Unit {
     try {
       Apptentive.register(getApplicationContext() , unpackCredentials(credentials))
+      Apptentive.addUnreadMessagesListener(this);
       promise.resolve(true)
     } catch (e: Exception) {
       promise.reject("Apptentive Error", "Failed to register Apptentive instance.", e)
@@ -226,4 +227,11 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
     return mReactContext.currentActivity
   }
 
+  override fun onUnreadMessageCountChanged(unreadMessages: Int) {
+    var result = Arguments.createMap()
+
+    result.putInt("count", unreadMessages)
+    mReactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+            .emit(EVT_UNREAD_MESSAGE_COUNT_CHANGE, result)
+  }
 }

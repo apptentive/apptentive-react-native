@@ -1,9 +1,10 @@
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 
 // Private implementation file that will register the required information with
 // React Native. Required for Swift implementation.
 
-@interface RCT_EXTERN_MODULE(ApptentiveModule, NSObject)
+@interface RCT_EXTERN_MODULE(ApptentiveModule, RCTEventEmitter)
 
 RCT_EXTERN_METHOD(
   register:(NSDictionary *)credentials
