@@ -60,7 +60,7 @@ export class App extends React.Component<{}, State> {
     configuration.setTroubleshootingModeEnabled = true;
 
     Apptentive.onUnreadMessageCountChanged = args => {
-      console.log("APPTENTIVE TEST: Unread message count changed to ", args.count)
+      console.log("APPTENTIVE TEST: Unread message count changed to ", args)
     } 
 
     // Register Apptentive

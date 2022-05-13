@@ -234,4 +234,12 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
     mReactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
             .emit(EVT_UNREAD_MESSAGE_COUNT_CHANGE, result)
   }
+
+  override fun hasConstants(): Boolean {
+    return true
+  }
+
+  override fun getConstants(): MutableMap<String, Any>? {
+    return mapOf<String, Any>("unreadMessageCountChangedEvent" to EVT_UNREAD_MESSAGE_COUNT_CHANGE).toMutableMap()
+  }
 }
