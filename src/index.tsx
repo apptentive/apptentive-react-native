@@ -1,7 +1,7 @@
-import { NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform, DeviceEventEmitter, NativeEventEmitter } from 'react-native';
 
 const LINKING_ERROR =
-  `The package 'react-native-apptentive' doesn't seem to be linked. Make sure: \n\n` +
+  `The package 'apptentive-react-native' doesn't seem to be linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
@@ -12,6 +12,9 @@ const ApptentiveModule = NativeModules.ApptentiveModule
   : new Proxy({},{ get() {
           throw new Error(LINKING_ERROR);
         },});
+
+let _onUnreadMessageCountChanged = count => {};
+let _eventsRegistered = false;
 
 ///// Class Implementation
 
@@ -30,13 +33,27 @@ export class ApptentiveConfiguration {
     this.distributionName = "React Native";
     this.distributionVersion = require("../package").version;
   }
-
 }
 
 export class Apptentive {
-
+  
   // Register the Apptentive SDK
   static register(configuration: ApptentiveConfiguration): Promise<boolean> {
+    if (!_eventsRegistered) {
+      _eventsRegistered = true;
+
+      const emitter = Platform.select({
+        ios: () => new NativeEventEmitter(ApptentiveModule),
+        android: () => DeviceEventEmitter
+      })();
+      
+      emitter.addListener(ApptentiveModule.unreadMessageCountChangedEvent, (e) => {
+        if (_onUnreadMessageCountChanged !== undefined) {
+          _onUnreadMessageCountChanged(e.count);
+        }
+      });
+    }
+    
     return ApptentiveModule.register(configuration);
   }
 
@@ -104,4 +121,20 @@ export class Apptentive {
   static getUnreadMessageCount(): Promise<number> {
     return ApptentiveModule.getUnreadMessageCount();
   }
+  
+  /**
+   * @return Current callback for the unread message count change in the Message Center.
+   */
+  static get onUnreadMessageCountChanged() {
+    return _onUnreadMessageCountChanged;
+  }
+
+  /**
+   * Sets current callback for the unread message count change in the Message Center.
+   * @param value Callback function with a single integer parameter.
+   */
+  static set onUnreadMessageCountChanged(value) {
+    _onUnreadMessageCountChanged = value;
+  }
+  
 }

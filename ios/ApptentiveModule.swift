@@ -1,8 +1,7 @@
 import Foundation
 import ApptentiveKit
-// import "ApptentiveModule.h"
 
-@objc(ApptentiveModule) class ApptentiveModule: NSObject {
+@objc(ApptentiveModule) class ApptentiveModule: RCTEventEmitter {
 
   // Register the Apptentive iOS SDK
   @objc(register:resolver:rejecter:)
@@ -184,8 +183,38 @@ import ApptentiveKit
     resolve(Apptentive.shared.unreadMessageCount)
   }
 
+  // MARK: - Events
+
+  struct EventName {
+    static let unreadMessageCountChanged = "onUnreadMessageCountChanged"
+  }
+
+  private var observation: NSKeyValueObservation?
+
+  override func constantsToExport() -> [AnyHashable : Any]! {
+    ["unreadMessageCountChangedEvent": "onUnreadMessageCountChanged"]
+  }
+
+  override func supportedEvents() -> [String]! {
+    return [EventName.unreadMessageCountChanged]
+  }
+
+  override func startObserving() {
+    self.observation = Apptentive.shared.observe(\.unreadMessageCount, options: [.old, .new], changeHandler: { apptentive, change in
+      if change.oldValue != change.newValue {
+        self.sendEvent(withName: EventName.unreadMessageCountChanged, body: ["count": apptentive.unreadMessageCount])
+      }
+    })
+  }
+
+  override func stopObserving() {
+    self.observation?.invalidate()
+  }
+
+  // MARK: - Misc
+
   // Avoid RN Module warning
-  @objc static func requiresMainQueueSetup() -> Bool { return false }
+  @objc override static func requiresMainQueueSetup() -> Bool { return true }
 
   private enum RNLogLevel: String {
     case verbose
