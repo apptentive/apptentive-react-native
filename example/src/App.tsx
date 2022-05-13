@@ -59,6 +59,10 @@ export class App extends React.Component<{}, State> {
     configuration.shouldSanitizeLogMessages = false;
     configuration.setTroubleshootingModeEnabled = true;
 
+    Apptentive.onUnreadMessageCountChanged = args => {
+      console.log("APPTENTIVE TEST: Unread message count changed to ", args.count)
+    } 
+
     // Register Apptentive
     Apptentive.register(configuration);
   }
@@ -277,22 +281,6 @@ export class App extends React.Component<{}, State> {
               title="Launch Message Center"
             />
           </View>
-
-          {/* Test Get Unread Message Count */}
-          <View style={[styles.container, { flexDirection: "row" }]}>
-            <Button
-              onPress={() => {
-                Apptentive.getUnreadMessageCount().then( (unreadMessageCount) => {
-                  console.log("APPTENTIVE TEST: Message Center unread message count?: " + unreadMessageCount)
-                }).catch( (error) => {
-                  console.log("APPTENTIVE TEST: Error getting unread message count from Message Center: ", error)
-                })
-
-              }}
-              title="Print Unread Message Count"
-            />
-          </View>
-
         </View>
       </View>
     );
