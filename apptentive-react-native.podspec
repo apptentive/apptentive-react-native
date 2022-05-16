@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
   s.authors      = package["author"]
 
   s.platforms    = { :ios => "11.0" }
-  s.source       = { :git => "https://github.com/HarryAWoodworth/Apptentive-React-Native-Module.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/apptentive/apptentive-react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"
 
   s.dependency 'ApptentiveKit', '~> 6.0.2'
-  s.dependency "React-Core"
+  s.dependency "React/Core"
 end
