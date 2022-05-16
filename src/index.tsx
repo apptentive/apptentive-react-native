@@ -13,7 +13,7 @@ const ApptentiveModule = NativeModules.ApptentiveModule
           throw new Error(LINKING_ERROR);
         },});
 
-let _onUnreadMessageCountChanged = count => {};
+let _onUnreadMessageCountChanged: (count: number) => {};
 let _eventsRegistered = false;
 
 ///// Class Implementation
@@ -44,7 +44,8 @@ export class Apptentive {
 
       const emitter = Platform.select({
         ios: () => new NativeEventEmitter(ApptentiveModule),
-        android: () => DeviceEventEmitter
+        android: () => DeviceEventEmitter,
+        default: () => DeviceEventEmitter
       })();
       
       emitter.addListener(ApptentiveModule.unreadMessageCountChangedEvent, (e) => {
