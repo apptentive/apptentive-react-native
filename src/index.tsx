@@ -25,6 +25,9 @@ export class ApptentiveConfiguration {
   logLevel: string;
   distributionName: string;
   distributionVersion: string;
+  shouldEncryptStorage: boolean;
+  shouldSanitizeLogMessages: boolean;
+  setTroubleshootingModeEnabled: boolean;
 
   constructor(key: string, signature: string) {
     this.apptentiveKey = key;
@@ -32,6 +35,9 @@ export class ApptentiveConfiguration {
     this.logLevel = "info";
     this.distributionName = "React Native";
     this.distributionVersion = require("../package").version;
+    this.shouldEncryptStorage = false;
+    this.shouldSanitizeLogMessages = true;
+    this.setTroubleshootingModeEnabled = true;
   }
 }
 
