@@ -344,7 +344,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  apptentive-react-native: c899b20bf55b74ff4f8ddd912a00159fed3bc47d
+  apptentive-react-native: 891019c93b93a3991cd0661d79967149b444ab31
   ApptentiveKit: a2190a8e7bf98639a7c117dbca3cc6004d6aaa64
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: cde416483dac037923206447da6e1454df403714
