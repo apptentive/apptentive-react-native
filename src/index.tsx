@@ -69,8 +69,8 @@ export class Apptentive {
     return ApptentiveModule.engage(event);
   }
 
-  // Show the Message Center
-  static showMessageCenter(): Promise<boolean> {
+  // Present the Message Center
+  static presentMessageCenter(): Promise<boolean> {
     return ApptentiveModule.showMessageCenter();
   }
 
@@ -117,6 +117,27 @@ export class Apptentive {
     return new Promise<boolean>((_, reject) => {reject("Apptentive Error: Unsupported type of custom data: " + (typeof value));});
   }
 
+  /**
+   * @deprecated The method should not be used. Use addCustomPersonData() instead
+   */
+  static addCustomPersonDataBool(key: string, value: boolean) {
+    return Apptentive.addCustomPersonData(key, value);
+  }
+
+  /**
+   * @deprecated The method should not be used. Use addCustomPersonData() instead
+   */
+  static addCustomPersonDataNumber(key: string, value: number) {
+    return Apptentive.addCustomPersonData(key, value);
+  }
+
+  /**
+   * @deprecated The method should not be used. Use addCustomPersonData() instead
+   */
+  static addCustomPersonDataString(key: string, value: string) {
+    return Apptentive.addCustomPersonData(key, value);
+  }
+
   // Remove person custom data based on key string
   static removeCustomPersonData(key: string): Promise<boolean> {
     return ApptentiveModule.removeCustomPersonData(key);
@@ -143,6 +164,27 @@ export class Apptentive {
     }
     // Return a default rejected Promise if type is not supported
     return new Promise<boolean>((_, reject) => {reject("Apptentive Error: Unsupported type of custom data: " + (typeof value));});
+  }
+
+  /**
+   * @deprecated The method should not be used. Use addCustomDeviceData() instead
+   */
+  static addCustomDeviceDataBool(key: string, value: boolean) {
+    return Apptentive.addCustomDeviceData(key, value);
+  }
+
+  /**
+   * @deprecated The method should not be used. Use addCustomDeviceData() instead
+   */
+  static addCustomDeviceDataNumber(key: string, value: number) {
+    return Apptentive.addCustomDeviceData(key, value);
+  }
+
+  /**
+   * @deprecated The method should not be used. Use addCustomDeviceData() instead
+   */
+  static addCustomDeviceDataString(key: string, value: string) {
+    return Apptentive.addCustomDeviceData(key, value);
   }
 
   // Remove device custom data based on key string
