@@ -61,7 +61,7 @@ export class App extends React.Component<{}, State> {
 
     Apptentive.onUnreadMessageCountChanged = args => {
       console.log("APPTENTIVE TEST: Unread message count changed to ", args)
-    } 
+    }
 
     // Register Apptentive
     Apptentive.register(configuration);
@@ -160,10 +160,10 @@ export class App extends React.Component<{}, State> {
             <Button
               onPress={() => {
                 // Parse dataVal and then pass to Apptentive
-                var dataVal = this.state.personDataValue
+                var dataVal = this.state.deviceDataValue
                 // Number
                 var customDataNum = Number(dataVal)
-                if (Number.isNaN(cdNum)) {
+                if (Number.isNaN(customDataNum)) {
                     // Bool
                     var customDataBoolStr = dataVal.toLowerCase().trim()
                     if (customDataBoolStr == "true") {
