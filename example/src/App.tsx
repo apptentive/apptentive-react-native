@@ -7,7 +7,7 @@ interface State {
   eventName: string;
 }
 
-// Set your Apptentive Dashbaord Credentials
+// Set your Apptentive Dashboard Credentials
 const credentials = Platform.select({
   android: {
     apptentiveKey: "___YOUR_ANDROID_APPTENTIVE_KEY___",
@@ -61,7 +61,7 @@ export class App extends React.Component<{}, State> {
 
     Apptentive.onUnreadMessageCountChanged = args => {
       console.log("APPTENTIVE TEST: Unread message count changed to ", args)
-    } 
+    }
 
     // Register Apptentive
     Apptentive.register(configuration);
@@ -160,10 +160,10 @@ export class App extends React.Component<{}, State> {
             <Button
               onPress={() => {
                 // Parse dataVal and then pass to Apptentive
-                var dataVal = this.state.personDataValue
+                var dataVal = this.state.deviceDataValue
                 // Number
                 var customDataNum = Number(dataVal)
-                if (Number.isNaN(cdNum)) {
+                if (Number.isNaN(customDataNum)) {
                     // Bool
                     var customDataBoolStr = dataVal.toLowerCase().trim()
                     if (customDataBoolStr == "true") {
@@ -276,11 +276,27 @@ export class App extends React.Component<{}, State> {
             />
             <Button
               onPress={() => {
-                Apptentive.showMessageCenter()
+                Apptentive.presentMessageCenter()
               }}
               title="Launch Message Center"
             />
           </View>
+
+          {/* Test Compatibility Functions */}
+          <View style={[styles.container, { flexDirection: "row" }]}>
+            <Button
+              onPress={() => {
+                Apptentive.addCustomPersonDataBool("LegacyTestPBool", true);
+                Apptentive.addCustomPersonDataNumber("LegacyTestPNum", 12);
+                Apptentive.addCustomPersonDataString("LegacyTestPStr", "Test String 1")
+                Apptentive.addCustomDeviceDataBool("LegacyTestDBool", false);
+                Apptentive.addCustomDeviceDataNumber("LegacyTestDNum", 1491.5);
+                Apptentive.addCustomDeviceDataString("LegacyTestDStr", "Test String 2")
+              }}
+              title="Type-Specific Custom Data"
+            />
+          </View>
+
         </View>
       </View>
     );
