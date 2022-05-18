@@ -42,7 +42,7 @@ export class ApptentiveConfiguration {
 }
 
 export class Apptentive {
-  
+
   // Register the Apptentive SDK
   static register(configuration: ApptentiveConfiguration): Promise<boolean> {
     if (!_eventsRegistered) {
@@ -53,14 +53,14 @@ export class Apptentive {
         android: () => DeviceEventEmitter,
         default: () => DeviceEventEmitter
       })();
-      
+
       emitter.addListener(ApptentiveModule.unreadMessageCountChangedEvent, (e) => {
         if (_onUnreadMessageCountChanged !== undefined) {
           _onUnreadMessageCountChanged(e.count);
         }
       });
     }
-    
+
     return ApptentiveModule.register(configuration);
   }
 
@@ -96,7 +96,25 @@ export class Apptentive {
 
   // Add person custom data based on key string and value of type bool, number, or string
   static addCustomPersonData(key: string, value: any): Promise<boolean> {
-    return ApptentiveModule.addCustomPersonData(key, value);
+    if (Platform.OS === "ios") {
+      return ApptentiveModule.addCustomPersonData(key, value);
+    }
+    else if (Platform.OS === "android") {
+      if (typeof value === 'boolean') {
+        return ApptentiveModule.addCustomPersonDataBoolean(key, value);
+      }
+      if (typeof value === 'number') {
+        return ApptentiveModule.addCustomPersonDataNumber(key, value);
+      }
+      if (typeof value === 'string') {
+        return ApptentiveModule.addCustomPersonDataString(key, value);
+      }
+    } else {
+      // Return a default rejected Promise if platform is not supported
+      return new Promise<boolean>((_, reject) => {reject("Apptentive Error: Unsupported platform: " + (Platform.OS));});
+    }
+    // Return a default rejected Promise if type is not supported
+    return new Promise<boolean>((_, reject) => {reject("Apptentive Error: Unsupported type of custom data: " + (typeof value));});
   }
 
   // Remove person custom data based on key string
@@ -106,7 +124,25 @@ export class Apptentive {
 
   // Add device custom data based on key string and value of type bool, number, or string
   static addCustomDeviceData(key: string, value: any): Promise<boolean> {
-    return ApptentiveModule.addCustomDeviceData(key, value);
+    if (Platform.OS === "ios") {
+      return ApptentiveModule.addCustomDeviceData(key, value);
+    }
+    else if (Platform.OS === "android") {
+      if (typeof value === 'boolean') {
+        return ApptentiveModule.addCustomDeviceDataBoolean(key, value);
+      }
+      if (typeof value === 'number') {
+        return ApptentiveModule.addCustomDeviceDataNumber(key, value);
+      }
+      if (typeof value === 'string') {
+        return ApptentiveModule.addCustomDeviceDataString(key, value);
+      }
+    } else {
+      // Return a default rejected Promise if platform is not supported
+      return new Promise<boolean>((_, reject) => {reject("Apptentive Error: Unsupported platform: " + (Platform.OS));});
+    }
+    // Return a default rejected Promise if type is not supported
+    return new Promise<boolean>((_, reject) => {reject("Apptentive Error: Unsupported type of custom data: " + (typeof value));});
   }
 
   // Remove device custom data based on key string
@@ -128,7 +164,7 @@ export class Apptentive {
   static getUnreadMessageCount(): Promise<number> {
     return ApptentiveModule.getUnreadMessageCount();
   }
-  
+
   /**
    * @return Current callback for the unread message count change in the Message Center.
    */
@@ -143,5 +179,5 @@ export class Apptentive {
   static set onUnreadMessageCountChanged(value) {
     _onUnreadMessageCountChanged = value;
   }
-  
+
 }

@@ -95,19 +95,27 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
     }
   }
 
-  // Add person custom data based on key string and value of type bool, number, or string
+  // Add person custom data based on key string and value of type bool
+  // Delegated from addCustomPersonData(key, value)
   @ReactMethod
-  fun addCustomPersonData(key: String, value: Any, promise: Promise): Unit {
-    when(value) {
-      is Number -> Apptentive.addCustomPersonData(key, value)
-      is Boolean -> Apptentive.addCustomPersonData(key, value)
-      is String -> Apptentive.addCustomPersonData(key, value)
-      else -> {
-        promise.reject("Apptentive Error", "Unable to add custom person" +
-          " data for key $key: Unexpected type: ${value::class.java.simpleName}", null)
-        return
-      }
-    }
+  fun addCustomPersonDataBoolean(key: String, value: Boolean, promise: Promise): Unit {
+    Apptentive.addCustomPersonData(key, value)
+    promise.resolve(true)
+  }
+
+  // Add person custom data based on key string and value of type double
+  // Delegated from addCustomPersonData(key, value)
+  @ReactMethod
+  fun addCustomPersonDataNumber(key: String, value: Double, promise: Promise): Unit {
+    Apptentive.addCustomPersonData(key, value)
+    promise.resolve(true)
+  }
+
+  // Add person custom data based on key string and value of type String
+  // Delegated from addCustomPersonData(key, value)
+  @ReactMethod
+  fun addCustomPersonDataString(key: String, value: String, promise: Promise): Unit {
+    Apptentive.addCustomPersonData(key, value)
     promise.resolve(true)
   }
 
@@ -122,18 +130,27 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
     }
   }
 
-  // Add device custom data based on key string and value of type bool, number, or string
+  // Add device custom data based on key string and value of type bool
+  // Delegated from addCustomPersonData(key, value)
   @ReactMethod
-  fun addCustomDeviceData(key: String, value: Any, promise: Promise): Unit {
-    when(value) {
-      is Number -> Apptentive.addCustomDeviceData(key, value)
-      is Boolean -> Apptentive.addCustomDeviceData(key, value)
-      is String -> Apptentive.addCustomDeviceData(key, value)
-      else -> {
-        promise.reject("Apptentive Error", "Unable to add custom device data for key $key: Unexpected type: ${value::class.java.simpleName}", null)
-        return
-      }
-    }
+  fun addCustomDeviceDataBoolean(key: String, value: Boolean, promise: Promise): Unit {
+    Apptentive.addCustomDeviceData(key, value)
+    promise.resolve(true)
+  }
+
+  // Add device custom data based on key string and value of type double
+  // Delegated from addCustomPersonData(key, value)
+  @ReactMethod
+  fun addCustomDeviceDataNumber(key: String, value: Double, promise: Promise): Unit {
+    Apptentive.addCustomDeviceData(key, value)
+    promise.resolve(true)
+  }
+
+  // Add device custom data based on key string and value of type string
+  // Delegated from addCustomPersonData(key, value)
+  @ReactMethod
+  fun addCustomDeviceDataString(key: String, value: String, promise: Promise): Unit {
+    Apptentive.addCustomDeviceData(key, value)
     promise.resolve(true)
   }
 
