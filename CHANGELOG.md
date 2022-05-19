@@ -5,6 +5,21 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+# 2022-05-16 - v6.0.0
+
+- Apptentive Android SDK: 5.8.3
+- Apptentive iOS SDK: 6.0.2
+
+#### New & Improved
+
+This release updates the iOS dependency to the new ApptentiveKit v6.0 SDK.
+
+#### Migration Notes
+
+- For most developers this should be a transparent migration with no additional steps
+- Login/logout (Client Authentication) is not supported in this release
+- Customizing Survey and Message Center interactions on iOS requires native code in this release (see our [iOS customization guide](https://learn.apptentive.com/knowledge-base/apptentive-kit-ios-customization/))
+
 # 2022-03-23 - v5.8.3
 
 - Apptentive Android SDK: 5.8.3
