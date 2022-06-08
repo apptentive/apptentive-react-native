@@ -29,9 +29,9 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
       // Register for lifecycle callbacks
       val currentActivity = getActivityContext()
       if (currentActivity == null) {
-				promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive instance was not initialized: current activity is null");
-				return;
-			}
+        promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive instance was not initialized: current activity is null");
+        return;
+      }
       val lifecycleCallbacks = ApptentiveActivityLifecycleCallbacks.getInstance()
       lifecycleCallbacks.onActivityStarted(currentActivity)
       lifecycleCallbacks.onActivityResumed(currentActivity)
