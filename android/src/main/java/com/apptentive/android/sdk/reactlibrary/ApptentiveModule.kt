@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import com.apptentive.android.sdk.Apptentive
 import com.apptentive.android.sdk.ApptentiveConfiguration
+import com.apptentive.android.sdk.lifecycle.ApptentiveActivityLifecycleCallbacks
 import com.apptentive.android.sdk.ApptentiveLog
 import com.apptentive.android.sdk.module.messagecenter.UnreadMessagesListener
 import com.facebook.react.bridge.*
@@ -22,6 +23,18 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   fun register(credentials: ReadableMap, promise: Promise): Unit {
     try {
       Apptentive.register(getApplicationContext() , unpackCredentials(credentials))
+
+      // Register for lifecycle callbacks
+      val currentActivity = getActivityContext()
+      if (currentActivity == null) {
+				promise.reject("Apptentive Error", "Apptentive instance was not initialized: current activity is null");
+				return;
+			}
+      val lifecycleCallbacks = ApptentiveActivityLifecycleCallbacks.getInstance()
+      lifecycleCallbacks.onActivityStarted(currentActivity)
+      lifecycleCallbacks.onActivityResumed(currentActivity)
+      lifecycleCallbacks.onActivityStopped(currentActivity)
+
       Apptentive.addUnreadMessagesListener(this);
       promise.resolve(true)
     } catch (e: Exception) {
