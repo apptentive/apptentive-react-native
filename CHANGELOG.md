@@ -5,6 +5,15 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-ios/blob/master/CHANGELOG.md)
 
+# 2022-06-09 - v6.0.1
+
+- Apptentive Android SDK: 5.8.3
+- Apptentive iOS SDK: 6.0.2
+
+#### Bugs Fixed
+
+- Added missing lifecycle callbacks for the Android platform
+
 # 2022-05-16 - v6.0.0
 
 - Apptentive Android SDK: 5.8.3
