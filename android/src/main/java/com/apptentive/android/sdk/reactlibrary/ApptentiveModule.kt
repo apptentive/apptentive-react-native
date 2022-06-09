@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import com.apptentive.android.sdk.Apptentive
 import com.apptentive.android.sdk.ApptentiveConfiguration
+import com.apptentive.android.sdk.lifecycle.ApptentiveActivityLifecycleCallbacks
 import com.apptentive.android.sdk.ApptentiveLog
 import com.apptentive.android.sdk.module.messagecenter.UnreadMessagesListener
 import com.facebook.react.bridge.*
@@ -12,6 +13,8 @@ import com.facebook.react.modules.core.DeviceEventManagerModule
 
 class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext),
   UnreadMessagesListener {
+
+  private val APPTENTIVE_ERROR_CODE = "Apptentive Error"
   private val EVT_UNREAD_MESSAGE_COUNT_CHANGE = "onUnreadMessageCountChanged"
 
   // React context allows us to get the Application context and the current Activity context
@@ -22,10 +25,22 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   fun register(credentials: ReadableMap, promise: Promise): Unit {
     try {
       Apptentive.register(getApplicationContext() , unpackCredentials(credentials))
+
+      // Register for lifecycle callbacks
+      val currentActivity = getActivityContext()
+      if (currentActivity == null) {
+        promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive instance was not initialized: current activity is null");
+        return;
+      }
+      val lifecycleCallbacks = ApptentiveActivityLifecycleCallbacks.getInstance()
+      lifecycleCallbacks.onActivityStarted(currentActivity)
+      lifecycleCallbacks.onActivityResumed(currentActivity)
+      lifecycleCallbacks.onActivityStopped(currentActivity)
+
       Apptentive.addUnreadMessagesListener(this);
       promise.resolve(true)
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to register Apptentive instance.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to register Apptentive instance.", e)
     }
   }
 
@@ -37,7 +52,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
         promise.resolve(it)
       }
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to engage event $event.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to engage event $event.", e)
     }
   }
 
@@ -49,7 +64,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
         promise.resolve(it)
       }
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to present Message Center.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to present Message Center.", e)
     }
   }
 
@@ -60,7 +75,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
       Apptentive.setPersonName(name)
       promise.resolve(true)
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to set person name.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person name.", e)
     }
   }
 
@@ -70,7 +85,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
     try {
       promise.resolve(Apptentive.getPersonName() ?: "")
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to get person name.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person name.", e)
     }
   }
 
@@ -81,7 +96,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
       Apptentive.setPersonEmail(email)
       promise.resolve(true)
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to set person email.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person email.", e)
     }
   }
 
@@ -91,7 +106,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
     try {
       promise.resolve(Apptentive.getPersonEmail() ?: "")
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to get person email.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person email.", e)
     }
   }
 
@@ -126,7 +141,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
       Apptentive.removeCustomPersonData(key)
       promise.resolve(true)
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to remove custom person data $key.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom person data $key.", e)
     }
   }
 
@@ -161,7 +176,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
       Apptentive.removeCustomDeviceData(key)
       promise.resolve(true)
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to remove custom device data $key.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom device data $key.", e)
     }
   }
 
@@ -173,7 +188,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
         promise.resolve(it)
       }
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to check if Apptentive interaction can be shown on event $event.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check if Apptentive interaction can be shown on event $event.", e)
     }
   }
 
@@ -185,7 +200,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
         promise.resolve(it)
       }
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to check if Apptentive can launch Message Center.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check if Apptentive can launch Message Center.", e)
     }
   }
 
@@ -195,7 +210,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
     try {
       promise.resolve(Apptentive.getUnreadMessageCount())
     } catch (e: Exception) {
-      promise.reject("Apptentive Error", "Failed to check number of unread messages in Message Center.", e)
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check number of unread messages in Message Center.", e)
     }
   }
 
@@ -211,7 +226,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
       "warn" -> ApptentiveLog.Level.WARN
       "error" -> ApptentiveLog.Level.ERROR
       else -> {
-        println("APPTENTIVE ERROR: Unknown log level $logLevel, setting to info by default.")
+        println("$APPTENTIVE_ERROR_CODE: Unknown log level $logLevel, setting to info by default.")
         ApptentiveLog.Level.INFO
       }
     }
