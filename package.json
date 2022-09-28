@@ -1,6 +1,6 @@
 {
   "name": "apptentive-react-native",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "React Native Module for Apptentive SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -39,10 +39,10 @@
   ],
   "author": "Apptentive <sdks@apptentive.com> (https://github.com/apptentive)",
   "contributors": [
-    "Harry Woodworth",
-    "Alex Lementuev",
     "Frank Schmitt",
-    "Matthew Callis"
+    "Chase Olson",
+    "Poornima Nagarajan",
+    "Luqmaan Khan"
   ],
   "repository": "https://github.com/apptentive/apptentive-react-native",
   "license": "BSD-3-Clause",
