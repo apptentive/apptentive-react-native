@@ -128,5 +128,5 @@ dependencies {
   api 'com.facebook.react:react-native:+'
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   // Apptentive
-  implementation 'com.apptentive:apptentive-android:5.8.3'
+  implementation 'com.apptentive:apptentive-android:5.8.4'
 }
