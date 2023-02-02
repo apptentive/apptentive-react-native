@@ -1,6 +1,6 @@
 {
   "name": "apptentive-react-native",
-  "version": "6.0.3",
+  "version": "6.0.9",
   "description": "React Native Module for Apptentive SDK",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
