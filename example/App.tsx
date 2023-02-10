@@ -1,11 +1,40 @@
-import * as React from 'react';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
 
-import { StyleSheet, Button, View, Text, TextInput, Platform } from 'react-native';
-import { Apptentive, ApptentiveConfiguration } from 'apptentive-react-native';
+import React from 'react';
+import type {PropsWithChildren} from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+  TextInput,
+  Button
+} from 'react-native';
 
-interface State {
-  eventName: string;
-}
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
+
+import {
+  Apptentive,
+  ApptentiveConfiguration
+} from 'apptentive-react-native'
+
+type SectionProps = PropsWithChildren<{
+  title: string;
+}>;
 
 // Set your Apptentive Dashboard Credentials
 const credentials = Platform.select({
@@ -68,10 +97,20 @@ export class App extends React.Component<{}, State> {
   }
 
   render() {
+    const backgroundStyle = {
+      backgroundColor: Colors.lighter,
+    };
+    
     return (
-      <View style={styles.root}>
-        <View style={styles.container}>
-
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        />
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={backgroundStyle}>
+          <Header />
           {/* Test Events */}
           <View style={[styles.container, { flexDirection: "row" }]}>
             <TextInput
@@ -296,28 +335,29 @@ export class App extends React.Component<{}, State> {
               title="Type-Specific Custom Data"
             />
           </View>
-
-        </View>
-      </View>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  root: {
-    alignItems: 'center',
-    alignSelf: 'center'
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
   },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: '600',
   },
-  textinput: {
-    flex: 3,
-    height: 40,
-    backgroundColor: 'floralwhite',
-  }
+  sectionDescription: {
+    marginTop: 8,
+    fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
+  },
 });
 
 export default App;
