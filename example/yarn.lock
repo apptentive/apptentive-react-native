@@ -1994,10 +1994,8 @@ appdirsjs@^1.2.4:
   resolved "https://registry.yarnpkg.com/appdirsjs/-/appdirsjs-1.2.7.tgz#50b4b7948a26ba6090d4aede2ae2dc2b051be3b3"
   integrity sha512-Quji6+8kLBC3NnBeo14nPDq0+2jUs5s3/xEye+udFHumHhRk4M7aAMXp/PBJqkKYGuuyR9M/6Dq7d2AViiGmhw==
 
-apptentive-react-native@^6.0.9:
-  version "6.0.9"
-  resolved "https://registry.yarnpkg.com/apptentive-react-native/-/apptentive-react-native-6.0.9.tgz#84d3e31eca5a3f3fcd34c4bfe1d5e705d770a5a1"
-  integrity sha512-24O0taKNIocs7qRNSH8LSk/CGAHsZ63j8ufWDe2JpIUw7pk9FZcXOi2f2if6UkD2v4y4wUHFfiRuNBlqI5qroQ==
+"apptentive-react-native@file:..":
+  version "6.1.0"
 
 argparse@^1.0.7:
   version "1.0.10"

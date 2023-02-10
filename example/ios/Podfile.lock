@@ -1,5 +1,5 @@
 PODS:
-  - apptentive-react-native (6.0.9):
+  - apptentive-react-native (6.1.0):
     - ApptentiveKit (~> 6.0.9)
     - React-Core
   - ApptentiveKit (6.0.9)
@@ -576,7 +576,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  apptentive-react-native: f00772028ccfed0041f312647170e64ca69e510c
+  apptentive-react-native: 9833cc6a84b5893c7faf321f228b0f316dc40973
   ApptentiveKit: 81dbaf191961aed4aeb70aaaaeb3967ff73124e0
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
