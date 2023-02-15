@@ -40,7 +40,7 @@ type SectionProps = PropsWithChildren<{
 const credentials = Platform.select({
   android: {
     apptentiveKey: "___YOUR_ANDROID_APPTENTIVE_KEY___",
-    apptentiveSignature: "___YOUR_ANDROID_APPTENTIVE_SIGNATURE___",
+    apptentiveSignature: "___YOUR_ANDROID_APPTENTIVE_SIGNATURE___c",
   },
   ios: {
     apptentiveKey: "___YOUR_IOS_APPTENTIVE_KEY___",
