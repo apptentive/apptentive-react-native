@@ -1,10 +1,10 @@
 import { NativeModules, Platform, DeviceEventEmitter, NativeEventEmitter } from 'react-native';
 
 const LINKING_ERROR =
-  `The package 'apptentive-react-native' doesn't seem to be linked. Make sure: \n\n` +
+  `The package 'apptentive-react-native' is not linked. Make sure: \n\n` +
   Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
   '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo managed workflow\n';
+  '- You are not using Expo Go\n';
 
 // Get the Apptentive Native Module
 const ApptentiveModule = NativeModules.ApptentiveModule
@@ -27,7 +27,9 @@ export class ApptentiveConfiguration {
   distributionVersion: string;
   shouldEncryptStorage: boolean;
   shouldSanitizeLogMessages: boolean;
-  setTroubleshootingModeEnabled: boolean;
+  shouldInheritAppTheme: boolean;
+  ratingInteractionThrottleLength: number;
+  customAppStoreURL: string | null;
 
   constructor(key: string, signature: string) {
     this.apptentiveKey = key;
@@ -37,7 +39,9 @@ export class ApptentiveConfiguration {
     this.distributionVersion = require("../package").version;
     this.shouldEncryptStorage = false;
     this.shouldSanitizeLogMessages = true;
-    this.setTroubleshootingModeEnabled = true;
+    this.shouldInheritAppTheme = true;
+    this.ratingInteractionThrottleLength = 604800000;
+    this.customAppStoreURL = null;
   }
 }
 

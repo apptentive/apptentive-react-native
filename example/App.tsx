@@ -86,7 +86,6 @@ export class App extends React.Component<{}, State> {
     configuration.logLevel = 'debug';
     configuration.shouldEncryptStorage = false;
     configuration.shouldSanitizeLogMessages = false;
-    configuration.setTroubleshootingModeEnabled = true;
 
     Apptentive.onUnreadMessageCountChanged = args => {
       console.log("APPTENTIVE TEST: Unread message count changed to ", args)

@@ -2,54 +2,86 @@ package com.apptentive.android.sdk.reactlibrary
 
 import android.app.Activity
 import android.app.Application
-import com.apptentive.android.sdk.Apptentive
-import com.apptentive.android.sdk.ApptentiveConfiguration
-import com.apptentive.android.sdk.lifecycle.ApptentiveActivityLifecycleCallbacks
-import com.apptentive.android.sdk.ApptentiveLog
-import com.apptentive.android.sdk.module.messagecenter.UnreadMessagesListener
-import com.facebook.react.bridge.*
+import androidx.appcompat.app.AppCompatActivity
+import apptentive.com.android.feedback.Apptentive
+import apptentive.com.android.feedback.ApptentiveActivityInfo
+import apptentive.com.android.feedback.ApptentiveConfiguration
+import apptentive.com.android.feedback.EngagementResult
+import apptentive.com.android.feedback.RegisterResult
+import apptentive.com.android.util.InternalUseOnly
+import apptentive.com.android.util.Log
+import apptentive.com.android.util.LogLevel
+import apptentive.com.android.util.LogTag
+import com.facebook.react.bridge.LifecycleEventListener
+import com.facebook.react.bridge.Promise
+import com.facebook.react.bridge.ReactApplicationContext
+import com.facebook.react.bridge.ReactContextBaseJavaModule
+import com.facebook.react.bridge.ReactMethod
+import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.WritableNativeMap
 import com.facebook.react.modules.core.DeviceEventManagerModule
 
 
-class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext),
-  UnreadMessagesListener {
+@OptIn(InternalUseOnly::class)
+class ApptentiveModule(private val reactContext: ReactApplicationContext) :
+  ReactContextBaseJavaModule(reactContext), ApptentiveActivityInfo, LifecycleEventListener {
 
-  private val APPTENTIVE_ERROR_CODE = "Apptentive Error"
-  private val EVT_UNREAD_MESSAGE_COUNT_CHANGE = "onUnreadMessageCountChanged"
+  private companion object {
+    const val APPTENTIVE_ERROR_CODE = "Apptentive Error"
+    const val UNREAD_MESSAGE_COUNT_CHANGED = "onUnreadMessageCountChanged"
+    val REACT_NATIVE_TAG = LogTag("REACT NATIVE")
+  }
 
-  // React context allows us to get the Application context and the current Activity context
-  private var mReactContext: ReactApplicationContext = reactContext
+  private var isApptentiveRegistered = false
 
   // Register the Apptentive Android SDK
   @ReactMethod
-  fun register(credentials: ReadableMap, promise: Promise): Unit {
+  fun register(credentials: ReadableMap, promise: Promise) {
     try {
-      Apptentive.register(getApplicationContext() , unpackCredentials(credentials))
+      android.util.Log.d("Apptentive", "[REACT NATIVE] Registering Apptentive")
 
-      // Register for lifecycle callbacks
-      val currentActivity = getActivityContext()
-      if (currentActivity == null) {
-        promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive instance was not initialized: current activity is null");
-        return;
+      Apptentive.register(getApplicationContext(), unpackCredentials(credentials)) {
+        if (it == RegisterResult.Success) {
+          Log.d(REACT_NATIVE_TAG, "Register Apptentive: Success")
+          isApptentiveRegistered = true
+
+          handlePostRegister()
+        } else Log.d(REACT_NATIVE_TAG, "Register Apptentive: Fail")
+
+        promise.resolve(isApptentiveRegistered)
       }
-      val lifecycleCallbacks = ApptentiveActivityLifecycleCallbacks.getInstance()
-      lifecycleCallbacks.onActivityStarted(currentActivity)
-      lifecycleCallbacks.onActivityResumed(currentActivity)
-      lifecycleCallbacks.onActivityStopped(currentActivity)
-
-      Apptentive.addUnreadMessagesListener(this);
-      promise.resolve(true)
     } catch (e: Exception) {
       promise.reject(APPTENTIVE_ERROR_CODE, "Failed to register Apptentive instance.", e)
     }
   }
 
+  private fun handlePostRegister() {
+    // We also do this in onResume, but doing it here as well might help
+    //   avoid some race conditions that we've encountered before.
+    Log.d(REACT_NATIVE_TAG, "Registering ApptentiveInfoCallback")
+    Apptentive.registerApptentiveActivityInfoCallback(this)
+
+    Log.d(REACT_NATIVE_TAG, "Observing Message Center Notification")
+    Apptentive.messageCenterNotificationObservable.observe { notification ->
+      Log.v(REACT_NATIVE_TAG, "Message Center notification received: $notification")
+      val eventEmitter =
+        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+      val map = WritableNativeMap()
+      map.putInt("count", notification?.unreadMessageCount ?: 0)
+
+      eventEmitter.emit(UNREAD_MESSAGE_COUNT_CHANGED, map)
+    }
+
+    Log.d(REACT_NATIVE_TAG, "Register lifecycle observe")
+    reactApplicationContext.addLifecycleEventListener(this)
+  }
+
   // Engage an event by an event name string
   @ReactMethod
-  fun engage(event: String, promise: Promise): Unit {
+  fun engage(event: String, promise: Promise) {
     try {
-      Apptentive.engage(getActivityContext(), event) {
-        promise.resolve(it)
+      Apptentive.engage(event) {
+        promise.resolve(it is EngagementResult.InteractionShown)
       }
     } catch (e: Exception) {
       promise.reject(APPTENTIVE_ERROR_CODE, "Failed to engage event $event.", e)
@@ -58,10 +90,10 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
 
   // Show the Apptentive Message Center
   @ReactMethod
-  fun showMessageCenter(promise: Promise): Unit {
+  fun showMessageCenter(promise: Promise) {
     try {
-      Apptentive.showMessageCenter(getActivityContext()) {
-        promise.resolve(it)
+      Apptentive.showMessageCenter {
+        promise.resolve(it is EngagementResult.InteractionShown)
       }
     } catch (e: Exception) {
       promise.reject(APPTENTIVE_ERROR_CODE, "Failed to present Message Center.", e)
@@ -70,7 +102,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
 
   // Set person name
   @ReactMethod
-  fun setPersonName(name: String, promise: Promise): Unit {
+  fun setPersonName(name: String, promise: Promise) {
     try {
       Apptentive.setPersonName(name)
       promise.resolve(true)
@@ -81,9 +113,9 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
 
   // Get person name, empty string if there is none
   @ReactMethod
-  fun getPersonName(promise: Promise): Unit {
+  fun getPersonName(promise: Promise) {
     try {
-      promise.resolve(Apptentive.getPersonName() ?: "")
+      promise.resolve(Apptentive.getPersonName().orEmpty())
     } catch (e: Exception) {
       promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person name.", e)
     }
@@ -91,7 +123,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
 
   // Set person email
   @ReactMethod
-  fun setPersonEmail(email: String, promise: Promise): Unit {
+  fun setPersonEmail(email: String, promise: Promise) {
     try {
       Apptentive.setPersonEmail(email)
       promise.resolve(true)
@@ -102,9 +134,9 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
 
   // Get person email, empty string if there is none
   @ReactMethod
-  fun getPersonEmail(promise: Promise): Unit {
+  fun getPersonEmail(promise: Promise) {
     try {
-      promise.resolve(Apptentive.getPersonEmail() ?: "")
+      promise.resolve(Apptentive.getPersonEmail().orEmpty())
     } catch (e: Exception) {
       promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person email.", e)
     }
@@ -113,7 +145,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   // Add person custom data based on key string and value of type bool
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
-  fun addCustomPersonDataBoolean(key: String, value: Boolean, promise: Promise): Unit {
+  fun addCustomPersonDataBoolean(key: String, value: Boolean, promise: Promise) {
     Apptentive.addCustomPersonData(key, value)
     promise.resolve(true)
   }
@@ -121,7 +153,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   // Add person custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
-  fun addCustomPersonDataNumber(key: String, value: Double, promise: Promise): Unit {
+  fun addCustomPersonDataNumber(key: String, value: Double, promise: Promise) {
     Apptentive.addCustomPersonData(key, value)
     promise.resolve(true)
   }
@@ -129,14 +161,14 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   // Add person custom data based on key string and value of type String
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
-  fun addCustomPersonDataString(key: String, value: String, promise: Promise): Unit {
+  fun addCustomPersonDataString(key: String, value: String, promise: Promise) {
     Apptentive.addCustomPersonData(key, value)
     promise.resolve(true)
   }
 
   // Remove person custom data based on key string
   @ReactMethod
-  fun removeCustomPersonData(key: String, promise: Promise): Unit {
+  fun removeCustomPersonData(key: String, promise: Promise) {
     try {
       Apptentive.removeCustomPersonData(key)
       promise.resolve(true)
@@ -148,7 +180,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   // Add device custom data based on key string and value of type bool
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
-  fun addCustomDeviceDataBoolean(key: String, value: Boolean, promise: Promise): Unit {
+  fun addCustomDeviceDataBoolean(key: String, value: Boolean, promise: Promise) {
     Apptentive.addCustomDeviceData(key, value)
     promise.resolve(true)
   }
@@ -156,7 +188,7 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   // Add device custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
-  fun addCustomDeviceDataNumber(key: String, value: Double, promise: Promise): Unit {
+  fun addCustomDeviceDataNumber(key: String, value: Double, promise: Promise) {
     Apptentive.addCustomDeviceData(key, value)
     promise.resolve(true)
   }
@@ -164,14 +196,14 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
   // Add device custom data based on key string and value of type string
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
-  fun addCustomDeviceDataString(key: String, value: String, promise: Promise): Unit {
+  fun addCustomDeviceDataString(key: String, value: String, promise: Promise) {
     Apptentive.addCustomDeviceData(key, value)
     promise.resolve(true)
   }
 
   // Remove device custom data based on key string
   @ReactMethod
-  fun removeCustomDeviceData(key: String, promise: Promise): Unit {
+  fun removeCustomDeviceData(key: String, promise: Promise) {
     try {
       Apptentive.removeCustomDeviceData(key)
       promise.resolve(true)
@@ -182,52 +214,64 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
 
   // Check if an event name will launch an interaction
   @ReactMethod
-  fun canShowInteraction(event: String, promise: Promise): Unit {
+  fun canShowInteraction(event: String, promise: Promise) {
     try {
-      Apptentive.queryCanShowInteraction(event) {
-        promise.resolve(it)
-      }
+      val canShow = Apptentive.canShowInteraction(event)
+      promise.resolve(canShow)
     } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check if Apptentive interaction can be shown on event $event.", e)
+      promise.reject(
+        APPTENTIVE_ERROR_CODE,
+        "Failed to check if Apptentive interaction can be shown on event $event.",
+        e
+      )
     }
   }
 
   // Check if Message Center can be shown
   @ReactMethod
-  fun canShowMessageCenter(promise: Promise): Unit {
+  fun canShowMessageCenter(promise: Promise) {
     try {
-      Apptentive.canShowMessageCenter {
-        promise.resolve(it)
-      }
+      val canShow = Apptentive.canShowMessageCenter()
+      promise.resolve(canShow)
     } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check if Apptentive can launch Message Center.", e)
+      promise.reject(
+        APPTENTIVE_ERROR_CODE,
+        "Failed to check if Apptentive can launch Message Center.",
+        e
+      )
     }
   }
 
   // Get unread message count in Message Center
   @ReactMethod
-  fun getUnreadMessageCount(promise: Promise): Unit {
+  fun getUnreadMessageCount(promise: Promise) {
     try {
-      promise.resolve(Apptentive.getUnreadMessageCount())
+      val count = Apptentive.getUnreadMessageCount()
+      promise.resolve(count)
     } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check number of unread messages in Message Center.", e)
+      promise.reject(
+        APPTENTIVE_ERROR_CODE,
+        "Failed to check number of unread messages in Message Center.",
+        e
+      )
     }
   }
 
   ////// Utility Functions
 
   // Set ApptentiveLogger log level
-  private fun parseLogLevel(logLevel: String): ApptentiveLog.Level {
-    println("APPTENTIVE TEST: Parsing log level: $logLevel")
-    return when(logLevel) {
-      "verbose" -> ApptentiveLog.Level.VERBOSE
-      "debug" -> ApptentiveLog.Level.DEBUG
-      "info" -> ApptentiveLog.Level.INFO
-      "warn" -> ApptentiveLog.Level.WARN
-      "error" -> ApptentiveLog.Level.ERROR
+  private fun parseLogLevel(logLevel: String): LogLevel {
+    android.util.Log.d("Apptentive", "[REACT NATIVE] Parsing log level: $logLevel")
+
+    return when (logLevel) {
+      "verbose" -> LogLevel.Verbose
+      "debug" -> LogLevel.Debug
+      "info" -> LogLevel.Info
+      "warn" -> LogLevel.Warning
+      "error" -> LogLevel.Error
       else -> {
         println("$APPTENTIVE_ERROR_CODE: Unknown log level $logLevel, setting to info by default.")
-        ApptentiveLog.Level.INFO
+        LogLevel.Info
       }
     }
   }
@@ -237,41 +281,77 @@ class ApptentiveModule(reactContext: ReactApplicationContext) : ReactContextBase
     // Key/Sig
     val apptentiveKey = credentials.getString("apptentiveKey")!!
     val apptentiveSignature = credentials.getString("apptentiveSignature")!!
+
     // Create configuration instance
     val apptentiveConfiguration = ApptentiveConfiguration(apptentiveKey, apptentiveSignature)
+
     // Set flags, or defaults if not present
-    apptentiveConfiguration.logLevel = parseLogLevel(if (credentials.hasKey("logLevel")) credentials.getString("logLevel") ?: "info" else "info")
-    apptentiveConfiguration.setShouldEncryptStorage(if (credentials.hasKey("shouldEncryptStorage")) credentials.getBoolean("shouldEncryptStorage") else false)
-    apptentiveConfiguration.setShouldSanitizeLogMessages(if (credentials.hasKey("shouldSanitizeLogMessages")) credentials.getBoolean("shouldSanitizeLogMessages") else true)
-    apptentiveConfiguration.isTroubleshootingModeEnabled = if (credentials.hasKey("troubleshootingModeEnabled")) credentials.getBoolean("troubleshootingModeEnabled") else true
-    // Return configuration
+    if (credentials.hasKey("logLevel")) {
+      apptentiveConfiguration.logLevel =
+        parseLogLevel(credentials.getString("logLevel") ?: "info")
+    }
+
+    // Set distribution name and version
+    if (credentials.hasKey("distributionName")) {
+      apptentiveConfiguration.distributionName = credentials.getString("distributionName") ?: "React Native"
+    }
+
+    if (credentials.hasKey("distributionVersion")) {
+      apptentiveConfiguration.distributionVersion = credentials.getString("distributionVersion").orEmpty()
+    }
+
+    if (credentials.hasKey("shouldEncryptStorage")) {
+      apptentiveConfiguration.shouldEncryptStorage = credentials.getBoolean("shouldEncryptStorage")
+    }
+
+    if (credentials.hasKey("shouldSanitizeLogMessages")) {
+      apptentiveConfiguration.shouldSanitizeLogMessages = credentials.getBoolean("shouldSanitizeLogMessages")
+    }
+
+    if (credentials.hasKey("shouldInheritAppTheme")) {
+      apptentiveConfiguration.shouldInheritAppTheme = credentials.getBoolean("shouldInheritAppTheme")
+    }
+
+    if (credentials.hasKey("ratingInteractionThrottleLength")) {
+      apptentiveConfiguration.ratingInteractionThrottleLength =
+        credentials.getDouble("ratingInteractionThrottleLength").toLong()
+    }
+
+    if (credentials.hasKey("customAppStoreURL")) {
+      apptentiveConfiguration.customAppStoreURL = credentials.getString("customAppStoreURL")
+    }
+
     return apptentiveConfiguration
   }
 
-  // Represents the name of the module
-  override fun getName(): String { return "ApptentiveModule" }
+  override fun getName(): String {
+    return "ApptentiveModule"
+  }
 
   private fun getApplicationContext(): Application {
-    return mReactContext.currentActivity?.applicationContext as Application
+    return currentActivity?.applicationContext as Application
   }
 
-  private fun getActivityContext(): Activity? {
-    return mReactContext.currentActivity
-  }
-
-  override fun onUnreadMessageCountChanged(unreadMessages: Int) {
-    var result = Arguments.createMap()
-
-    result.putInt("count", unreadMessages)
-    mReactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-            .emit(EVT_UNREAD_MESSAGE_COUNT_CHANGE, result)
+  override fun getApptentiveActivityInfo(): Activity {
+    return currentActivity as AppCompatActivity
   }
 
   override fun hasConstants(): Boolean {
     return true
   }
 
-  override fun getConstants(): MutableMap<String, Any>? {
-    return mapOf<String, Any>("unreadMessageCountChangedEvent" to EVT_UNREAD_MESSAGE_COUNT_CHANGE).toMutableMap()
+  override fun getConstants(): MutableMap<String, Any> {
+    return mutableMapOf("unreadMessageCountChangedEvent" to UNREAD_MESSAGE_COUNT_CHANGED)
   }
+
+  override fun onHostResume() {
+    if (isApptentiveRegistered) {
+      Log.d(REACT_NATIVE_TAG, "Registering ApptentiveInfoCallback")
+      Apptentive.registerApptentiveActivityInfoCallback(this)
+    }
+  }
+
+  override fun onHostPause() {}
+
+  override fun onHostDestroy() {}
 }
