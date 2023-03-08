@@ -333,7 +333,8 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   }
 
   override fun getApptentiveActivityInfo(): Activity {
-    return currentActivity as AppCompatActivity
+    return (currentActivity as? AppCompatActivity)
+      ?: throw IllegalStateException("Activity $this could not retrieve currentActivity from React Native.")
   }
 
   override fun hasConstants(): Boolean {
