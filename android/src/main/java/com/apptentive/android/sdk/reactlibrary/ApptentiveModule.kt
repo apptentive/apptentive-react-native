@@ -40,15 +40,19 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     try {
       android.util.Log.d("Apptentive", "[REACT NATIVE] Registering Apptentive")
 
-      Apptentive.register(getApplicationContext(), unpackCredentials(credentials)) {
-        if (it == RegisterResult.Success) {
-          Log.d(REACT_NATIVE_TAG, "Register Apptentive: Success")
-          isApptentiveRegistered = true
+      getApplicationContext()?.let { application ->
+        Apptentive.register(application, unpackCredentials(credentials)) {
+          if (it == RegisterResult.Success) {
+            Log.d(REACT_NATIVE_TAG, "Register Apptentive: Success")
+            isApptentiveRegistered = true
 
-          handlePostRegister()
-        } else Log.d(REACT_NATIVE_TAG, "Register Apptentive: Fail")
+            handlePostRegister()
+          } else Log.d(REACT_NATIVE_TAG, "Register Apptentive: Fail")
 
-        promise.resolve(isApptentiveRegistered)
+          promise.resolve(isApptentiveRegistered)
+        }
+      } ?: run {
+        promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive instance was not initialized: application context is null")
       }
     } catch (e: Exception) {
       promise.reject(APPTENTIVE_ERROR_CODE, "Failed to register Apptentive instance.", e)
@@ -328,8 +332,8 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     return "ApptentiveModule"
   }
 
-  private fun getApplicationContext(): Application {
-    return currentActivity?.applicationContext as Application
+  private fun getApplicationContext(): Application? {
+    return currentActivity?.applicationContext as Application?
   }
 
   override fun getApptentiveActivityInfo(): Activity {
