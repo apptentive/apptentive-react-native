@@ -51,9 +51,10 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
 
           promise.resolve(isApptentiveRegistered)
         }
-      } ?: run {
-        promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive instance was not initialized: application context is null")
-      }
+      } ?: promise.reject(
+        APPTENTIVE_ERROR_CODE,
+        "Apptentive instance was not initialized: application context is null"
+      )
     } catch (e: Exception) {
       promise.reject(APPTENTIVE_ERROR_CODE, "Failed to register Apptentive instance.", e)
     }
