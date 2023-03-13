@@ -2,8 +2,13 @@
 
 This document lets you know what has changed in the React Native module. For changes in each version of the native SDKs, please see:
 
-- [Android Changelog](https://github.com/apptentive/apptentive-android/blob/master/CHANGELOG.md)
+- [Android Changelog](https://github.com/apptentive/apptentive-kit-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-kit-ios/blob/main/CHANGELOG.md)
+
+# 2023-03-13 - v6.1.1
+
+- Apptentive Android SDK: 6.0.3
+- Apptentive iOS SDK: 6.1.0
 
 # 2023-02-14 - v6.1.0
 
