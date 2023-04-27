@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "apptentive-react-native": "file:../",
+    "apptentive-react-native": "file:..",
     "react": "18.2.0",
     "react-native": "0.71.2"
   },

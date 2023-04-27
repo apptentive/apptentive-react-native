@@ -94,8 +94,8 @@ import ApptentiveKit
   // Add person custom data based on key string and value of type bool, number, or string
   @objc(addCustomPersonData:value:resolver:rejecter:)
   func addCustomPersonData(_ key: String, value: Any, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    if let value_bool = value as? Bool {
-      Apptentive.shared.personCustomData[key] = value_bool
+    if let value_number = value as? NSNumber, CFGetTypeID(value_number) == CFBooleanGetTypeID() {
+      Apptentive.shared.personCustomData[key] = value_number as? Bool
     }
     else if let value_int = value as? Int {
       Apptentive.shared.personCustomData[key] = value_int
@@ -126,8 +126,8 @@ import ApptentiveKit
   // Add device custom data based on key string and value of type bool, number, or string
   @objc(addCustomDeviceData:value:resolver:rejecter:)
   func addCustomDeviceData(_ key: String, value: Any, resolver resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) -> Void {
-    if let value_bool = value as? Bool {
-      Apptentive.shared.deviceCustomData[key] = value_bool
+    if let value_number = value as? NSNumber, CFGetTypeID(value_number) == CFBooleanGetTypeID() {
+      Apptentive.shared.deviceCustomData[key] = value_number as? Bool
     }
     else if let value_int = value as? Int {
       Apptentive.shared.deviceCustomData[key] = value_int
