@@ -151,24 +151,36 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataBoolean(key: String, value: Boolean, promise: Promise) {
-    Apptentive.addCustomPersonData(key, value)
-    promise.resolve(true)
+      try {
+          Apptentive.addCustomPersonData(key, value)
+          promise.resolve(true)
+      } catch (e: Exception) {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.", e)
+      }
   }
 
   // Add person custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataNumber(key: String, value: Double, promise: Promise) {
-    Apptentive.addCustomPersonData(key, value)
-    promise.resolve(true)
+      try {
+          Apptentive.addCustomPersonData(key, value)
+          promise.resolve(true)
+      } catch (e: Exception) {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.", e)
+      }
   }
 
   // Add person custom data based on key string and value of type String
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataString(key: String, value: String, promise: Promise) {
-    Apptentive.addCustomPersonData(key, value)
-    promise.resolve(true)
+      try {
+          Apptentive.addCustomPersonData(key, value)
+          promise.resolve(true)
+      } catch (e: Exception) {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.", e)
+      }
   }
 
   // Remove person custom data based on key string
@@ -186,24 +198,35 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataBoolean(key: String, value: Boolean, promise: Promise) {
-    Apptentive.addCustomDeviceData(key, value)
-    promise.resolve(true)
+    try {
+        Apptentive.addCustomDeviceData(key, value)
+        promise.resolve(true)
+            } catch (e: Exception) {
+        promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.", e)
+    }
   }
-
   // Add device custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataNumber(key: String, value: Double, promise: Promise) {
-    Apptentive.addCustomDeviceData(key, value)
-    promise.resolve(true)
+      try {
+          Apptentive.addCustomDeviceData(key, value)
+          promise.resolve(true)
+      } catch (e: Exception) {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.", e)
+      }
   }
 
   // Add device custom data based on key string and value of type string
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataString(key: String, value: String, promise: Promise) {
-    Apptentive.addCustomDeviceData(key, value)
-    promise.resolve(true)
+      try {
+          Apptentive.addCustomDeviceData(key, value)
+          promise.resolve(true)
+      } catch (e: Exception) {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.", e)
+      }
   }
 
   // Remove device custom data based on key string
