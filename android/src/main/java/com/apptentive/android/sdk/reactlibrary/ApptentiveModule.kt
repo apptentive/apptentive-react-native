@@ -112,7 +112,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
       Apptentive.setPersonName(name)
       promise.resolve(true)
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person name.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -122,7 +122,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     if (isApptentiveRegistered) {
       promise.resolve(Apptentive.getPersonName().orEmpty())
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person name.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -133,7 +133,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
       Apptentive.setPersonEmail(email)
       promise.resolve(true)
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person email.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -143,7 +143,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     if (isApptentiveRegistered) {
       promise.resolve(Apptentive.getPersonEmail().orEmpty())
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person email.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -155,7 +155,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
           Apptentive.addCustomPersonData(key, value)
           promise.resolve(true)
       } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.")
+          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
       }
   }
 
@@ -167,7 +167,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
           Apptentive.addCustomPersonData(key, value)
           promise.resolve(true)
       } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.")
+          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
       }
   }
 
@@ -179,7 +179,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
           Apptentive.addCustomPersonData(key, value)
           promise.resolve(true)
       } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.")
+          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
       }
   }
 
@@ -190,7 +190,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
       Apptentive.removeCustomPersonData(key)
       promise.resolve(true)
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom person data $key.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -201,8 +201,8 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     if (isApptentiveRegistered) {
         Apptentive.addCustomDeviceData(key, value)
         promise.resolve(true)
-            } else {
-        promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.")
+    } else {
+        promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
   // Add device custom data based on key string and value of type double
@@ -213,7 +213,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
           Apptentive.addCustomDeviceData(key, value)
           promise.resolve(true)
       } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.")
+          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
       }
   }
 
@@ -225,7 +225,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
           Apptentive.addCustomDeviceData(key, value)
           promise.resolve(true)
       } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.")
+          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
       }
   }
 
@@ -236,7 +236,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
       Apptentive.removeCustomDeviceData(key)
       promise.resolve(true)
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom device data $key.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -247,7 +247,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
       val canShow = Apptentive.canShowInteraction(event)
       promise.resolve(canShow)
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check if Apptentive interaction can be shown on event $event.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -258,7 +258,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
       val canShow = Apptentive.canShowMessageCenter()
       promise.resolve(canShow)
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE,"Failed to check if Apptentive can launch Message Center.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -269,7 +269,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
       val count = Apptentive.getUnreadMessageCount()
       promise.resolve(count)
     } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check number of unread messages in Message Center.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
