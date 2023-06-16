@@ -37,7 +37,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Register the Apptentive Android SDK
   @ReactMethod
   fun register(credentials: ReadableMap, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       android.util.Log.d("Apptentive", "[REACT NATIVE] Registering Apptentive")
 
       getApplicationContext()?.let { application ->
@@ -55,8 +55,8 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
         APPTENTIVE_ERROR_CODE,
         "Apptentive instance was not initialized: application context is null"
       )
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to register Apptentive instance.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to register Apptentive instance.")
     }
   }
 
@@ -84,66 +84,66 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Engage an event by an event name string
   @ReactMethod
   fun engage(event: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.engage(event) {
         promise.resolve(it is EngagementResult.InteractionShown)
       }
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to engage event $event.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Show the Apptentive Message Center
   @ReactMethod
   fun showMessageCenter(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.showMessageCenter {
         promise.resolve(it is EngagementResult.InteractionShown)
       }
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to present Message Center.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Set person name
   @ReactMethod
   fun setPersonName(name: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.setPersonName(name)
       promise.resolve(true)
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person name.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person name.")
     }
   }
 
-  // Get person name, empty string if there is none
+  // Get person namempty string if there is none
   @ReactMethod
   fun getPersonName(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       promise.resolve(Apptentive.getPersonName().orEmpty())
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person name.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person name.")
     }
   }
 
   // Set person email
   @ReactMethod
   fun setPersonEmail(email: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.setPersonEmail(email)
       promise.resolve(true)
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person email.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person email.")
     }
   }
 
   // Get person email, empty string if there is none
   @ReactMethod
   fun getPersonEmail(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       promise.resolve(Apptentive.getPersonEmail().orEmpty())
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person email.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person email.")
     }
   }
 
@@ -151,11 +151,11 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataBoolean(key: String, value: Boolean, promise: Promise) {
-      try {
+      if (isApptentiveRegistered) {
           Apptentive.addCustomPersonData(key, value)
           promise.resolve(true)
-      } catch (e: Exception) {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.", e)
+      } else {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.")
       }
   }
 
@@ -163,11 +163,11 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataNumber(key: String, value: Double, promise: Promise) {
-      try {
+      if (isApptentiveRegistered) {
           Apptentive.addCustomPersonData(key, value)
           promise.resolve(true)
-      } catch (e: Exception) {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.", e)
+      } else {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.")
       }
   }
 
@@ -175,22 +175,22 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataString(key: String, value: String, promise: Promise) {
-      try {
+      if (isApptentiveRegistered) {
           Apptentive.addCustomPersonData(key, value)
           promise.resolve(true)
-      } catch (e: Exception) {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.", e)
+      } else {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom person data $key.")
       }
   }
 
   // Remove person custom data based on key string
   @ReactMethod
   fun removeCustomPersonData(key: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.removeCustomPersonData(key)
       promise.resolve(true)
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom person data $key.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom person data $key.")
     }
   }
 
@@ -198,22 +198,22 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataBoolean(key: String, value: Boolean, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
         Apptentive.addCustomDeviceData(key, value)
         promise.resolve(true)
-            } catch (e: Exception) {
-        promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.", e)
+            } else {
+        promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.")
     }
   }
   // Add device custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataNumber(key: String, value: Double, promise: Promise) {
-      try {
+      if (isApptentiveRegistered) {
           Apptentive.addCustomDeviceData(key, value)
           promise.resolve(true)
-      } catch (e: Exception) {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.", e)
+      } else {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.")
       }
   }
 
@@ -221,67 +221,55 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataString(key: String, value: String, promise: Promise) {
-      try {
+      if (isApptentiveRegistered) {
           Apptentive.addCustomDeviceData(key, value)
           promise.resolve(true)
-      } catch (e: Exception) {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.", e)
+      } else {
+          promise.reject(APPTENTIVE_ERROR_CODE, "Failed to add custom device data $key.")
       }
   }
 
   // Remove device custom data based on key string
   @ReactMethod
   fun removeCustomDeviceData(key: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.removeCustomDeviceData(key)
       promise.resolve(true)
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom device data $key.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom device data $key.")
     }
   }
 
   // Check if an event name will launch an interaction
   @ReactMethod
   fun canShowInteraction(event: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       val canShow = Apptentive.canShowInteraction(event)
       promise.resolve(canShow)
-    } catch (e: Exception) {
-      promise.reject(
-        APPTENTIVE_ERROR_CODE,
-        "Failed to check if Apptentive interaction can be shown on event $event.",
-        e
-      )
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check if Apptentive interaction can be shown on event $event.")
     }
   }
 
   // Check if Message Center can be shown
   @ReactMethod
   fun canShowMessageCenter(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       val canShow = Apptentive.canShowMessageCenter()
       promise.resolve(canShow)
-    } catch (e: Exception) {
-      promise.reject(
-        APPTENTIVE_ERROR_CODE,
-        "Failed to check if Apptentive can launch Message Center.",
-        e
-      )
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE,"Failed to check if Apptentive can launch Message Center.")
     }
   }
 
   // Get unread message count in Message Center
   @ReactMethod
   fun getUnreadMessageCount(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       val count = Apptentive.getUnreadMessageCount()
       promise.resolve(count)
-    } catch (e: Exception) {
-      promise.reject(
-        APPTENTIVE_ERROR_CODE,
-        "Failed to check number of unread messages in Message Center.",
-        e
-      )
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to check number of unread messages in Message Center.")
     }
   }
 
@@ -360,9 +348,8 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     return currentActivity?.applicationContext as Application?
   }
 
-  override fun getApptentiveActivityInfo(): Activity {
-    return (currentActivity as? AppCompatActivity)
-      ?: throw IllegalStateException("Activity $this could not retrieve currentActivity from React Native.")
+  override fun getApptentiveActivityInfo(): Activity? {
+    return currentActivity
   }
 
   override fun hasConstants(): Boolean {
