@@ -37,7 +37,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Register the Apptentive Android SDK
   @ReactMethod
   fun register(credentials: ReadableMap, promise: Promise) {
-    if (isApptentiveRegistered) {
+    try {
       android.util.Log.d("Apptentive", "[REACT NATIVE] Registering Apptentive")
 
       getApplicationContext()?.let { application ->
@@ -55,8 +55,8 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
         APPTENTIVE_ERROR_CODE,
         "Apptentive instance was not initialized: application context is null"
       )
-    } else {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to register Apptentive instance.")
+    } catch (e: Exception) {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to register Apptentive instance.", e)
     }
   }
 
