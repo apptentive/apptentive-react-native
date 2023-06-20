@@ -116,7 +116,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     }
   }
 
-  // Get person namempty string if there is none
+  // Get person name, empty string if there is none
   @ReactMethod
   fun getPersonName(promise: Promise) {
     if (isApptentiveRegistered) {
