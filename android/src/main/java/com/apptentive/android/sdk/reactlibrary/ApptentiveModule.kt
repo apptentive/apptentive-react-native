@@ -151,36 +151,36 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataBoolean(key: String, value: Boolean, promise: Promise) {
-      if (isApptentiveRegistered) {
-          Apptentive.addCustomPersonData(key, value)
-          promise.resolve(true)
-      } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
-      }
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomPersonData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Add person custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataNumber(key: String, value: Double, promise: Promise) {
-      if (isApptentiveRegistered) {
-          Apptentive.addCustomPersonData(key, value)
-          promise.resolve(true)
-      } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
-      }
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomPersonData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Add person custom data based on key string and value of type String
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataString(key: String, value: String, promise: Promise) {
-      if (isApptentiveRegistered) {
-          Apptentive.addCustomPersonData(key, value)
-          promise.resolve(true)
-      } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
-      }
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomPersonData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Remove person custom data based on key string
@@ -199,34 +199,34 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   @ReactMethod
   fun addCustomDeviceDataBoolean(key: String, value: Boolean, promise: Promise) {
     if (isApptentiveRegistered) {
-        Apptentive.addCustomDeviceData(key, value)
-        promise.resolve(true)
+      Apptentive.addCustomDeviceData(key, value)
+      promise.resolve(true)
     } else {
-        promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
   // Add device custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataNumber(key: String, value: Double, promise: Promise) {
-      if (isApptentiveRegistered) {
-          Apptentive.addCustomDeviceData(key, value)
-          promise.resolve(true)
-      } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
-      }
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomDeviceData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Add device custom data based on key string and value of type string
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataString(key: String, value: String, promise: Promise) {
-      if (isApptentiveRegistered) {
-          Apptentive.addCustomDeviceData(key, value)
-          promise.resolve(true)
-      } else {
-          promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
-      }
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomDeviceData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Remove device custom data based on key string
