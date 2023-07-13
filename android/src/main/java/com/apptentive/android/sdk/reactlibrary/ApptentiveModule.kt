@@ -8,6 +8,7 @@ import apptentive.com.android.feedback.ApptentiveActivityInfo
 import apptentive.com.android.feedback.ApptentiveConfiguration
 import apptentive.com.android.feedback.EngagementResult
 import apptentive.com.android.feedback.RegisterResult
+import apptentive.com.android.feedback.model.MessageCenterNotification
 import apptentive.com.android.util.InternalUseOnly
 import apptentive.com.android.util.Log
 import apptentive.com.android.util.LogLevel
@@ -67,18 +68,21 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     Apptentive.registerApptentiveActivityInfoCallback(this)
 
     Log.d(REACT_NATIVE_TAG, "Observing Message Center Notification")
-    Apptentive.messageCenterNotificationObservable.observe { notification ->
-      Log.v(REACT_NATIVE_TAG, "Message Center notification received: $notification")
-      val eventEmitter =
-        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-      val map = WritableNativeMap()
-      map.putInt("count", notification?.unreadMessageCount ?: 0)
-
-      eventEmitter.emit(UNREAD_MESSAGE_COUNT_CHANGED, map)
-    }
+    Apptentive.messageCenterNotificationObservable.observe(::observeNewMessage)
 
     Log.d(REACT_NATIVE_TAG, "Register lifecycle observe")
     reactApplicationContext.addLifecycleEventListener(this)
+  }
+
+  // Handle new message center notification
+  private fun observeNewMessage(notification: MessageCenterNotification?) {
+    Log.v(REACT_NATIVE_TAG, "Message Center notification received: $notification")
+    
+    val map = WritableNativeMap()
+    map.putInt("count", notification?.unreadMessageCount ?: 0)
+
+    val eventEmitter = reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+    eventEmitter.emit(UNREAD_MESSAGE_COUNT_CHANGED, map)
   }
 
   // Engage an event by an event name string
@@ -369,5 +373,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
 
   override fun onHostPause() {}
 
-  override fun onHostDestroy() {}
+  override fun onHostDestroy() {
+    Apptentive.messageCenterNotificationObservable.removeObserver(::observeNewMessage)
+  }
 }
