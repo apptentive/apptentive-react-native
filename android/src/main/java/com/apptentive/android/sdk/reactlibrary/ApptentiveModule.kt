@@ -8,6 +8,7 @@ import apptentive.com.android.feedback.ApptentiveActivityInfo
 import apptentive.com.android.feedback.ApptentiveConfiguration
 import apptentive.com.android.feedback.EngagementResult
 import apptentive.com.android.feedback.RegisterResult
+import apptentive.com.android.feedback.model.MessageCenterNotification
 import apptentive.com.android.util.InternalUseOnly
 import apptentive.com.android.util.Log
 import apptentive.com.android.util.LogLevel
@@ -67,83 +68,86 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     Apptentive.registerApptentiveActivityInfoCallback(this)
 
     Log.d(REACT_NATIVE_TAG, "Observing Message Center Notification")
-    Apptentive.messageCenterNotificationObservable.observe { notification ->
-      Log.v(REACT_NATIVE_TAG, "Message Center notification received: $notification")
-      val eventEmitter =
-        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-      val map = WritableNativeMap()
-      map.putInt("count", notification?.unreadMessageCount ?: 0)
-
-      eventEmitter.emit(UNREAD_MESSAGE_COUNT_CHANGED, map)
-    }
+    Apptentive.messageCenterNotificationObservable.observe(::observeNewMessage)
 
     Log.d(REACT_NATIVE_TAG, "Register lifecycle observe")
     reactApplicationContext.addLifecycleEventListener(this)
   }
 
+  // Handle new message center notification
+  private fun observeNewMessage(notification: MessageCenterNotification?) {
+    Log.v(REACT_NATIVE_TAG, "Message Center notification received: $notification")
+    
+    val map = WritableNativeMap()
+    map.putInt("count", notification?.unreadMessageCount ?: 0)
+
+    val eventEmitter = reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+    eventEmitter.emit(UNREAD_MESSAGE_COUNT_CHANGED, map)
+  }
+
   // Engage an event by an event name string
   @ReactMethod
   fun engage(event: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.engage(event) {
         promise.resolve(it is EngagementResult.InteractionShown)
       }
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to engage event $event.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Show the Apptentive Message Center
   @ReactMethod
   fun showMessageCenter(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.showMessageCenter {
         promise.resolve(it is EngagementResult.InteractionShown)
       }
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to present Message Center.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Set person name
   @ReactMethod
   fun setPersonName(name: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.setPersonName(name)
       promise.resolve(true)
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person name.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Get person name, empty string if there is none
   @ReactMethod
   fun getPersonName(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       promise.resolve(Apptentive.getPersonName().orEmpty())
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person name.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Set person email
   @ReactMethod
   fun setPersonEmail(email: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.setPersonEmail(email)
       promise.resolve(true)
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to set person email.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Get person email, empty string if there is none
   @ReactMethod
   fun getPersonEmail(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       promise.resolve(Apptentive.getPersonEmail().orEmpty())
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to get person email.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -151,34 +155,46 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataBoolean(key: String, value: Boolean, promise: Promise) {
-    Apptentive.addCustomPersonData(key, value)
-    promise.resolve(true)
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomPersonData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Add person custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataNumber(key: String, value: Double, promise: Promise) {
-    Apptentive.addCustomPersonData(key, value)
-    promise.resolve(true)
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomPersonData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Add person custom data based on key string and value of type String
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomPersonDataString(key: String, value: String, promise: Promise) {
-    Apptentive.addCustomPersonData(key, value)
-    promise.resolve(true)
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomPersonData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Remove person custom data based on key string
   @ReactMethod
   fun removeCustomPersonData(key: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.removeCustomPersonData(key)
       promise.resolve(true)
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom person data $key.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -186,79 +202,78 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataBoolean(key: String, value: Boolean, promise: Promise) {
-    Apptentive.addCustomDeviceData(key, value)
-    promise.resolve(true)
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomDeviceData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
-
   // Add device custom data based on key string and value of type double
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataNumber(key: String, value: Double, promise: Promise) {
-    Apptentive.addCustomDeviceData(key, value)
-    promise.resolve(true)
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomDeviceData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Add device custom data based on key string and value of type string
   // Delegated from addCustomPersonData(key, value)
   @ReactMethod
   fun addCustomDeviceDataString(key: String, value: String, promise: Promise) {
-    Apptentive.addCustomDeviceData(key, value)
-    promise.resolve(true)
+    if (isApptentiveRegistered) {
+      Apptentive.addCustomDeviceData(key, value)
+      promise.resolve(true)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
+    }
   }
 
   // Remove device custom data based on key string
   @ReactMethod
   fun removeCustomDeviceData(key: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       Apptentive.removeCustomDeviceData(key)
       promise.resolve(true)
-    } catch (e: Exception) {
-      promise.reject(APPTENTIVE_ERROR_CODE, "Failed to remove custom device data $key.", e)
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Check if an event name will launch an interaction
   @ReactMethod
   fun canShowInteraction(event: String, promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       val canShow = Apptentive.canShowInteraction(event)
       promise.resolve(canShow)
-    } catch (e: Exception) {
-      promise.reject(
-        APPTENTIVE_ERROR_CODE,
-        "Failed to check if Apptentive interaction can be shown on event $event.",
-        e
-      )
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Check if Message Center can be shown
   @ReactMethod
   fun canShowMessageCenter(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       val canShow = Apptentive.canShowMessageCenter()
       promise.resolve(canShow)
-    } catch (e: Exception) {
-      promise.reject(
-        APPTENTIVE_ERROR_CODE,
-        "Failed to check if Apptentive can launch Message Center.",
-        e
-      )
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
   // Get unread message count in Message Center
   @ReactMethod
   fun getUnreadMessageCount(promise: Promise) {
-    try {
+    if (isApptentiveRegistered) {
       val count = Apptentive.getUnreadMessageCount()
       promise.resolve(count)
-    } catch (e: Exception) {
-      promise.reject(
-        APPTENTIVE_ERROR_CODE,
-        "Failed to check number of unread messages in Message Center.",
-        e
-      )
+    } else {
+      promise.reject(APPTENTIVE_ERROR_CODE, "Apptentive is not registered.")
     }
   }
 
@@ -337,9 +352,8 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     return currentActivity?.applicationContext as Application?
   }
 
-  override fun getApptentiveActivityInfo(): Activity {
-    return (currentActivity as? AppCompatActivity)
-      ?: throw IllegalStateException("Activity $this could not retrieve currentActivity from React Native.")
+  override fun getApptentiveActivityInfo(): Activity? {
+    return currentActivity
   }
 
   override fun hasConstants(): Boolean {
@@ -359,5 +373,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
 
   override fun onHostPause() {}
 
-  override fun onHostDestroy() {}
+  override fun onHostDestroy() {
+    Apptentive.messageCenterNotificationObservable.removeObserver(::observeNewMessage)
+  }
 }
