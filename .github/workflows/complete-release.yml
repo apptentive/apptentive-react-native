@@ -1,0 +1,39 @@
+name: Complete Release
+
+on:
+  pull_request:
+    types:
+    - closed
+    branches:
+    - master
+
+jobs:
+  tag-and-release:
+    # Run only after release PR branch is merged
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/')
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Get Tag Name
+      id: get_tag_name
+      run: echo "tag_name=v$(cat package.json | jq -r '.version')" >> $GITHUB_OUTPUT
+  
+    - name: Create Tag
+      id: create_tag
+      uses: rickstaa/action-create-tag@v1
+      with: 
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        tag: ${{ steps.get_tag_name.outputs.tag_name }}
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get_tag_name.outputs.tag_name }}
+        name: ${{ steps.get_tag_name.outputs.tag_name }}
+        draft: false
+        prerelease: false
+        body_path: .scripts/changes.md
