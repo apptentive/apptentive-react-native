@@ -73,7 +73,7 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   // Apptentive
-  implementation 'com.apptentive:apptentive-kit-android:6.1.0'
+  implementation 'com.apptentive:apptentive-kit-android:6.7.0'
 }
 
 if (isNewArchitectureEnabled()) {
