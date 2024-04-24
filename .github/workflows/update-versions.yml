@@ -1,0 +1,50 @@
+name: Update Versions
+
+on:
+  workflow_dispatch:
+    inputs:
+      distribution-version:
+        description: 'Distribution Version of the release'
+        required: true
+        type: string
+      ios-version:
+        description: 'Version of the iOS SDK to incorporate'
+        required: true
+        type: string
+      android-version:
+          description: 'Version of the Android SDK to incorporate'
+          required: true
+          type: string
+        
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop
+
+      - name: Update distribution version plus any incidental copies
+        run: .scripts/update_distribution_version.sh "${{ inputs.distribution-version }}"
+      
+      - name: Update ApptentiveKit iOS dependency
+        run: .scripts/update_ios_version.sh apptentive-react-native.podspec "${{ inputs.ios-version }}"
+
+      - name: Update ApptentiveKit Android dependency
+        run: .scripts/update_android_version.sh android/build.gradle "${{ inputs.android-version }}"
+      
+      - name: Update CHANGELOG.md
+        id: changelog
+        run: |
+           .scripts/add_changelog_entry.sh "${{ inputs.distribution-version }}" "${{ inputs.android-version }}" "${{ inputs.ios-version }}" \
+           > .scripts/changes.md
+  
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "Update for ${{ inputs.distribution-version }}"
+          committer: "Alchemer Mobile Team <sdks@apptentive.com>"
+          branch: "updates/${{ inputs.distribution-version }}"
+          base: develop
+          title: "Update for v${{ inputs.distribution-version }}"
+          body-path: .scripts/changes.md
