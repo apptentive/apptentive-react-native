@@ -10,7 +10,7 @@ on:
 jobs:
   tag-and-release:
     # Run only after release PR branch is merged
-    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'releases/')
+    if: github.event.pull_request.merged == true && github.head_ref == 'develop'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
