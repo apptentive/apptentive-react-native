@@ -39,8 +39,8 @@ type SectionProps = PropsWithChildren<{
 // Set your Apptentive Dashboard Credentials
 const credentials = Platform.select({
   android: {
-    apptentiveKey: "ANDROID-RATTELSNAKEFAX",
-    apptentiveSignature: "e93b2fe9c834d10f2adcd00cc013ca33",
+    apptentiveKey: "___YOUR_ANDROID_APPTENTIVE_KEY___",
+    apptentiveSignature: "___YOUR_ANDROID_APPTENTIVE_SIGNATURE___",
   },
   ios: {
     apptentiveKey: "___YOUR_IOS_APPTENTIVE_KEY___",
