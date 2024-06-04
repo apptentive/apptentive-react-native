@@ -356,10 +356,6 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     return currentActivity
   }
 
-  override fun hasConstants(): Boolean {
-    return true
-  }
-
   override fun getConstants(): MutableMap<String, Any> {
     return mutableMapOf("unreadMessageCountChangedEvent" to UNREAD_MESSAGE_COUNT_CHANGED)
   }

@@ -36,7 +36,7 @@ export class ApptentiveConfiguration {
     this.apptentiveSignature = signature;
     this.logLevel = "info";
     this.distributionName = "React Native";
-    this.distributionVersion = require("../package").version;
+    this.distributionVersion = "6.7.0";
     this.shouldEncryptStorage = false;
     this.shouldSanitizeLogMessages = true;
     this.shouldInheritAppTheme = true;
