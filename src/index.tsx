@@ -30,6 +30,7 @@ export class ApptentiveConfiguration {
   shouldInheritAppTheme: boolean;
   ratingInteractionThrottleLength: number;
   customAppStoreURL: string | null;
+  apiBaseURL: string | null;
 
   constructor(key: string, signature: string) {
     this.apptentiveKey = key;
@@ -42,6 +43,7 @@ export class ApptentiveConfiguration {
     this.shouldInheritAppTheme = true;
     this.ratingInteractionThrottleLength = 604800000;
     this.customAppStoreURL = null;
+    this.apiBaseURL = null;
   }
 }
 
