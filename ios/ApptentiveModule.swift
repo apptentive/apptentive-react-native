@@ -29,7 +29,9 @@ import ApptentiveKit
       return reject("Apptentive Error", "Missing key or signature", nil)
     }
 
-    Apptentive.shared.register(with: .init(key: apptentiveKey, signature: apptentiveSignature), completion: { (result) -> Void in
+    let region = configuration["apiBaseURL"].flatMap { Apptentive.Region(apiBaseURL: $0) }
+
+    Apptentive.shared.register(with: .init(key: apptentiveKey, signature: apptentiveSignature), region: region, completion: { (result) -> Void in
       switch result {
       case .success(let success):
         resolve(success)
