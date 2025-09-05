@@ -349,11 +349,11 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   }
 
   private fun getApplicationContext(): Application? {
-    return currentActivity?.applicationContext as Application?
+    return reactApplicationContext.currentActivity?.applicationContext as Application?
   }
 
   override fun getApptentiveActivityInfo(): Activity? {
-    return currentActivity
+    return reactApplicationContext.currentActivity
   }
 
   override fun getConstants(): MutableMap<String, Any> {
