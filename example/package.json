@@ -10,9 +10,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "apptentive-react-native": "file:..",
+    "apptentive-react-native": "file:../apptentive-react-native-6.8.0.tgz",
     "react": "18.2.0",
-    "react-native": "0.72.3"
+    "react-native": "0.72.3",
+    "react-native-gradle-plugin": "^0.71.19"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

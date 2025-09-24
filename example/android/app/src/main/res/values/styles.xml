@@ -4,11 +4,13 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+        <item name="android:colorPrimary">#191970</item>
+        <item name="android:colorSecondary">#191970</item>
     </style>
 
     <style name="ApptentiveThemeOverride">
-        <item name="colorPrimary">#191970</item>
-        <item name="colorSecondary">#191970</item>
+        <item name="android:colorPrimary">#191970</item>
+        <item name="android:colorSecondary">#191970</item>
         <item name="android:textColorPrimary">#000000</item>
         <item name="android:textColorSecondary">#000000</item>
     </style>
