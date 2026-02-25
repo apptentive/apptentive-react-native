@@ -91,13 +91,13 @@ def reactNativeArchitectures() {
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 34
 
     namespace "com.apptentiveexample"
     defaultConfig {
         applicationId "com.apptentiveexample"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 35
         versionCode 1
         versionName "1.0"
     }
@@ -129,6 +129,10 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+    }
+
+    packagingOptions {
+        exclude '**/node_modules_reactnative_libraries_newappscreen_components_logo.png'
     }
 
     // applicationVariants are e.g. debug, release
