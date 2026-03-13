@@ -324,7 +324,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     }
 
     val customURL = credentials.getString("overrideBaseURL")
-    if (customURL != null) {
+    if (!customURL.isNullOrBlank()) {
       apptentiveConfiguration.region = parseRegion(customURL)
       android.util.Log.d("Apptentive", "[REACT NATIVE] setting custom baseURL: $customURL")
     } else {
