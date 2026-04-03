@@ -303,7 +303,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
       "US" -> ApptentiveRegion.US
       "EU" -> ApptentiveRegion.EU
       "AU" -> ApptentiveRegion.AU
-      "CN" -> ApptentiveRegion.CN
+      "CA" -> ApptentiveRegion.CA
       else -> ApptentiveRegion.Custom(region)
     }
   }
