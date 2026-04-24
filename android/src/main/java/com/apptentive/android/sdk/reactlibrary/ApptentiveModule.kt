@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import apptentive.com.android.feedback.Apptentive
 import apptentive.com.android.feedback.ApptentiveActivityInfo
 import apptentive.com.android.feedback.ApptentiveConfiguration
+import apptentive.com.android.feedback.ApptentiveRegion
 import apptentive.com.android.feedback.EngagementResult
 import apptentive.com.android.feedback.RegisterResult
 import apptentive.com.android.feedback.model.MessageCenterNotification
@@ -281,7 +282,7 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
 
   // Set ApptentiveLogger log level
   private fun parseLogLevel(logLevel: String): LogLevel {
-    android.util.Log.d("Apptentive", "[REACT NATIVE] Parsing log level: $logLevel")
+    android.util.Log.d("Apptentive", "[REACT NATIVE] Parsing log level:: $logLevel")
 
     return when (logLevel) {
       "verbose" -> LogLevel.Verbose
@@ -293,6 +294,17 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
         println("$APPTENTIVE_ERROR_CODE: Unknown log level $logLevel, setting to info by default.")
         LogLevel.Info
       }
+    }
+  }
+
+  // Set region
+  private fun parseRegion(region: String): ApptentiveRegion {
+    return when (region) {
+      "US" -> ApptentiveRegion.US
+      "EU" -> ApptentiveRegion.EU
+      "AU" -> ApptentiveRegion.AU
+      "CA" -> ApptentiveRegion.CA
+      else -> ApptentiveRegion.Custom(region)
     }
   }
 
@@ -309,6 +321,16 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
     if (credentials.hasKey("logLevel")) {
       apptentiveConfiguration.logLevel =
         parseLogLevel(credentials.getString("logLevel") ?: "info")
+    }
+
+    val customURL = credentials.getString("overrideBaseURL")
+    if (!customURL.isNullOrBlank()) {
+      apptentiveConfiguration.region = parseRegion(customURL)
+      android.util.Log.d("Apptentive", "[REACT NATIVE] setting custom baseURL: $customURL")
+    } else {
+      val region = credentials.getString("region") ?: "US"
+      android.util.Log.d("Apptentive", "[REACT NATIVE] Setting region: $region")
+      apptentiveConfiguration.region = parseRegion(region)
     }
 
     // Set distribution name and version
@@ -349,11 +371,11 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   }
 
   private fun getApplicationContext(): Application? {
-    return currentActivity?.applicationContext as Application?
+    return reactApplicationContext.currentActivity?.applicationContext as Application?
   }
 
   override fun getApptentiveActivityInfo(): Activity? {
-    return currentActivity
+    return reactApplicationContext.currentActivity
   }
 
   override fun getConstants(): MutableMap<String, Any> {
