@@ -1,0 +1,6 @@
+export const APPTENTIVE_CREDENTIALS = {
+    iOSKey: "<YOUR_IOS_APPTENTIVE_KEY>",
+    iOSSignature: "<YOUR_IOS_APPTENTIVE_SIGNATURE>",
+    androidKey: "<YOUR_ANDROID_APPTENTIVE_KEY>",
+    androidSignature: "<YOUR_ANDROID_APPTENTIVE_SIGNATURE>"
+};

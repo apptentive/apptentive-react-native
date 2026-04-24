@@ -1,17 +1,24 @@
+const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+const path = require('path');
+
 /**
- * Metro configuration for React Native
- * https://github.com/facebook/react-native
+ * Metro configuration
+ * https://facebook.github.io/metro/docs/configuration
  *
- * @format
+ * @type {import('metro-config').MetroConfig}
  */
 
-module.exports = {
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: true,
-      },
-    }),
+// The root of the apptentive-react-native package (one level up)
+const packageRoot = path.resolve(__dirname, '..');
+
+const config = {
+  // Watch the parent package so Metro can resolve the local apptentive-react-native module
+  watchFolders: [packageRoot],
+  resolver: {
+    extraNodeModules: {
+      'apptentive-react-native': packageRoot,
+    },
   },
 };
+
+module.exports = mergeConfig(getDefaultConfig(__dirname), config);

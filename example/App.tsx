@@ -32,6 +32,8 @@ import {
   ApptentiveConfiguration
 } from 'apptentive-react-native'
 
+import { APPTENTIVE_CREDENTIALS } from './credentials';
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -39,12 +41,12 @@ type SectionProps = PropsWithChildren<{
 // Set your Apptentive Dashboard Credentials
 const credentials = Platform.select({
   android: {
-    apptentiveKey: "___YOUR_ANDROID_APPTENTIVE_KEY___",
-    apptentiveSignature: "___YOUR_ANDROID_APPTENTIVE_SIGNATURE___",
+    apptentiveKey: APPTENTIVE_CREDENTIALS.androidKey,
+    apptentiveSignature: APPTENTIVE_CREDENTIALS.androidSignature,
   },
   ios: {
-    apptentiveKey: "___YOUR_IOS_APPTENTIVE_KEY___",
-    apptentiveSignature: "___YOUR_IOS_APPTENTIVE_SIGNATURE___",
+    apptentiveKey: APPTENTIVE_CREDENTIALS.iOSKey,
+    apptentiveSignature: APPTENTIVE_CREDENTIALS.iOSSignature,
   },
 });
 
@@ -68,11 +70,11 @@ export class App extends React.Component<{}, State> {
 
   componentDidMount() {
     // Check for key and signature
-    if (!credentials.apptentiveKey || credentials.apptentiveKey === "___YOUR_IOS_APPTENTIVE_KEY___" || credentials.apptentiveKey === "___YOUR_ANDROID_APPTENTIVE_KEY___") {
+    if (!credentials.apptentiveKey || credentials.apptentiveKey === "<YOUR_IOS_APPTENTIVE_KEY>" || credentials.apptentiveKey === "<YOUR_ANDROID_APPTENTIVE_KEY>") {
       console.log("APPTENTIVE ERROR: Please provide Apptentive Key");
       return;
     }
-    if (!credentials.apptentiveSignature || credentials.apptentiveSignature === "___YOUR_IOS_APPTENTIVE_SIGNATURE___" || credentials.apptentiveSignature === "___YOUR_ANDROID_APPTENTIVE_SIGNATURE___") {
+    if (!credentials.apptentiveSignature || credentials.apptentiveSignature === "<YOUR_IOS_APPTENTIVE_SIGNATURE>" || credentials.apptentiveSignature === "<YOUR_ANDROID_APPTENTIVE_SIGNATURE>") {
       console.log("APPTENTIVE ERROR: Please provide Apptentive Signature");
       return;
     }
