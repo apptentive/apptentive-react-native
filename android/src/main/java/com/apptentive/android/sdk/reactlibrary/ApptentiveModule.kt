@@ -299,11 +299,12 @@ class ApptentiveModule(private val reactContext: ReactApplicationContext) :
 
   // Set region
   private fun parseRegion(region: String): ApptentiveRegion {
-    return when (region) {
-      "US" -> ApptentiveRegion.US
-      "EU" -> ApptentiveRegion.EU
-      "AU" -> ApptentiveRegion.AU
-      "CA" -> ApptentiveRegion.CA
+    val normalized = region.lowercase()
+    return when (normalized) {
+      "us" -> ApptentiveRegion.US
+      "eu" -> ApptentiveRegion.EU
+      "au" -> ApptentiveRegion.AU
+      "ca" -> ApptentiveRegion.CA
       else -> ApptentiveRegion.Custom(region)
     }
   }
