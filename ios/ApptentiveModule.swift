@@ -28,7 +28,8 @@ import ApptentiveKit
       environment = .custom(overrideBaseURL)
     }
 
-    let region = (configuration["region"] as? String).flatMap { Apptentive.Region(rawValue: $0) } ?? .us
+    let regionString = (configuration["region"] as? String)?.lowercased()
+    let region = regionString.flatMap { Apptentive.Region(rawValue: $0) } ?? .us
 
     Task {
       do {
