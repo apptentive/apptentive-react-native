@@ -5,6 +5,20 @@ This document lets you know what has changed in the React Native module. For cha
 - [Android Changelog](https://github.com/apptentive/apptentive-kit-android/blob/master/CHANGELOG.md)
 - [iOS Changelog](https://github.com/apptentive/apptentive-kit-ios/blob/main/CHANGELOG.md)
 
+# 2026-05-07 - v7.1.0
+
+- Apptentive Android SDK: 7.1.0
+- Apptentive iOS SDK: 7.1.0
+
+#### New & Improved
+
+- Allows routing traffic to region‑specific endpoints, reducing latency and comply with regional data‑handling requirements. Now supporting EU along with US
+
+# 2026-02-11 - v7.0.0
+
+- Apptentive Android SDK: 7.0.0
+- Apptentive iOS SDK: 7.0.0
+
 # 2024-06-26 - v6.8.0
 
 - Apptentive Android SDK: 6.8.0
