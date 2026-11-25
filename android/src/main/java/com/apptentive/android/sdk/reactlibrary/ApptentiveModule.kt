@@ -1,3 +1,5 @@
+@file:Suppress("OPT_IN_USAGE_ERROR")
+
 package com.apptentive.android.sdk.reactlibrary
 
 import android.app.Activity
@@ -10,7 +12,6 @@ import apptentive.com.android.feedback.ApptentiveRegion
 import apptentive.com.android.feedback.EngagementResult
 import apptentive.com.android.feedback.RegisterResult
 import apptentive.com.android.feedback.model.MessageCenterNotification
-import apptentive.com.android.util.InternalUseOnly
 import apptentive.com.android.util.Log
 import apptentive.com.android.util.LogLevel
 import apptentive.com.android.util.LogTag
@@ -24,7 +25,6 @@ import com.facebook.react.bridge.WritableNativeMap
 import com.facebook.react.modules.core.DeviceEventManagerModule
 
 
-@OptIn(InternalUseOnly::class)
 class ApptentiveModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext), ApptentiveActivityInfo, LifecycleEventListener {
 
