@@ -2231,8 +2231,9 @@ appdirsjs@^1.2.4:
   resolved "https://registry.yarnpkg.com/appdirsjs/-/appdirsjs-1.2.7.tgz#50b4b7948a26ba6090d4aede2ae2dc2b051be3b3"
   integrity sha512-Quji6+8kLBC3NnBeo14nPDq0+2jUs5s3/xEye+udFHumHhRk4M7aAMXp/PBJqkKYGuuyR9M/6Dq7d2AViiGmhw==
 
-"apptentive-react-native@file:..":
-  version "6.8.0"
+"apptentive-react-native@link:..":
+  version "0.0.0"
+  uid ""
 
 argparse@^1.0.7:
   version "1.0.10"

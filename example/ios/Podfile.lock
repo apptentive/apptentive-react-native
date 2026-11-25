@@ -1,8 +1,8 @@
 PODS:
-  - apptentive-react-native (7.0.0):
-    - ApptentiveKit (~> 7.0.0)
+  - apptentive-react-native (7.4.0):
+    - ApptentiveKit (~> 7.4.0)
     - React-Core
-  - ApptentiveKit (7.0.0)
+  - ApptentiveKit (7.4.0)
   - boost (1.84.0)
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
@@ -1720,8 +1720,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  apptentive-react-native: d16e7714166bbfe63063ec52cd7703fed16ac9e9
-  ApptentiveKit: 3113c35e84be5fa827bed10ee4afea6c53af7ae8
+  apptentive-react-native: 67197085c7e0b38f1915373ebd4af72d895bed55
+  ApptentiveKit: 42e894ccdff2b6b5f1201ae58f37807688d1fc91
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
@@ -1790,6 +1790,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 78d74e245ed67bb94275a1316cdc170b9b7fe884
 
-PODFILE CHECKSUM: 3926121460bcc7e2e1addbb446974ea3a926949d
+PODFILE CHECKSUM: 2d44ba68a2da69bdc1b22bdb804e7974a18e7115
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0

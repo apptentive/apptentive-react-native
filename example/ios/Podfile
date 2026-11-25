@@ -32,9 +32,9 @@ target 'ApptentiveExample' do
       # necessary for Mac Catalyst builds
       :mac_catalyst_enabled => false
     )
-    # glog 0.3.5 doesn't compile under C++20; override it to C++17
+    # glog 0.3.5 and fmt 11.0.2 don't compile under C++20 with newer Xcode clang; override them to C++17
     installer.pods_project.targets.each do |target|
-      if target.name == 'glog'
+      if ['glog', 'fmt'].include?(target.name)
         target.build_configurations.each do |config|
           config.build_settings['CLANG_CXX_LANGUAGE_STANDARD'] = 'c++17'
         end
